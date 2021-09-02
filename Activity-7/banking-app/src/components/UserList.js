@@ -11,11 +11,10 @@ const LOCAL_STORAGE_KEY = 'userList';
 const UserList = () => {
     const [show, setShow] = useState(false);
     // for now use uuid for unique acct numbers - will change later since it is too long and also has letters
-    const [acctNum, setAcctNum] = useState(uuidv4());
-    const [users, setUsers] = useState([]);
+    const [acctNum, setAcctNum] = useState('');
 
-    const [form, setForm] = useState({});
-    const [errors, setErrors] = useState({});
+    //alin ang hardcoded??
+    const [users, setUsers] = useState([]);
 
     // useRef to reference input fields
     const acctNameRef = useRef();
@@ -33,35 +32,42 @@ const UserList = () => {
         if (storedUsers) setUsers(storedUsers);
     }, [])
 
-    // console.log(acctNameRef)
-
-    // useEffect(() => {
-    //     // on click enter on input fields
-    //     // Account Name
-    //     acctNameRef.current.addEventListener('keyup', function(e) {
-    //         if (e.code === 'Enter') {
-    //             accountCreation();
-    //         }
-    //     })
-    // }, [show])
-
     // on add new account, will add to local storage
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(users));
     }, [users])
 
+    // Account number generator
+    const generateAcctNum = () => {
+        let date = new Date();
+        let min = (date.getMinutes()).toString().substr(-2);
+        setAcctNum(Math.floor(Math.random() * 90) + min)
+    }
+
+
     // Function for account creation
     const accountCreation = () => {
+        generateAcctNum();
+
         var acctName = acctNameRef.current.value;
         var initBal = initBalRef.current.value;
         var acctEmail = acctEmailRef.current.value;
         var insecurePword = insecurePwordRef.current.value;
-        setAcctNum(uuidv4())
         setShow(false)
+
+        console.log(acctNum)
+
+        const newUser = {
+            'Account No.': acctNum, 
+            'Account Name': acctName, 
+            'Email': acctEmail, 
+            'Password': insecurePword, 
+            'Balance': initBal
+        }
 
         //add new user to previous set of users using spread operator for previous data 
         setUsers(prevUsers => {
-            return [...prevUsers, {'Account No.': acctNum, 'Account Name': acctName, 'Email': acctEmail, 'Password': insecurePword, 'Balance': initBal}]
+            return [...prevUsers, newUser]
         })
         
         // alert('Account Created Sucessfully!');
@@ -86,6 +92,8 @@ const UserList = () => {
                 </tbody>
             </Table>
 
+            {//Add Account Modal
+            }
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header>
                 <Modal.Title>Create New Account</Modal.Title>
