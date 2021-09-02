@@ -1,24 +1,33 @@
-import React, {useState} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 
-if(localStorage.getItem('dataname') == null) {
-    localStorage.setItem('dataname', '[]');
+if(localStorage.getItem('userList') == null) {
+    localStorage.setItem('userList', '[]');
 }
+
 const UserList = () => {
     const [show, setShow] = useState(false);
     const [acctNum, setAcctNum] = useState(1);
+    const [users, setUsers] = useState([]);
+
+    const acctNameRef = useRef();
+    const initBalRef = useRef();
+    const acctEmailRef = useRef();
+    const insecurePwordRef = useRef();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const accountCreation = () => {
         var table = document.getElementById("userTable");
-        var acctName = document.getElementById("acctName").value;
-        var initBal = document.getElementById("initBal").value;
+        var acctName = acctNameRef.current.value;
+        var initBal = initBalRef.current.value;
+        var acctEmail = acctEmailRef.current.value;
+        var insecurePword = insecurePwordRef.current.value;
         var row = table.insertRow(-1);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
@@ -29,13 +38,14 @@ const UserList = () => {
         cell3.innerHTML = initBal;
         setShow(false)
         
-        const oldata = JSON.parse(localStorage.getItem('dataname'));
-       
-        oldata.push(acctName);
-        localStorage.setItem('dataname', JSON.stringify(oldata));
+        const oldData = JSON.parse(localStorage.getItem('userList'));
+
+        oldData.push({'Account No.': acctNum, 'Account Name': acctName, 'Email': acctEmail, 'Password': insecurePword, 'Balance': initBal});
+        localStorage.setItem('userList', JSON.stringify(oldData));
         alert('Account Created Sucessfully!');
-      
     }
+    
+
     return (
         <div>
             <Table responsive className ="container" id="userTable">
@@ -60,19 +70,19 @@ const UserList = () => {
                     <Form>
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" id="acctName"/>
+                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" />
+                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="********" />
+                            <Form.Control type="password" placeholder="********" ref={insecurePwordRef}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Initial Balance</Form.Label>
-                            <Form.Control type="number" placeholder="0" id="initBal"/>
+                            <Form.Control type="number" placeholder="0" ref={initBalRef}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
