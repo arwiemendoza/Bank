@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import User from './User'
-import { v4 as uuidv4 } from 'uuid';
 
 const LOCAL_STORAGE_KEY = 'userList';
 
@@ -24,7 +23,10 @@ const UserList = () => {
 
     // functions for modal
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true)
+        generateAcctNum()
+    };
 
     // on mount, will load existing users
     useEffect(() => {
@@ -47,15 +49,12 @@ const UserList = () => {
 
     // Function for account creation
     const accountCreation = () => {
-        generateAcctNum();
 
         var acctName = acctNameRef.current.value;
         var initBal = initBalRef.current.value;
         var acctEmail = acctEmailRef.current.value;
         var insecurePword = insecurePwordRef.current.value;
         setShow(false)
-
-        console.log(acctNum)
 
         const newUser = {
             'Account No.': acctNum, 
