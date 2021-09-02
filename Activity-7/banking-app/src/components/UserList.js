@@ -3,15 +3,14 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import User from './User'
+import { v4 as uuidv4 } from 'uuid';
 
-
-if(localStorage.getItem('userList') == null) {
-    localStorage.setItem('userList', '[]');
-}
+const LOCAL_STORAGE_KEY = 'userList';
 
 const UserList = () => {
     const [show, setShow] = useState(false);
-    const [acctNum, setAcctNum] = useState(1);
+    const [acctNum, setAcctNum] = useState(uuidv4());
     const [users, setUsers] = useState([]);
 
     const acctNameRef = useRef();
@@ -22,32 +21,36 @@ const UserList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    useEffect(() => {
+        const storedUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        if (storedUsers) setUsers(storedUsers);
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(users));
+    }, [users])
+
     const accountCreation = () => {
-        var table = document.getElementById("userTable");
         var acctName = acctNameRef.current.value;
         var initBal = initBalRef.current.value;
         var acctEmail = acctEmailRef.current.value;
         var insecurePword = insecurePwordRef.current.value;
-        var row = table.insertRow(-1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        setAcctNum(acctNum + 1)
-        cell1.innerHTML = acctNum;
-        cell2.innerHTML = acctName;
-        cell3.innerHTML = initBal;
+        setAcctNum(uuidv4())
         setShow(false)
-        
-        const oldData = JSON.parse(localStorage.getItem('userList'));
 
-        oldData.push({'Account No.': acctNum, 'Account Name': acctName, 'Email': acctEmail, 'Password': insecurePword, 'Balance': initBal});
-        localStorage.setItem('userList', JSON.stringify(oldData));
-        alert('Account Created Sucessfully!');
+        setUsers(prevUsers => {
+            return [...prevUsers, {'Account No.': acctNum, 'Account Name': acctName, 'Email': acctEmail, 'Password': insecurePword, 'Balance': initBal}]
+        })
+        
+        // alert('Account Created Sucessfully!');
     }
     
 
     return (
         <div>
+
+            <Button variant="warning"  onClick={handleShow}>Add Account Holder</Button>
+
             <Table responsive className ="container" id="userTable">
                 <thead>
                     <tr>
@@ -56,11 +59,10 @@ const UserList = () => {
                     <th>Balance</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                {users.map(user => {
+                    return <User key={user['Account No.']} user = {user}/>
+                })}
             </Table>
-
-            <Button variant="warning"  onClick={handleShow}>Add Account Holder</Button>{' '}
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header>
