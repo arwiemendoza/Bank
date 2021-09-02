@@ -10,26 +10,47 @@ const LOCAL_STORAGE_KEY = 'userList';
 
 const UserList = () => {
     const [show, setShow] = useState(false);
+    // for now use uuid for unique acct numbers - will change later since it is too long and also has letters
     const [acctNum, setAcctNum] = useState(uuidv4());
     const [users, setUsers] = useState([]);
 
+    const [form, setForm] = useState({});
+    const [errors, setErrors] = useState({});
+
+    // useRef to reference input fields
     const acctNameRef = useRef();
     const initBalRef = useRef();
     const acctEmailRef = useRef();
     const insecurePwordRef = useRef();
 
+    // functions for modal
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // on mount, will load existing users
     useEffect(() => {
         const storedUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
         if (storedUsers) setUsers(storedUsers);
     }, [])
 
+    // console.log(acctNameRef)
+
+    // useEffect(() => {
+    //     // on click enter on input fields
+    //     // Account Name
+    //     acctNameRef.current.addEventListener('keyup', function(e) {
+    //         if (e.code === 'Enter') {
+    //             accountCreation();
+    //         }
+    //     })
+    // }, [show])
+
+    // on add new account, will add to local storage
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(users));
     }, [users])
 
+    // Function for account creation
     const accountCreation = () => {
         var acctName = acctNameRef.current.value;
         var initBal = initBalRef.current.value;
@@ -38,17 +59,16 @@ const UserList = () => {
         setAcctNum(uuidv4())
         setShow(false)
 
+        //add new user to previous set of users using spread operator for previous data 
         setUsers(prevUsers => {
             return [...prevUsers, {'Account No.': acctNum, 'Account Name': acctName, 'Email': acctEmail, 'Password': insecurePword, 'Balance': initBal}]
         })
         
         // alert('Account Created Sucessfully!');
     }
-    
 
     return (
         <div>
-
             <Button variant="warning"  onClick={handleShow}>Add Account Holder</Button>
 
             <Table responsive className ="container" id="userTable">
@@ -59,9 +79,11 @@ const UserList = () => {
                     <th>Balance</th>
                     </tr>
                 </thead>
-                {users.map(user => {
-                    return <User key={user['Account No.']} user = {user}/>
-                })}
+                <tbody>
+                    {users.map(user => {
+                        return <User key={user['Account No.']} user = {user}/>
+                    })}
+                </tbody>
             </Table>
 
             <Modal show={show} onHide={handleClose}>
