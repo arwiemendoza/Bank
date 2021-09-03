@@ -11,8 +11,11 @@ const UserList = () => {
     const [show, setShow] = useState(false);
     // for now use uuid for unique acct numbers - will change later since it is too long and also has letters
     const [acctNum, setAcctNum] = useState('');
+    const [bal, setBal] = useState(0);
+    const [acctName, setAcctName] = useState('');
+    const [acctEmail, setAcctEmail] = useState('');
+    const [pword, setPword] = useState('');
 
-    //alin ang hardcoded??
     const [users, setUsers] = useState([]);
 
     // useRef to reference input fields
@@ -46,22 +49,24 @@ const UserList = () => {
         setAcctNum(Math.floor(Math.random() * 90) + min)
     }
 
-
     // Function for account creation
-    const accountCreation = () => {
-
-        var acctName = acctNameRef.current.value;
-        var initBal = initBalRef.current.value;
-        var acctEmail = acctEmailRef.current.value;
-        var insecurePword = insecurePwordRef.current.value;
+    const acctCreation = () => {
+        // var acctNameInput = acctNameRef.current.value;
+        // var initBal = initBalRef.current.value;
+        // var acctEmailInput = acctEmailRef.current.value;
+        // var insecurePword = insecurePwordRef.current.value;
+        // setAcctName(acctNameInput);
+        // setBal(initBal);
+        // setAcctEmail(acctEmailInput);
+        // setPword(insecurePword);
         setShow(false)
 
         const newUser = {
             'Account No.': acctNum, 
             'Account Name': acctName, 
             'Email': acctEmail, 
-            'Password': insecurePword, 
-            'Balance': initBal
+            'Password': pword, 
+            'Balance': bal
         }
 
         //add new user to previous set of users using spread operator for previous data 
@@ -91,8 +96,7 @@ const UserList = () => {
                 </tbody>
             </Table>
 
-            {//Add Account Modal
-            }
+            {/*Add Account Modal*/}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header>
                 <Modal.Title>Create New Account</Modal.Title>
@@ -101,19 +105,19 @@ const UserList = () => {
                     <Form>
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef}/>
+                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} onChange={(e) => setAcctName(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} />
+                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="********" ref={insecurePwordRef}/>
+                            <Form.Control type="password" placeholder="********" ref={insecurePwordRef}  onChange={(e) => setPword(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Initial Balance</Form.Label>
-                            <Form.Control type="number" placeholder="0" ref={initBalRef}/>
+                            <Form.Control type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -121,7 +125,7 @@ const UserList = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={accountCreation}>
+                <Button variant="primary" onClick={acctCreation}>
                     Create Account
                 </Button>
                 </Modal.Footer>
