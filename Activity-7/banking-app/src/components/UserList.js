@@ -7,16 +7,6 @@ import User from './User'
 
 const LOCAL_STORAGE_KEY = 'userList';
 
-//okay na lipat ka nalang uli branch to test-branch
-
-// like pano yung command? git checkout test-branch?
- // yes kaso di ko sure if nagwowork with desktop github?
- //dito pweede 
- //try ko ipush to
- //tama ba ginawa ko 
- //ye 
-//yan? 
-// wala ka pa binago save muna tong userlist
 const UserList = () => {
     const [show, setShow] = useState(false);
     // for now use uuid for unique acct numbers - will change later since it is too long and also has letters
