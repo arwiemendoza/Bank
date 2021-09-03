@@ -57,14 +57,6 @@ const UserList = () => {
 
     // Function for account creation
     const createAcct = () => {
-        // var acctNameInput = acctNameRef.current.value;
-        // var initBal = initBalRef.current.value;
-        // var acctEmailInput = acctEmailRef.current.value;
-        // var insecurePword = insecurePwordRef.current.value;
-        // setAcctName(acctNameInput);
-        // setBal(initBal);
-        // setAcctEmail(acctEmailInput);
-        // setPword(insecurePword);
         setShow(false)
 
         const newAcct = {
@@ -91,19 +83,38 @@ const UserList = () => {
     const withdrawMoney = () => {
         const acct = accts.find(user => {return user["Account No."] === acctNum})
         if(acct) {
-            var newBal = acct["Balance"] - withdrawAmt;
-            setAccts([...accts], acct["Balance"] = newBal)
+            if(acct["Balance"]>= withdrawAmt) {
+                var newBal = acct["Balance"] - withdrawAmt;
+                setAccts([...accts], acct["Balance"] = newBal)
+            }
+            else {
+                alert('Insufficient Funds')
+            }
         }
         else {
             alert('Account does not exist')
         }
     }
 
+    // const name_event = document.getElementById('name_input');
+    // acctNameRef.current.addEventListener('keyup', (e)=> {
+    //     if(e.key === "Enter"){
+    //         createAcct();
+    //         e.currentTarget.value=" ";
+    //     }
+    // })    
+
+    const handleRegKeypress = (e) => {
+        //it triggers by pressing the enter key
+        if (e.code === 'Enter') {
+            createAcct();
+        }
+    };
+
+
     return (
         <div>
             <Button variant="primary"  onClick={handleShow}>Add Account Holder</Button>
-
-            <Button variant="warning"  onClick={createAcct}>Create Dummy Account</Button>
 
             <Table responsive className ="container" id="userTable">
                 <thead>
@@ -126,22 +137,22 @@ const UserList = () => {
                 <Modal.Title>Create New Account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form id="register">
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} onChange={(e) => setAcctName(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)}/>
+                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="********" ref={insecurePwordRef}  onChange={(e) => setPword(e.target.value)}/>
+                            <Form.Control type="password" placeholder="********" ref={insecurePwordRef}  onChange={(e) => setPword(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Initial Balance</Form.Label>
-                            <Form.Control type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)}/>
+                            <Form.Control type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -149,7 +160,7 @@ const UserList = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={createAcct}>
+                <Button type="submit" variant="primary" onClick={createAcct}>
                     Create Account
                 </Button>
                 </Modal.Footer>
