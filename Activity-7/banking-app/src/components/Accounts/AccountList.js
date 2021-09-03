@@ -3,26 +3,26 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import User from './User'
+import Account from './Account'
+import Withdraw from '../Transactions/Withdraw';
 
 const LOCAL_STORAGE_KEY = 'userList';
 
 const UserList = () => {
+    //modal display states
     const [show, setShow] = useState(false);
-    // for now use uuid for unique acct numbers - will change later since it is too long and also has letters
+
+    //account data states
+    const [accts, setAccts] = useState([]);
     const [acctNum, setAcctNum] = useState('');
     const [bal, setBal] = useState(0);
     const [acctName, setAcctName] = useState('');
     const [acctEmail, setAcctEmail] = useState('');
     const [pword, setPword] = useState('');
-
-    const [users, setUsers] = useState([]);
-
-    // useRef to reference input fields
-    const acctNameRef = useRef();
-    const initBalRef = useRef();
-    const acctEmailRef = useRef();
-    const insecurePwordRef = useRef();
+    //transaction states
+    const [withdrawAmt, setWithdrawAmt] = useState(0);
+    const [depositAmt, setDepositAmt] = useState(0);
+    const [transferAmt, setTransferAmt] = useState(0);
 
     // functions for modal
     const handleClose = () => setShow(false);
@@ -31,16 +31,22 @@ const UserList = () => {
         generateAcctNum()
     };
 
+    // input reference
+    const acctNameRef = useRef();
+    const acctEmailRef = useRef();
+    const insecurePwordRef = useRef();
+    const initBalRef = useRef();
+
     // on mount, will load existing users
     useEffect(() => {
         const storedUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        if (storedUsers) setUsers(storedUsers);
+        if (storedUsers) setAccts(storedUsers);
     }, [])
 
     // on add new account, will add to local storage
     useEffect(() => {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(users));
-    }, [users])
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(accts));
+    }, [accts])
 
     // Account number generator
     const generateAcctNum = () => {
@@ -50,7 +56,7 @@ const UserList = () => {
     }
 
     // Function for account creation
-    const acctCreation = () => {
+    const createAcct = () => {
         // var acctNameInput = acctNameRef.current.value;
         // var initBal = initBalRef.current.value;
         // var acctEmailInput = acctEmailRef.current.value;
@@ -61,7 +67,7 @@ const UserList = () => {
         // setPword(insecurePword);
         setShow(false)
 
-        const newUser = {
+        const newAcct = {
             'Account No.': acctNum, 
             'Account Name': acctName, 
             'Email': acctEmail, 
@@ -70,16 +76,34 @@ const UserList = () => {
         }
 
         //add new user to previous set of users using spread operator for previous data 
-        setUsers(prevUsers => {
-            return [...prevUsers, newUser]
+        setAccts(prevAccts => {
+            return [...prevAccts, newAcct]
         })
         
+        setAcctName('');
+        setBal('');
+        setAcctEmail('');
+        setPword('');
         // alert('Account Created Sucessfully!');
+    }
+
+    //Function to withdraw
+    const withdrawMoney = () => {
+        const acct = accts.find(user => {return user["Account No."] === acctNum})
+        if(acct) {
+            var newBal = acct["Balance"] - withdrawAmt;
+            setAccts([...accts], acct["Balance"] = newBal)
+        }
+        else {
+            alert('Account does not exist')
+        }
     }
 
     return (
         <div>
-            <Button variant="warning"  onClick={handleShow}>Add Account Holder</Button>
+            <Button variant="primary"  onClick={handleShow}>Add Account Holder</Button>
+
+            <Button variant="warning"  onClick={createAcct}>Create Dummy Account</Button>
 
             <Table responsive className ="container" id="userTable">
                 <thead>
@@ -90,8 +114,8 @@ const UserList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(user => {
-                        return <User key={user['Account No.']} user = {user}/>
+                    {accts.map(user => {
+                        return <Account key={user['Account No.']} user = {user}/>
                     })}
                 </tbody>
             </Table>
@@ -125,11 +149,27 @@ const UserList = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={acctCreation}>
+                <Button variant="primary" onClick={createAcct}>
                     Create Account
                 </Button>
                 </Modal.Footer>
             </Modal>
+
+            <div>
+                <Form>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Account No.</Form.Label>
+                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setAcctNum(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Amount</Form.Label>
+                        <Form.Control type="number" placeholder="0" onChange={(e) => setWithdrawAmt(e.target.value)}/>
+                    </Form.Group>
+                </Form>
+                <Button variant="primary" onClick={withdrawMoney}>
+                    Withdraw
+                </Button>
+            </div>
         </div>
     )
 }
