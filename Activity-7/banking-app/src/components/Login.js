@@ -1,8 +1,6 @@
 import React from 'react'
 import { Form, Button, Dropdown } from 'react-bootstrap';
 
-//Not yet, no need for login yet
-
 const Login = () => {
     return (
         <div className="login-parent">

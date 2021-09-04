@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Account from './Account'
-import Login from '../Login'
 
 const LOCAL_STORAGE_KEY = 'userList';
 
@@ -20,9 +19,11 @@ const AccountList = () => {
     const [acctEmail, setAcctEmail] = useState('');
     const [pword, setPword] = useState('');
     //transaction states
+    const [fromAcctNum, setFromAcctNum] = useState('');
+    const [toAcctNum, setToAcctNum] = useState('');
     const [withdrawAmt, setWithdrawAmt] = useState(0);
-    // const [depositAmt, setDepositAmt] = useState(0);
-    // const [transferAmt, setTransferAmt] = useState(0);
+    const [depositAmt, setDepositAmt] = useState(0);
+    const [transferAmt, setTransferAmt] = useState(0);
 
     // functions for modal
     const handleClose = () => setShow(false);
@@ -81,7 +82,7 @@ const AccountList = () => {
 
     //Function to withdraw
     const withdrawMoney = () => {
-        const acct = accts.find(user => {return user["Account No."] === acctNum})
+        const acct = accts.find(user => {return user["Account No."] === fromAcctNum})
         if(acct) {
             if(acct["Balance"]>= withdrawAmt) {
                 var newBal = acct["Balance"] - withdrawAmt;
@@ -96,6 +97,36 @@ const AccountList = () => {
         }
     }
 
+    //Function to deposit
+    const depositMoney = () => {
+        const acct = accts.find(user => {return user["Account No."] === fromAcctNum})
+        if(acct) {
+                var newBal = acct["Balance"] - (-depositAmt);
+                setAccts([...accts], acct["Balance"] = newBal)
+        }
+        else {
+            alert('Account does not exist')
+        }
+    }
+
+    //Function to transfer
+    const transferMoney = () => {
+        const fromAcct = accts.find(user => {return user["Account No."] === fromAcctNum})
+        const toAcct = accts.find(user => {return user["Account No."] === toAcctNum})
+        if(fromAcct && toAcct) {
+            var newBalFromAcct = fromAcct["Balance"] - transferAmt;
+            setAccts([...accts], fromAcct["Balance"] = newBalFromAcct)
+            var newBalToAcct = toAcct["Balance"] - (-transferAmt);
+            setAccts([...accts], toAcct["Balance"] = newBalToAcct)
+        }
+        else if (!fromAcct) {
+            alert('Sending Account does not exist')
+        }
+        else {
+            alert('Receiving Account does not exist')
+        }
+    }
+
     const handleRegKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
@@ -106,7 +137,6 @@ const AccountList = () => {
 
     return (
         <div>
-            <Login />
             <Button variant="primary"  onClick={handleShow}>Add Account Holder</Button>
 
             <Table responsive className ="container" id="userTable">
@@ -158,13 +188,13 @@ const AccountList = () => {
                 </Button>
                 </Modal.Footer>
             </Modal>
-            
+
             {/* Withdraw Form */}
             <div>
                 <Form>
                     <Form.Group className="mb-3">
                         <Form.Label>Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setAcctNum(e.target.value)}/>
+                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Amount</Form.Label>
@@ -173,6 +203,44 @@ const AccountList = () => {
                 </Form>
                 <Button variant="primary" onClick={withdrawMoney}>
                     Withdraw
+                </Button>
+            </div>
+
+            {/* Deposit Form */}
+            <div>
+                <Form>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Account No.</Form.Label>
+                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Amount</Form.Label>
+                        <Form.Control type="number" placeholder="0" onChange={(e) => setDepositAmt(e.target.value)}/>
+                    </Form.Group>
+                </Form>
+                <Button variant="primary" onClick={depositMoney}>
+                    Deposit
+                </Button>
+            </div>
+
+            {/* Transfer Form */}
+            <div>
+                <Form>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Sender Account No.</Form.Label>
+                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Receiver Account No.</Form.Label>
+                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setToAcctNum(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Amount</Form.Label>
+                        <Form.Control type="number" placeholder="0" onChange={(e) => setTransferAmt(e.target.value)}/>
+                    </Form.Group>
+                </Form>
+                <Button variant="primary" onClick={transferMoney}>
+                    Transfer
                 </Button>
             </div>
         </div>
