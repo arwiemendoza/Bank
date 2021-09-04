@@ -4,11 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Account from './Account'
-import Withdraw from '../Transactions/Withdraw';
 
 const LOCAL_STORAGE_KEY = 'userList';
 
-const UserList = () => {
+const AccountList = () => {
     //modal display states
     const [show, setShow] = useState(false);
 
@@ -21,8 +20,8 @@ const UserList = () => {
     const [pword, setPword] = useState('');
     //transaction states
     const [withdrawAmt, setWithdrawAmt] = useState(0);
-    const [depositAmt, setDepositAmt] = useState(0);
-    const [transferAmt, setTransferAmt] = useState(0);
+    // const [depositAmt, setDepositAmt] = useState(0);
+    // const [transferAmt, setTransferAmt] = useState(0);
 
     // functions for modal
     const handleClose = () => setShow(false);
@@ -96,14 +95,6 @@ const UserList = () => {
         }
     }
 
-    // const name_event = document.getElementById('name_input');
-    // acctNameRef.current.addEventListener('keyup', (e)=> {
-    //     if(e.key === "Enter"){
-    //         createAcct();
-    //         e.currentTarget.value=" ";
-    //     }
-    // })    
-
     const handleRegKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
@@ -166,6 +157,7 @@ const UserList = () => {
                 </Modal.Footer>
             </Modal>
 
+            {/* Withdraw Form */}
             <div>
                 <Form>
                     <Form.Group className="mb-3">
@@ -185,4 +177,4 @@ const UserList = () => {
     )
 }
 
-export default UserList
+export default AccountList

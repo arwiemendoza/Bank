@@ -1,11 +1,20 @@
 // import React, {useReducer} from 'react';
 import './App.css';
-import UserList from './components/Accounts/AccountList'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Navigation, Footer, Home, Contact, AccountList } from "./components";
 
 function App() {
   return (
     <div>
-      <UserList />
+      <Router>
+        <Navigation />
+        <Switch>
+          <Route path="/" exact component={() => <Home />} />
+          <Route path="/accounts" exact component={() => <AccountList />} />
+          <Route path="/contact" exact component={() => <Contact />} />
+        </Switch>
+        <Footer />
+      </Router>
     </div>
   );
 }
