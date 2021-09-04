@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Account from './Account'
 import Withdraw from '../Transactions/Withdraw';
+import Login from '../Login'
 
 const LOCAL_STORAGE_KEY = 'userList';
 
@@ -96,14 +97,6 @@ const UserList = () => {
         }
     }
 
-    // const name_event = document.getElementById('name_input');
-    // acctNameRef.current.addEventListener('keyup', (e)=> {
-    //     if(e.key === "Enter"){
-    //         createAcct();
-    //         e.currentTarget.value=" ";
-    //     }
-    // })    
-
     const handleRegKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
@@ -114,6 +107,7 @@ const UserList = () => {
 
     return (
         <div>
+            <Login />
             <Button variant="primary"  onClick={handleShow}>Add Account Holder</Button>
 
             <Table responsive className ="container" id="userTable">

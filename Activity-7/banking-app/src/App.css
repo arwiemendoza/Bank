@@ -6,3 +6,17 @@ table, th, td{
   border: 1px solid black;
 }
 
+svg{
+  width: 20%;
+}
+
+.login-parent{
+  display: flex;
+  justify-content: center;
+}
+
+.login-sub{
+  width:50vw;
+  display: flex;
+  justify-content: space-evenly;
+}
