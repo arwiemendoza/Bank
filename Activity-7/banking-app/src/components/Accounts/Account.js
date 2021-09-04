@@ -1,13 +1,13 @@
 import React from 'react'
 
-const User = ({user}) => {
+const Account = ({acct}) => {
     return (
                 <tr>
-                    <td>{user['Account No.']}</td>
-                    <td>{user['Account Name']}</td>
-                    <td>{user['Balance']}</td>
+                    <td>{acct['Account No.']}</td>
+                    <td>{acct['Account Name']}</td>
+                    <td>{acct['Balance']}</td>
                 </tr>
     )
 }
 
-export default User
+export default Account

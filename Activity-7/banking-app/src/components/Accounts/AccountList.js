@@ -4,8 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Account from './Account'
+import Transaction from '../Transactions/Transaction'
+import { v4 as uuidv4 } from 'uuid';
 
-const LOCAL_STORAGE_KEY = 'userList';
+const LOCAL_STORAGE_KEY_1 = 'userList';
+const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
 const AccountList = () => {
     //modal display states
@@ -24,6 +27,7 @@ const AccountList = () => {
     const [withdrawAmt, setWithdrawAmt] = useState(0);
     const [depositAmt, setDepositAmt] = useState(0);
     const [transferAmt, setTransferAmt] = useState(0);
+    const [transactionHistory, setTransactionHistory] = useState([]);
 
     // functions for modal
     const handleClose = () => setShow(false);
@@ -38,16 +42,23 @@ const AccountList = () => {
     const insecurePwordRef = useRef();
     const initBalRef = useRef();
 
-    // on mount, will load existing users
+    // on mount, will load existing accounts and transactions
     useEffect(() => {
-        const storedUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        if (storedUsers) setAccts(storedUsers);
+        const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
+        if (storedAccts) setAccts(storedAccts);
+        const storedTransactions = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_2));
+        if (storedTransactions) setTransactionHistory(storedTransactions);
     }, [])
 
     // on add new account, will add to local storage
     useEffect(() => {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(accts));
+        localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
     }, [accts])
+
+    // on new transactions, will add to local storage
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_KEY_2, JSON.stringify(transactionHistory));
+    }, [transactionHistory])
 
     // Account number generator
     const generateAcctNum = () => {
@@ -56,8 +67,45 @@ const AccountList = () => {
         setAcctNum(Math.floor(Math.random() * 90) + min)
     }
 
+    // Date and Time generator
+    const generateDate = () => {
+        var date = '';
+        //Date
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        var day = currentDate.getDate();
+        var month = currentDate.getMonth();
+        var monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        // Time
+        var currentTime = new Date();
+        var h = currentTime.getHours();
+        var m = currentTime.getMinutes();
+        var partOfDay;
+        if (h < 12) {
+            partOfDay = "AM";
+        }
+        else {
+            partOfDay = "PM";
+        }
+        if (h > 12) {
+            h = h - 12;
+        }
+        if (h === 24) {
+            h = 12;
+        }
+        if (m < 10) {
+            m = "0" + m;
+        }
+
+        // Add to variable
+        date = `${monthArray[month]} ${day} ${year} ${h}:${m} ${partOfDay}`;
+
+        return date;
+    }
+
     // Function for account creation
-    const createAcct = () => {
+    const handleCreateAcct = () => {
         setShow(false)
 
         const newAcct = {
@@ -80,13 +128,29 @@ const AccountList = () => {
         // alert('Account Created Sucessfully!');
     }
 
+    class TransactionClass {
+        constructor(transactionId, transactionDate, transactionFromAcctNum, transactionToAcctNum, transactionType, transactionAmt) {
+            this.transactionId = transactionId;
+            this.transactionDate = transactionDate;
+            this.transactionFromAcctNum = transactionFromAcctNum;
+            this.transactionToAcctNum = transactionToAcctNum;
+            this.transactionType = transactionType;
+            this.transactionAmt = transactionAmt;
+        }
+    }
+
     //Function to withdraw
-    const withdrawMoney = () => {
+    const handleWithdraw = () => {
         const acct = accts.find(user => {return user["Account No."] === fromAcctNum})
         if(acct) {
             if(acct["Balance"]>= withdrawAmt) {
                 var newBal = acct["Balance"] - withdrawAmt;
-                setAccts([...accts], acct["Balance"] = newBal)
+                setAccts([...accts], acct["Balance"] = newBal);
+                var date = generateDate();
+                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Withdraw", withdrawAmt);
+                setTransactionHistory(prevTransactions => {
+                    return [...prevTransactions, newTransaction]
+                })
             }
             else {
                 alert('Insufficient Funds')
@@ -98,11 +162,16 @@ const AccountList = () => {
     }
 
     //Function to deposit
-    const depositMoney = () => {
+    const handleDeposit = () => {
         const acct = accts.find(user => {return user["Account No."] === fromAcctNum})
         if(acct) {
                 var newBal = acct["Balance"] - (-depositAmt);
                 setAccts([...accts], acct["Balance"] = newBal)
+                var date = generateDate();
+                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Deposit", depositAmt);
+                setTransactionHistory(prevTransactions => {
+                    return [...prevTransactions, newTransaction]
+                })
         }
         else {
             alert('Account does not exist')
@@ -110,14 +179,24 @@ const AccountList = () => {
     }
 
     //Function to transfer
-    const transferMoney = () => {
+    const handleTransfer = () => {
         const fromAcct = accts.find(user => {return user["Account No."] === fromAcctNum})
         const toAcct = accts.find(user => {return user["Account No."] === toAcctNum})
         if(fromAcct && toAcct) {
-            var newBalFromAcct = fromAcct["Balance"] - transferAmt;
-            setAccts([...accts], fromAcct["Balance"] = newBalFromAcct)
-            var newBalToAcct = toAcct["Balance"] - (-transferAmt);
-            setAccts([...accts], toAcct["Balance"] = newBalToAcct)
+            if(fromAcct["Balance"]>= transferAmt) {
+                var newBalFromAcct = fromAcct["Balance"] - transferAmt;
+                setAccts([...accts], fromAcct["Balance"] = newBalFromAcct)
+                var newBalToAcct = toAcct["Balance"] - (-transferAmt);
+                setAccts([...accts], toAcct["Balance"] = newBalToAcct)
+                var date = generateDate();
+                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, toAcctNum, "Transfer", transferAmt);
+                setTransactionHistory(prevTransactions => {
+                    return [...prevTransactions, newTransaction]
+                })
+            }
+            else {
+                alert('Insufficient Funds')
+            }
         }
         else if (!fromAcct) {
             alert('Sending Account does not exist')
@@ -130,15 +209,17 @@ const AccountList = () => {
     const handleRegKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
-            createAcct();
+            handleCreateAcct();
         }
     };
 
 
     return (
         <div>
+            {/* Add Account Holder Button */}
             <Button variant="primary"  onClick={handleShow}>Add Account Holder</Button>
 
+            {/* Accounts List Table */}
             <Table responsive className ="container" id="userTable">
                 <thead>
                     <tr>
@@ -148,8 +229,8 @@ const AccountList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {accts.map(user => {
-                        return <Account key={user['Account No.']} user = {user}/>
+                    {accts.map(acct => {
+                        return <Account key={acct['Account No.']} acct = {acct}/>
                     })}
                 </tbody>
             </Table>
@@ -183,7 +264,7 @@ const AccountList = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button type="submit" variant="primary" onClick={createAcct}>
+                <Button type="submit" variant="primary" onClick={handleCreateAcct}>
                     Create Account
                 </Button>
                 </Modal.Footer>
@@ -201,7 +282,7 @@ const AccountList = () => {
                         <Form.Control type="number" placeholder="0" onChange={(e) => setWithdrawAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
-                <Button variant="primary" onClick={withdrawMoney}>
+                <Button variant="primary" onClick={handleWithdraw}>
                     Withdraw
                 </Button>
             </div>
@@ -218,7 +299,7 @@ const AccountList = () => {
                         <Form.Control type="number" placeholder="0" onChange={(e) => setDepositAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
-                <Button variant="primary" onClick={depositMoney}>
+                <Button variant="primary" onClick={handleDeposit}>
                     Deposit
                 </Button>
             </div>
@@ -239,10 +320,28 @@ const AccountList = () => {
                         <Form.Control type="number" placeholder="0" onChange={(e) => setTransferAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
-                <Button variant="primary" onClick={transferMoney}>
+                <Button variant="primary" onClick={handleTransfer}>
                     Transfer
                 </Button>
             </div>
+
+            {/* Transactions Table */}
+            <Table responsive className ="container" id="transactionTable">
+                <thead>
+                    <tr>
+                    <th>Transaction Date</th>
+                    <th>Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {transactionHistory.map(transaction => {
+                        return <Transaction key={transaction.transactionId} transaction = {transaction}/>
+                    })}
+                </tbody>
+            </Table>
         </div>
     )
 }
