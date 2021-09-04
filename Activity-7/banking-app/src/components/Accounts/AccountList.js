@@ -4,12 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Account from './Account'
-import Withdraw from '../Transactions/Withdraw';
 import Login from '../Login'
 
 const LOCAL_STORAGE_KEY = 'userList';
 
-const UserList = () => {
+const AccountList = () => {
     //modal display states
     const [show, setShow] = useState(false);
 
@@ -22,8 +21,8 @@ const UserList = () => {
     const [pword, setPword] = useState('');
     //transaction states
     const [withdrawAmt, setWithdrawAmt] = useState(0);
-    const [depositAmt, setDepositAmt] = useState(0);
-    const [transferAmt, setTransferAmt] = useState(0);
+    // const [depositAmt, setDepositAmt] = useState(0);
+    // const [transferAmt, setTransferAmt] = useState(0);
 
     // functions for modal
     const handleClose = () => setShow(false);
@@ -159,6 +158,7 @@ const UserList = () => {
                 </Button>
                 </Modal.Footer>
             </Modal>
+            
             {/* Withdraw Form */}
             <div>
                 <Form>
@@ -179,4 +179,4 @@ const UserList = () => {
     )
 }
 
-export default UserList
+export default AccountList
