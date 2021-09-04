@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Account from './Account'
-import Login from '../Login'
+import '../../css/Account.css'
 
 const LOCAL_STORAGE_KEY = 'userList';
 
@@ -106,10 +106,9 @@ const AccountList = () => {
 
     return (
         <div>
-            <Login />
             <Button variant="primary"  onClick={handleShow}>Add Account Holder</Button>
 
-            <Table responsive className ="container" id="userTable">
+            <Table responsive id="userTable">
                 <thead>
                     <tr>
                     <th>Account No.</th>
@@ -130,7 +129,7 @@ const AccountList = () => {
                 <Modal.Title>Create New Account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form id="register">
+                    <Form id="register2">
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
                             <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>

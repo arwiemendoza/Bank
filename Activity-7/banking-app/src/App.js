@@ -7,8 +7,9 @@ function App() {
   return (
     <div>
       <Router>
+        <Navigation/>
         <Switch>
-          <Route path="/" exact component={() => <Login />} />
+          <Route path="/Login" exact component={() => <Login />} />
           <Route path="/accounts" exact component={() => <AccountList />} />
           <Route path="/contact" exact component={() => <Contact />} />
         </Switch>
