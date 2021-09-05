@@ -21,6 +21,7 @@ const AccountList = () => {
     const [acctName, setAcctName] = useState('');
     const [acctEmail, setAcctEmail] = useState('');
     const [pword, setPword] = useState('');
+    const [currency, setCurrency] = useState('PHP');
     //transaction states
     const [fromAcctNum, setFromAcctNum] = useState('');
     const [toAcctNum, setToAcctNum] = useState('');
@@ -113,7 +114,8 @@ const AccountList = () => {
             'Account Name': acctName, 
             'Email': acctEmail, 
             'Password': pword, 
-            'Balance': bal
+            'Balance': bal,
+            'Currency': currency
         }
 
         //add new user to previous set of users using spread operator for previous data 
@@ -125,17 +127,17 @@ const AccountList = () => {
         setBal('');
         setAcctEmail('');
         setPword('');
-        // alert('Account Created Sucessfully!');
     }
 
     class TransactionClass {
-        constructor(transactionId, transactionDate, transactionFromAcctNum, transactionToAcctNum, transactionType, transactionAmt) {
+        constructor(transactionId, transactionDate, transactionFromAcctNum, transactionToAcctNum, transactionType, transactionAmt, transactionCurrency) {
             this.transactionId = transactionId;
             this.transactionDate = transactionDate;
             this.transactionFromAcctNum = transactionFromAcctNum;
             this.transactionToAcctNum = transactionToAcctNum;
             this.transactionType = transactionType;
             this.transactionAmt = transactionAmt;
+            this.transactionCurrency = transactionCurrency
         }
     }
 
@@ -147,7 +149,7 @@ const AccountList = () => {
                 var newBal = acct["Balance"] - withdrawAmt;
                 setAccts([...accts], acct["Balance"] = newBal);
                 var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Withdraw", withdrawAmt);
+                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Withdraw", withdrawAmt, currency);
                 setTransactionHistory(prevTransactions => {
                     return [...prevTransactions, newTransaction]
                 })
@@ -168,7 +170,7 @@ const AccountList = () => {
                 var newBal = acct["Balance"] - (-depositAmt);
                 setAccts([...accts], acct["Balance"] = newBal)
                 var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Deposit", depositAmt);
+                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Deposit", depositAmt, currency);
                 setTransactionHistory(prevTransactions => {
                     return [...prevTransactions, newTransaction]
                 })
@@ -189,7 +191,7 @@ const AccountList = () => {
                 var newBalToAcct = toAcct["Balance"] - (-transferAmt);
                 setAccts([...accts], toAcct["Balance"] = newBalToAcct)
                 var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, toAcctNum, "Transfer", transferAmt);
+                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, toAcctNum, "Transfer", transferAmt, currency);
                 setTransactionHistory(prevTransactions => {
                     return [...prevTransactions, newTransaction]
                 })
