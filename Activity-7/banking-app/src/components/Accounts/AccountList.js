@@ -1,12 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react'
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 import Account from './Account'
 import { v4 as uuidv4 } from 'uuid';
 import '../../css/Account.css'
-import Navigation from '../Navigation'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
@@ -52,7 +51,7 @@ const AccountList = (props) => {
         if (storedTransactions) setTransactionHistory(storedTransactions);
     }, [])
 
-    // on add new account, will add to local storage
+    // on modify account, will add to local storage
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
     }, [accts])
@@ -142,73 +141,6 @@ const AccountList = (props) => {
         }
     }
 
-    //Function to withdraw
-    const handleWithdraw = () => {
-        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
-        if(fromAcct) {
-            if(fromAcct["Balance"]>= parseInt(withdrawAmt*100)/100) {
-                var newBal = (fromAcct["Balance"]*100 - withdrawAmt*100)/100;
-                setAccts([...accts], fromAcct["Balance"] = newBal);
-                var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Withdraw", withdrawAmt);
-                setTransactionHistory(prevTransactions => {
-                    return [...prevTransactions, newTransaction]
-                })
-            }
-            else {
-                alert('Insufficient Funds')
-            }
-        }
-        else {
-            alert('Account does not exist')
-        }
-    }
-
-    //Function to deposit
-    const handleDeposit = () => {
-        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
-        if(fromAcct) {
-                var newBal = (fromAcct["Balance"]*100 - (-depositAmt)*100)/100;
-                setAccts([...accts], fromAcct["Balance"] = newBal)
-                var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, null, fromAcctNum, "Deposit", depositAmt);
-                setTransactionHistory(prevTransactions => {
-                    return [...prevTransactions, newTransaction]
-                })
-        }
-        else {
-            alert('Account does not exist')
-        }
-    }
-
-    //Function to transfer
-    const handleTransfer = () => {
-        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
-        const toAcct = accts.find(acct => {return acct["Account No."] === toAcctNum})
-        if(fromAcct && toAcct) {
-            if(fromAcct["Balance"]>= parseInt(transferAmt*100)/100) {
-                var newBalFromAcct = (fromAcct["Balance"]*100 - transferAmt*100)/100;
-                setAccts([...accts], fromAcct["Balance"] = newBalFromAcct)
-                var newBalToAcct = (toAcct["Balance"]*100 - (-transferAmt)*100)/100
-                setAccts([...accts], toAcct["Balance"] = newBalToAcct)
-                var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, toAcctNum, "Transfer", transferAmt);
-                setTransactionHistory(prevTransactions => {
-                    return [...prevTransactions, newTransaction]
-                })
-            }
-            else {
-                alert('Insufficient Funds')
-            }
-        }
-        else if (!fromAcct) {
-            alert('Sending Account does not exist')
-        }
-        else {
-            alert('Receiving Account does not exist')
-        }
-    }
-
     const handleRegKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
@@ -237,7 +169,7 @@ const AccountList = (props) => {
     return (
 
         <div className="accountList">
-            <Navigation />
+            {/* <Navigation transactionHistory={transactionHistory}/> */}
             {/* Add Account Holder Button */}
             <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>
 
@@ -268,7 +200,7 @@ const AccountList = (props) => {
                     <Form id="register2">
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} required="true" id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>

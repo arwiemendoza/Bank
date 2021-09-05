@@ -1,6 +1,55 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { v4 as uuidv4 } from 'uuid';
+import { useLocation } from "react-router-dom";
 
-const Deposit = () => {
+const Deposit = (props) => {
+    const location = useLocation();
+    const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
+    const generateDate = props.generateDate
+    const TransactionClass = props.TransactionClass
+    const validate = props.validate
+
+    const [accts, setAccts] = useState([]);
+    const [fromAcctNum, setFromAcctNum] = useState('');
+    const [depositAmt, setDepositAmt] = useState(0);
+    const [transactionHistory, setTransactionHistory] = useState([]);
+
+    useEffect(() => {
+        const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
+        if (storedAccts) setAccts(storedAccts);
+        const storedTransactions = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_2));
+        if (storedTransactions) setTransactionHistory(storedTransactions);
+    }, [])
+
+    // on modify account, will add to local storage
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
+    }, [accts])
+
+    // on new transactions, will add to local storage
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_KEY_2, JSON.stringify(transactionHistory));
+    }, [transactionHistory])
+
+    //Function to deposit
+    const handleDeposit = () => {
+        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
+        if(fromAcct) {
+                var newBal = (fromAcct["Balance"]*100 - (-depositAmt)*100)/100;
+                setAccts([...accts], fromAcct["Balance"] = newBal)
+                var date = generateDate();
+                var newTransaction = new TransactionClass(uuidv4(), date, null, fromAcctNum, "Deposit", depositAmt);
+                setTransactionHistory(prevTransactions => {
+                    return [...prevTransactions, newTransaction]
+                })
+        }
+        else {
+            alert('Account does not exist')
+        }
+    }
+
     return (
         <div>
             {/* Deposit Form */}

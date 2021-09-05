@@ -1,11 +1,24 @@
-import React from 'react'
-import Transaction from '../Transactions/Transaction'
+import React, {useState, useEffect} from 'react'
+import Transaction from './Transaction'
+import Table from 'react-bootstrap/Table';
+import { useLocation } from "react-router-dom";
+
+const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
 const UserTransaction = () => {
+    // const location = useLocation();
+    // const {transactionHistoryProp} = location.state
+    const [transactionHistory, setTransactionHistory] = useState([]);
+
+    useEffect(() => {
+        const storedTransactions = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_2));
+        if (storedTransactions) setTransactionHistory(storedTransactions);
+    }, [])
+
     return (
         <div>
-             {/* Transactions Table */}
-             <Table responsive className ="container" id="transactionTable">
+            {/* Transactions Table */}
+            <Table responsive className ="container" id="transactionTable">
                 <thead>
                     <tr>
                     <th>Transaction Date</th>
@@ -16,6 +29,9 @@ const UserTransaction = () => {
                     </tr>
                 </thead>
                 <tbody>
+                    {/* {transactionHistoryProp.map(transaction => {
+                        return <Transaction key={transaction.transactionId} transaction = {transaction}/>
+                    })} */}
                     {transactionHistory.map(transaction => {
                         return <Transaction key={transaction.transactionId} transaction = {transaction}/>
                     })}
