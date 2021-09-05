@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { Form, Button, Dropdown } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import '../css/Login.css'
@@ -9,15 +9,42 @@ const Login = () => {
     const usernameRef = useRef();
     const passwordRef = useRef();
 
+    var loadingTextId;
+
+    const loadingText = `Loading`;
+    const loadingEllipis = `...`;
+    const typingDelay = 500;
+    var charIndex = 0;
+
+    useEffect(() => {
+        loadingTextId = document.querySelector('#loadingTextId');
+        console.log(loadingTextId);
+        loadingTextId.textContent = loadingText
+    }, [])
+
+    // function for Type Effect
+    function type() {
+        if(charIndex < loadingText.length + loadingEllipis.length) {
+            loadingTextId.textContent += loadingEllipis.charAt(charIndex); // Add 1 dot
+            charIndex++;
+            setTimeout(type, typingDelay); // callback type function every 500ms
+        }
+    }
+
     const handleLoginKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
-            if (usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') {
-                setLoginState(true);
-            }
-            else {
-                console.log('fail')
-            }
+            type();
+
+            setTimeout(() => {
+                if (usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') {
+                    setLoginState(true);
+                }
+                else {
+                    console.log('fail')
+                }
+            }, 2000)
+
         }
     };
 
@@ -49,12 +76,9 @@ const Login = () => {
                         Login
                     </Button> */}
                     <br/>
-                    <Form.Text className="text-muted">
-                            Logging in...
+                    <Form.Text className="text-muted" id="loadingTextId">
                         </Form.Text>
                     </Form>
-                    
-         
                     <div className="form-check form-switch">
                         <input className="form-check-input" type="checkbox" id="userSwitch" /* onClick={changeUser} *//>
                     </div>

@@ -214,14 +214,17 @@ const AccountList = () => {
     };
 
     // disable changing of number values via mousewheel
-    const numberInput = document.querySelectorAll('.number-input');
-    numberInput.forEach(input => {
-        input.addEventListener("mousewheel", 
-            function(event){ 
-                this.blur() 
-            }
-        );
-    })
+    var numberInput;
+    useEffect(() => {
+            numberInput = document.querySelectorAll('.number-input');
+            numberInput.forEach(input => {
+                input.addEventListener("mousewheel", 
+                    function(event){ 
+                        this.blur() 
+                    }
+                );
+            })
+    }, [])
 
     //limit to 2 decimal places onInput
     const validate = (e) => {
