@@ -37,7 +37,7 @@ const Login = () => {
             type();
 
             setTimeout(() => {
-                if (usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') {
+                if ((usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') || (usernameRef.current.value === 'arwie' && passwordRef.current.value === 'p4ssw0rd')) {
                     setLoginState(true);
                 }
                 else {
