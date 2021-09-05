@@ -212,6 +212,20 @@ const AccountList = () => {
         }
     };
 
+    // disable changing of number values via mousewheel
+    const numberInput = document.querySelectorAll('.number-input');
+    numberInput.forEach(input => {
+        input.addEventListener("mousewheel", 
+            function(event){ 
+                this.blur() 
+            }
+        );
+    })
+
+    //limit to 2 decimal places onInput
+    const validate = (e) => {
+        e.target.value = (e.target.value.indexOf(".") >= 0) ? (e.target.value.substr(0, e.target.value.indexOf(".")) + e.target.value.substr(e.target.value.indexOf("."), 3)) : e.target.value;
+    }
 
     return (
         <div>
@@ -255,7 +269,7 @@ const AccountList = () => {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Initial Balance</Form.Label>
-                            <Form.Control type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onInput={validate} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -278,7 +292,7 @@ const AccountList = () => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Amount</Form.Label>
-                        <Form.Control type="number" placeholder="0" onChange={(e) => setWithdrawAmt(e.target.value)}/>
+                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
                 <Button variant="primary" onClick={handleWithdraw}>
@@ -295,7 +309,7 @@ const AccountList = () => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Amount</Form.Label>
-                        <Form.Control type="number" placeholder="0" onChange={(e) => setDepositAmt(e.target.value)}/>
+                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
                 <Button variant="primary" onClick={handleDeposit}>
@@ -316,7 +330,7 @@ const AccountList = () => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Amount</Form.Label>
-                        <Form.Control type="number" placeholder="0" onChange={(e) => setTransferAmt(e.target.value)}/>
+                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setTransferAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
                 <Button variant="primary" onClick={handleTransfer}>
