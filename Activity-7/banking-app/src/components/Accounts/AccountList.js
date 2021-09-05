@@ -7,6 +7,7 @@ import Account from './Account'
 import Transaction from '../Transactions/Transaction'
 import { v4 as uuidv4 } from 'uuid';
 import '../../css/Account.css'
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
@@ -29,14 +30,15 @@ const AccountList = () => {
     const [depositAmt, setDepositAmt] = useState(0);
     const [transferAmt, setTransferAmt] = useState(0);
     const [transactionHistory, setTransactionHistory] = useState([]);
-
+    const addButton = "{+}";
+    
     // functions for modal
     const handleClose = () => setShow(false);
     const handleShow = () => {
         setShow(true)
         generateAcctNum()
     };
-
+  
     // input reference
     const acctNameRef = useRef();
     const acctEmailRef = useRef();
@@ -170,7 +172,7 @@ const AccountList = () => {
                 var newBal = (fromAcct["Balance"]*100 - (-depositAmt)*100)/100;
                 setAccts([...accts], fromAcct["Balance"] = newBal)
                 var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Deposit", depositAmt);
+                var newTransaction = new TransactionClass(uuidv4(), date, null, fromAcctNum, "Deposit", depositAmt);
                 setTransactionHistory(prevTransactions => {
                     return [...prevTransactions, newTransaction]
                 })
@@ -234,25 +236,56 @@ const AccountList = () => {
     }
 
     return (
-        <div>
+        <div className="accountList">
+            <Dropdown
+                className="d-inline-block"
+            >
+            <Dropdown.Toggle id="buttondrop" className= 'e-caret-hide' caret></Dropdown.Toggle>
+            <Dropdown.Menu>
+            <Dropdown.Item header>Submenu 1</Dropdown.Item>
+            <Dropdown.Item>Submenu 1.1</Dropdown.Item>
+            </Dropdown.Menu>
+
+        </Dropdown>
+
+
+            {/* Withdraw Form */}
+            <div className="transact-parent">
+                <Form className="form-class">
+                    <Form.Group className="mb-3">
+                        <Form.Label>Account No.</Form.Label>
+                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Amount</Form.Label>
+                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
+                    </Form.Group>
+                </Form>
+                <Button variant="primary" onClick={handleWithdraw}>
+                    Withdraw
+                </Button>
+            </div>
             {/* Add Account Holder Button */}
-            <Button variant="primary"  onClick={handleShow}>Add Account Holder</Button>
+            <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>
 
             {/* Accounts List Table */}
-            <Table responsive className ="container" id="userTable">
-                <thead>
-                    <tr>
-                    <th>Account No.</th>
-                    <th>Account Name</th>
-                    <th>Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {accts.map(acct => {
-                        return <Account key={acct['Account No.']} acct = {acct}/>
-                    })}
-                </tbody>
-            </Table>
+            <div className="table-container">
+                
+                    <Table responsive className ="container" id="userTable">
+                        <thead>
+                            <tr>
+                            <th>Account No.</th>
+                            <th>Account Name</th>
+                            <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {accts.map(acct => {
+                                return <Account key={acct['Account No.']} acct = {acct}/>
+                            })}
+                        </tbody>
+                    </Table>
+            </div>
 
             {/*Add Account Modal*/}
             <Modal show={show} onHide={handleClose}>
@@ -289,26 +322,11 @@ const AccountList = () => {
                 </Modal.Footer>
             </Modal>
 
-            {/* Withdraw Form */}
-            <div>
-                <Form>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
-                    </Form.Group>
-                </Form>
-                <Button variant="primary" onClick={handleWithdraw}>
-                    Withdraw
-                </Button>
-            </div>
+            
 
             {/* Deposit Form */}
-            <div>
-                <Form>
+            <div className="transact-parent">
+                <Form className="form-class">
                     <Form.Group className="mb-3">
                         <Form.Label>Account No.</Form.Label>
                         <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
@@ -324,8 +342,8 @@ const AccountList = () => {
             </div>
 
             {/* Transfer Form */}
-            <div>
-                <Form>
+            <div className="transact-parent">
+                <Form className="form-class">
                     <Form.Group className="mb-3">
                         <Form.Label>Sender Account No.</Form.Label>
                         <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
