@@ -185,7 +185,7 @@ const AccountList = () => {
         const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
         const toAcct = accts.find(acct => {return acct["Account No."] === toAcctNum})
         if(fromAcct && toAcct) {
-            if(fromAcct["Balance"]>= transferAmt) {
+            if(fromAcct["Balance"]>= parseInt(transferAmt*100)/100) {
                 var newBalFromAcct = (fromAcct["Balance"]*100 - transferAmt*100)/100;
                 setAccts([...accts], fromAcct["Balance"] = newBalFromAcct)
                 var newBalToAcct = (toAcct["Balance"]*100 - (-transferAmt)*100)/100
