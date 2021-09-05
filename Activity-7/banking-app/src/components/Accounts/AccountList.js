@@ -4,11 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Account from './Account'
-import Transaction from '../Transactions/Transaction'
 import { v4 as uuidv4 } from 'uuid';
 import '../../css/Account.css'
-import Dropdown from 'react-bootstrap/Dropdown';
-import { Link, withRouter } from "react-router-dom";
+import Navigation from '../Navigation'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
@@ -239,73 +237,12 @@ const AccountList = (props) => {
     return (
 
         <div className="accountList">
-            <Dropdown className="d-inline-block">
-                <Dropdown.Toggle id="buttondrop" className= 'e-caret-hide' caret></Dropdown.Toggle>
-            <Dropdown.Menu>
-            <span>Transactions</span>
-
-            <Dropdown.Item>
-                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
-                    <Link class="nav-link" to="/">
-                    Withdraw
-                    <span class="sr-only"></span>
-                    </Link>
-                </li>
-            </Dropdown.Item>
-                    
-            <Dropdown.Item>
-                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
-                    <Link class="nav-link" to="/">
-                    Deposit
-                    <span class="sr-only"></span>
-                    </Link>
-                </li>
-            </Dropdown.Item>
-
-            <Dropdown.Item>
-                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
-                    <Link class="nav-link" to="/">
-                    Transfer
-                    <span class="sr-only"></span>
-                    </Link>
-                </li>
-            </Dropdown.Item>
-
-            <Dropdown.Item>
-                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
-                    <Link class="nav-link" to="/">
-                    Transaction List
-                    <span class="sr-only"></span>
-                    </Link>
-                </li>
-            </Dropdown.Item>
-            </Dropdown.Menu>
-
-        </Dropdown>
-
-
-            {/* Withdraw Form */}
-            <div className="transact-parent">
-                <Form className="form-class">
-                    <Form.Group className="mb-3">
-                        <Form.Label>Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
-                    </Form.Group>
-                </Form>
-                <Button variant="primary" onClick={handleWithdraw}>
-                    Withdraw
-                </Button>
-            </div>
+            <Navigation />
             {/* Add Account Holder Button */}
             <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>
 
             {/* Accounts List Table */}
             <div className="table-container">
-                
                     <Table responsive className ="container" id="userTable">
                         <thead>
                             <tr>
@@ -331,7 +268,7 @@ const AccountList = (props) => {
                     <Form id="register2">
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} required="true" id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
@@ -355,67 +292,9 @@ const AccountList = (props) => {
                     Create Account
                 </Button>
                 </Modal.Footer>
-            </Modal>
-
-            
-
-            {/* Deposit Form */}
-            <div className="transact-parent">
-                <Form className="form-class">
-                    <Form.Group className="mb-3">
-                        <Form.Label>Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)}/>
-                    </Form.Group>
-                </Form>
-                <Button variant="primary" onClick={handleDeposit}>
-                    Deposit
-                </Button>
-            </div>
-
-            {/* Transfer Form */}
-            <div className="transact-parent">
-                <Form className="form-class">
-                    <Form.Group className="mb-3">
-                        <Form.Label>Sender Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Receiver Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setToAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setTransferAmt(e.target.value)}/>
-                    </Form.Group>
-                </Form>
-                <Button variant="primary" onClick={handleTransfer}>
-                    Transfer
-                </Button>
-            </div>
-
-            {/* Transactions Table */}
-            <Table responsive className ="container" id="transactionTable">
-                <thead>
-                    <tr>
-                    <th>Transaction Date</th>
-                    <th>Type</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {transactionHistory.map(transaction => {
-                        return <Transaction key={transaction.transactionId} transaction = {transaction}/>
-                    })}
-                </tbody>
-            </Table>
+            </Modal>  
         </div>
     )
 }
 
-export default withRouter(AccountList);
+export default AccountList;
