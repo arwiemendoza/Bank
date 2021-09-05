@@ -19,7 +19,6 @@ const Login = () => {
     useEffect(() => {
         loadingTextId = document.querySelector('#loadingTextId');
         console.log(loadingTextId);
-        loadingTextId.textContent = loadingText
     }, [])
 
     // function for Type Effect
@@ -34,6 +33,7 @@ const Login = () => {
     const handleLoginKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
+            loadingTextId.textContent = loadingText
             type();
 
             setTimeout(() => {
@@ -43,6 +43,7 @@ const Login = () => {
                 else {
                     console.log('fail')
                 }
+                loadingTextId.textContent = '';
             }, 2000)
 
         }

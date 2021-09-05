@@ -109,6 +109,8 @@ const AccountList = () => {
     const handleCreateAcct = () => {
         setShow(false)
 
+        console.log(bal)
+
         const newAcct = {
             'Account No.': acctNum, 
             'Account Name': acctName, 
@@ -141,11 +143,11 @@ const AccountList = () => {
 
     //Function to withdraw
     const handleWithdraw = () => {
-        const acct = accts.find(user => {return user["Account No."] === fromAcctNum})
-        if(acct) {
-            if(acct["Balance"]>= withdrawAmt) {
-                var newBal = (acct["Balance"]*100 - withdrawAmt*100)/100;
-                setAccts([...accts], acct["Balance"] = newBal);
+        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
+        if(fromAcct) {
+            if(fromAcct["Balance"]>= parseInt(withdrawAmt*100)/100) {
+                var newBal = (fromAcct["Balance"]*100 - withdrawAmt*100)/100;
+                setAccts([...accts], fromAcct["Balance"] = newBal);
                 var date = generateDate();
                 var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Withdraw", withdrawAmt);
                 setTransactionHistory(prevTransactions => {
@@ -163,10 +165,10 @@ const AccountList = () => {
 
     //Function to deposit
     const handleDeposit = () => {
-        const acct = accts.find(user => {return user["Account No."] === fromAcctNum})
-        if(acct) {
-                var newBal = (acct["Balance"]*100 - (-depositAmt)*100)/100;
-                setAccts([...accts], acct["Balance"] = newBal)
+        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
+        if(fromAcct) {
+                var newBal = (fromAcct["Balance"]*100 - (-depositAmt)*100)/100;
+                setAccts([...accts], fromAcct["Balance"] = newBal)
                 var date = generateDate();
                 var newTransaction = new TransactionClass(uuidv4(), date, fromAcctNum, null, "Deposit", depositAmt);
                 setTransactionHistory(prevTransactions => {
@@ -180,8 +182,8 @@ const AccountList = () => {
 
     //Function to transfer
     const handleTransfer = () => {
-        const fromAcct = accts.find(user => {return user["Account No."] === fromAcctNum})
-        const toAcct = accts.find(user => {return user["Account No."] === toAcctNum})
+        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
+        const toAcct = accts.find(acct => {return acct["Account No."] === toAcctNum})
         if(fromAcct && toAcct) {
             if(fromAcct["Balance"]>= transferAmt) {
                 var newBalFromAcct = (fromAcct["Balance"]*100 - transferAmt*100)/100;
