@@ -1,4 +1,5 @@
 import React from 'react'
+import Transaction from '../Transactions/Transaction'
 
 const UserTransaction = () => {
     return (
