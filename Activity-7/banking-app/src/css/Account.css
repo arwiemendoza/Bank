@@ -1,6 +1,11 @@
 .accountList {
   height: 100vh;
   width: 100vw;
+  color: #09f501;
+}
+
+#userTable, #transactionTable {
+  color: #09f501;
 }
 
 .transact-parent {

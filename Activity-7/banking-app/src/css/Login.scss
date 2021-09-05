@@ -20,7 +20,6 @@ $font-color:#09f501;
     background-size: cover;
 }
 *{
-    color:$font-color;
     font-family: Consola;
 }
 svg{
@@ -45,6 +44,9 @@ svg{
 }
 .mb-3{
     text-align: center;
+}
+.adminmb3{
+    color:$font-color;
 }
 
 .form-button,.form-button:hover{
@@ -92,12 +94,12 @@ svg{
 }
 #userSwitch{
     margin-top: 10vmin;
-    border: none;
+    border: 1px solid black;
 }
 #userSwitch:checked{
     margin-top: 10vmin;
     background-color: $font-color;
-    border: none;
+    border: 1px solid $fill-color;
 }
 
 @media (max-width:375px){

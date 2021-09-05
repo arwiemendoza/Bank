@@ -51,19 +51,35 @@ const Login = () => {
     let userSwitch;
     let loginParent;
     let adminLogo;
+    let adminForm;
+    let adminPlaceholder
 
     useEffect(() => {
         userSwitch = document.querySelector('#userSwitch')
         loginParent = document.querySelector('.login-parent')
         adminLogo = document.querySelector('svg')
+        adminForm = document.querySelectorAll('.mb-3')
+        adminPlaceholder = document.querySelectorAll('.form-control')
     },[])
     const changeUser = () => {
         if (userSwitch.checked){
             loginParent.classList.add('adminlogin-parent')
             adminLogo.classList.add('admin-svg')
+            adminForm.forEach(form => {
+                form.classList.add('adminmb3')    
+            })
+            adminPlaceholder.forEach(form => {
+                form.classList.add('form-placeholder')    
+            })
         }else {
             loginParent.classList.remove('adminlogin-parent')
             adminLogo.classList.remove('admin-svg')
+            adminForm.forEach(form => {
+                form.classList.remove('adminmb3')       
+            })
+            adminPlaceholder.forEach(form => {
+                form.classList.remove('form-placeholder')    
+            })
         }
     }
     if (loginState) {
@@ -83,12 +99,12 @@ const Login = () => {
                     <div className="user"></div>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control className="form-placeholder" type="email" placeholder="Enter username" ref={usernameRef} onKeyPress={handleLoginKeypress} />
+                        <Form.Control className="form-control" type="email" placeholder="Enter username" ref={usernameRef} onKeyPress={handleLoginKeypress} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control className="form-placeholder" type="password" placeholder="********" ref={passwordRef} onKeyPress={handleLoginKeypress} />
+                        <Form.Control className="form-control" type="password" placeholder="********" ref={passwordRef} onKeyPress={handleLoginKeypress} />
                     </Form.Group>
                     {/* <Button variant="primary" type="submit" className="form-button">
                         Login

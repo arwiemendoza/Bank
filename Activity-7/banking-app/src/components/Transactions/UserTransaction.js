@@ -1,14 +1,26 @@
 import React from 'react'
-import Withdraw from './components/Transactions/Withdraw'
-import Deposit from './components/Transactions/Deposit'
-import Transfer from './components/Transactions/Transfer'
 
 const UserTransaction = () => {
     return (
         <div>
-            <Withdraw />
-            <Deposit />
-            <Transfer />
+             {/* Transactions Table */}
+             <Table responsive className ="container" id="transactionTable">
+                <thead>
+                    <tr>
+                    <th>Transaction Date</th>
+                    <th>Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {transactionHistory.map(transaction => {
+                        return <Transaction key={transaction.transactionId} transaction = {transaction}/>
+                    })}
+                </tbody>
+            </Table>
+
         </div>
     )
 }

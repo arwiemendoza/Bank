@@ -8,11 +8,12 @@ import Transaction from '../Transactions/Transaction'
 import { v4 as uuidv4 } from 'uuid';
 import '../../css/Account.css'
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Link, withRouter } from "react-router-dom";
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
-const AccountList = () => {
+const AccountList = (props) => {
     //modal display states
     const [show, setShow] = useState(false);
 
@@ -236,14 +237,48 @@ const AccountList = () => {
     }
 
     return (
+
         <div className="accountList">
-            <Dropdown
-                className="d-inline-block"
-            >
-            <Dropdown.Toggle id="buttondrop" className= 'e-caret-hide' caret></Dropdown.Toggle>
+            <Dropdown className="d-inline-block">
+                <Dropdown.Toggle id="buttondrop" className= 'e-caret-hide' caret></Dropdown.Toggle>
             <Dropdown.Menu>
-            <Dropdown.Item header>Submenu 1</Dropdown.Item>
-            <Dropdown.Item>Submenu 1.1</Dropdown.Item>
+            <span>Transactions</span>
+
+            <Dropdown.Item>
+                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
+                    <Link class="nav-link" to="/">
+                    Withdraw
+                    <span class="sr-only"></span>
+                    </Link>
+                </li>
+            </Dropdown.Item>
+                    
+            <Dropdown.Item>
+                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
+                    <Link class="nav-link" to="/">
+                    Deposit
+                    <span class="sr-only"></span>
+                    </Link>
+                </li>
+            </Dropdown.Item>
+
+            <Dropdown.Item>
+                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
+                    <Link class="nav-link" to="/">
+                    Transfer
+                    <span class="sr-only"></span>
+                    </Link>
+                </li>
+            </Dropdown.Item>
+
+            <Dropdown.Item>
+                <li class={`nav-item  ${props.location.pathname === "/" ? "active" : ""}`}>
+                    <Link class="nav-link" to="/">
+                    Transaction List
+                    <span class="sr-only"></span>
+                    </Link>
+                </li>
+            </Dropdown.Item>
             </Dropdown.Menu>
 
         </Dropdown>
@@ -383,4 +418,4 @@ const AccountList = () => {
     )
 }
 
-export default AccountList
+export default withRouter(AccountList);
