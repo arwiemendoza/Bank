@@ -1,36 +1,81 @@
+@font-face {
+    font-family:'Consola';
+    src: url('../utils/CONSOLA.TTF');
+}
+$fill-color: #00c600;
+$font-color:#09f501;
 
+@mixin flex-prop {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items:center;
+}
+@mixin background-base {
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+*{
+    color:$font-color;
+    font-family: Consola;
+}
 svg{
     height: 90%;
     width: 50%;
-    
 }
+.admin-svg{
+    fill:$fill-color;   
+}
+.adminlogin-parent{
+    background-image: url('../utils/trybg.gif');
+    background-color: black;
+
+}
+.form-placeholder{
+    color:$font-color;
+    background-color: black;
+}
+.form-placeholder:focus{
+    color:$font-color;
+    background-color: black;
+}
+.mb-3{
+    text-align: center;
+}
+
+.form-button,.form-button:hover{
+    background-color:$font-color;
+    border: none;
+}
+
+
 .login-parent{
+    @include background-base();
     height: 100vh;
     width: 100vw;
+    
+
 }
 .login-parent{
-    display: flex;
-    flex-direction: column;
+    @include flex-prop();
     justify-content: center;
-    align-content: center;
-    align-items: center;
+
 }
 
 .svg-parent{
-    display: flex;
-    flex-direction: column;
+    @include flex-prop();
     justify-content: flex-end;
-    align-content: center;
-    align-items: center;
+
 }
 
 .form-parent{
+    @include flex-prop();
     margin-top: 10vmin;
-    display: flex;
-    flex-direction: column;
     justify-content: flex-start;
-    align-content: center;
-    align-items: center;
 }
 
 .form-parent, .svg-parent{
@@ -39,24 +84,54 @@ svg{
 }
 
 #register{
+    @include flex-prop();
     height: 30%;
     width: 100vw;
-
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-content: center;
-    align-items: center;
-}
 
-@media (max-width:414px){
-    svg{
-        height: 40vh;
-    }
+}
+#userSwitch{
+    margin-top: 10vmin;
+    border: none;
+}
+#userSwitch:checked{
+    margin-top: 10vmin;
+    background-color: $font-color;
+    border: none;
 }
 
 @media (max-width:375px){
     svg{
         height: 150%;
     }
+    #userSwitch{
+        margin-top: 20vmin;
+    }
 }
+
+@media (max-width:414px){
+    svg{
+        height: 40vh;
+    }
+    #userSwitch{
+        margin-top: 20vmin;
+    }
+}
+@media (max-width:320px){
+    svg{
+        height: 40vh;
+    }
+    #userSwitch{
+        margin-top: 25vmin;
+    }
+}
+
+@media (max-width:540px){
+    svg{
+        height: 40vh;
+    }
+    #userSwitch{
+        margin-top: 20vmin;
+    }
+}
+
