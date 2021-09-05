@@ -7,7 +7,6 @@ function App() {
   return (
     <div>
       <Router>
-        <Navigation />
         <Switch>
           <Route path="/" exact component={() => <Login />} />
           <Route path="/accounts" exact component={() => <AccountList />} />
