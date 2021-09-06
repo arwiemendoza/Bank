@@ -18,7 +18,7 @@ const Deposit = (props) => {
 
     useEffect(() => {
         const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
-        if (storedAccts) setAccts(storedAccts);
+        if (storedAccts) setAccts(storedAccts)
         const storedTransactions = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_2));
         if (storedTransactions) setTransactionHistory(storedTransactions);
     }, [])
@@ -49,7 +49,6 @@ const Deposit = (props) => {
             alert('Account does not exist')
         }
     }
-
     return (
         <div>
             {/* Deposit Form */}
@@ -61,7 +60,7 @@ const Deposit = (props) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)}/>
+                        <Form.Control className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
                 <Button variant="primary" onClick={handleDeposit}>

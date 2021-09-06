@@ -74,7 +74,7 @@ function App() {
           <Route path="/transactions" exact render={(props) => (<UserTransaction {...props} isAuthed={true} />)}/>
           <Route path="/withdraw" exact 
             render={(props) => (
-            <Withdraw {...props} 
+            <Withdraw {...props}
               generateDate={generateDate} 
               TransactionClass = {TransactionClass}
               validate = {validate}

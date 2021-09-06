@@ -63,6 +63,15 @@ function Navigation(props) {
                     Transaction History
                     </Link>
                 </Dropdown.Item>
+
+                <Dropdown.Item>
+                    <Link className="nav-link" to={{
+                        pathname: "/login", 
+                    /*state: {transactionHistoryProp}*/}}>
+                    Logout
+                    </Link>
+                </Dropdown.Item>
+            
                 </Dropdown.Menu>
 
             </Dropdown>

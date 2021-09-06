@@ -107,27 +107,44 @@ const AccountList = (props) => {
 
     // Function for account creation
     const handleCreateAcct = () => {
-        setShow(false)
+        if (!acctNameRef.current.value || !acctEmailRef.current.value) {
+                return alert('try')
+        } else if (!isNaN(acctNameRef.current.value.substring(0, 1))) {
+            return alert('Please enter valid name')
+        } else if (acctEmailRef.current.value.indexOf('@') === -1){
+            return alert('Please enter valid email') 
+        } else if (acctEmailRef.current.value.indexOf('.com') === -1){
+            return alert('Please enter valid email')
+        } else if (accts.find(acct => {return acct["Email"] === acctEmailRef.current.value}) !== null) {
+            return alert('Account already exists')
+        } else if(!insecurePwordRef.current.value){
+            return alert('Set password!');  
+        } else if (insecurePwordRef.current.value.length < 8) {
+            return alert('Password is too weak')
+        } else {
+            setShow(false);
+            const newAcct = {
+                'Account No.': acctNum, 
+                'Account Name': acctName, 
+                'Email': acctEmail, 
+                'Password': pword, 
+                'Balance': bal
+            }
 
-        console.log(bal)
-
-        const newAcct = {
-            'Account No.': acctNum, 
-            'Account Name': acctName, 
-            'Email': acctEmail, 
-            'Password': pword, 
-            'Balance': bal
+            //add new user to previous set of users using spread operator for previous data 
+            setAccts(prevAccts => {
+                return [...prevAccts, newAcct]
+            })
+            
+            setAcctName('');
+            setBal('');
+            setAcctEmail('');
+            setPword('');
+            acctNameRef.current.value = null
+            acctEmailRef.current.value = null
+            insecurePwordRef.current.value = null
+            initBalRef.current.value = null
         }
-
-        //add new user to previous set of users using spread operator for previous data 
-        setAccts(prevAccts => {
-            return [...prevAccts, newAcct]
-        })
-        
-        setAcctName('');
-        setBal('');
-        setAcctEmail('');
-        setPword('');
     }
 
     class TransactionClass {
@@ -167,14 +184,16 @@ const AccountList = (props) => {
     }
 
     return (
-
+        
         <div className="accountList">
+
             {/* <Navigation transactionHistory={transactionHistory}/> */}
             {/* Add Account Holder Button */}
             <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>
 
             {/* Accounts List Table */}
             <div className="table-container">
+
                     <Table responsive className ="container" id="userTable">
                         <thead>
                             <tr>
@@ -189,42 +208,50 @@ const AccountList = (props) => {
                             })}
                         </tbody>
                     </Table>
-            </div>
 
+            </div>
+                
             {/*Add Account Modal*/}
+
             <Modal show={show} onHide={handleClose}>
+
                 <Modal.Header>
-                <Modal.Title>Create New Account</Modal.Title>
+                    <Modal.Title>Create New Account</Modal.Title>
                 </Modal.Header>
+
                 <Modal.Body>
+
                     <Form id="register2">
+
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="********" ref={insecurePwordRef}  onChange={(e) => setPword(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  onChange={(e) => setPword(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Initial Balance</Form.Label>
                             <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onInput={validate} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
+                        <Button type="submit" variant="primary" onClick={handleCreateAcct}>
+                            Create Account
+                        </Button> 
+                        {<Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>}
+
                     </Form>
+
                 </Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button type="submit" variant="primary" onClick={handleCreateAcct}>
-                    Create Account
-                </Button>
-                </Modal.Footer>
-            </Modal>  
+
+            </Modal>
+
         </div>
     )
 }
