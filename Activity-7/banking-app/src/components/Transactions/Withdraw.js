@@ -65,7 +65,7 @@ const Withdraw = (props) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
+                        <Form.Control className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
                     </Form.Group>
                 </Form>
                 <Button variant="primary" onClick={handleWithdraw}>

@@ -11,6 +11,7 @@ const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
 const AccountList = (props) => {
+    
     //modal display states
     const [show, setShow] = useState(false);
 
@@ -200,11 +201,11 @@ const AccountList = (props) => {
                     <Form id="register2">
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control required type="text" placeholder="Full Name"  ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="email" placeholder="name@example.com" required="true" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Password</Form.Label>
@@ -212,7 +213,7 @@ const AccountList = (props) => {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Initial Balance</Form.Label>
-                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onInput={validate} onKeyPress={handleRegKeypress}/>
+                            <Form.Control className="number-input" type="number" min="0" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onInput={validate} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -225,6 +226,7 @@ const AccountList = (props) => {
                 </Button>
                 </Modal.Footer>
             </Modal>  
+            
         </div>
     )
 }

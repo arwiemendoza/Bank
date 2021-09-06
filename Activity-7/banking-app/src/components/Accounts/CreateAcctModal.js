@@ -3,7 +3,7 @@ import React from 'react'
 const CreateAcctModal = () => {
     return (
         <div>
-            TEST
+            Test
         </div>
     )
 }
