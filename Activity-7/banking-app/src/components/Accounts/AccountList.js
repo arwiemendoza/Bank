@@ -107,7 +107,7 @@ const AccountList = (props) => {
 
     // Function for account creation
     const handleCreateAcct = () => {
-        setShow(false)
+        /* setShow(false) */
 
         console.log(bal)
 
@@ -200,11 +200,11 @@ const AccountList = (props) => {
                     <Form id="register2">
                         <Form.Group className="mb-3">
                             <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Control type="email" placeholder="name@example.com" required="true" ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Password</Form.Label>
@@ -214,16 +214,14 @@ const AccountList = (props) => {
                             <Form.Label>Initial Balance</Form.Label>
                             <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onInput={validate} onKeyPress={handleRegKeypress}/>
                         </Form.Group>
+                        <Button type="submit" variant="primary" onClick={handleCreateAcct}>
+                            Create Account
+                        </Button> 
+                        {<Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>} 
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button type="submit" variant="primary" onClick={handleCreateAcct}>
-                    Create Account
-                </Button>
-                </Modal.Footer>
             </Modal>  
         </div>
     )
