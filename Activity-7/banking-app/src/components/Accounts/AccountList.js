@@ -159,6 +159,8 @@ const AccountList = (props) => {
         // }
     }
 
+    
+
     // Function for account creation
     const handleCreateAcct = (event) => {
         const form = event.currentTarget;
@@ -245,27 +247,27 @@ const AccountList = (props) => {
 
                 <Modal.Body id="modal_body">
 
-                    <Form id="register2" noValidate validated={validated} onSubmit="handleCreateAcct">
+                    <Form id="register2" noValidate validated={validated} >
                             
                         <Form.Group className="mb-3">
                             <Form.Label id="create-name">Account Holder Name:</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} />
+                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress} />
                             <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-email">Email address:</Form.Label>
                             
-                            <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)}/>
+                            <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
                             <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-password">Password:</Form.Label>
-                            <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  id="password_input" onChange={(e) => setPword(e.target.value)}/>
+                            <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  id="password_input" onChange={(e) => setPword(e.target.value)} onKeyPress={handleRegKeypress}/>
                             <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-balance">Initial Balance:</Form.Label>
-                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate}/>
+                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate} onKeyPress={handleRegKeypress}/>
                             <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Button type="submit" id="create_account" variant="primary" onClick={handleCreateAcct}>
