@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
-const UserTransaction = () => {
+const UserTransaction = () => {    
     // const location = useLocation();
     // const {transactionHistoryProp} = location.state
     const [transactionHistory, setTransactionHistory] = useState([]);

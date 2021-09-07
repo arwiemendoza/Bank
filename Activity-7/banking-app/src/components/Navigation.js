@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, withRouter, useLocation } from "react-router-dom";
-import '../css/Account.css'
+import '../css/NavBar.css'
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
@@ -15,9 +15,8 @@ function Navigation(props) {
 
     return (
         <div className="navigation">
-
             <Dropdown className="d-inline-block">
-                    <Dropdown.Toggle id="buttondrop" className= 'e-caret-hide'></Dropdown.Toggle>
+                    <Dropdown.Toggle id="nav-logo"></Dropdown.Toggle>
                 <Dropdown.Menu>
                 <Dropdown.Item>
                     <Link className="nav-link" to="/accounts">

@@ -13,6 +13,9 @@ $font-color:#09f501;
     height:100vh;
     width: 100vw;
     color:$font-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #userTable, #transactionTable{
@@ -25,15 +28,13 @@ $font-color:#09f501;
     justify-content: center;
     align-content: center;
     align-items: center;
+    height: 30vh;
 }
 
 .table-container{
     height: 70vh;
+    width: 90vw;
     overflow: auto;
-}
-
-.transact-parent{
-    height: 30vh;
 }
 
 #createAccount{
@@ -45,36 +46,67 @@ $font-color:#09f501;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: rgba(128, 128, 128, 0.055);
-    color: yellowgreen;
-    border:none;
+    background-color: rgba(117, 39, 39, 0.055);
     
     right: 10vw;
     bottom: 5vh;
     border-radius: 5vmin;
 }
-
-#buttondrop{
-    @include background-base();
-    position:absolute;
-    height:10vh;
-    width:10vh;
-    background-image: url('../utils/bank_logo3.png');
-    color:transparent;
-    border: none;
-    clip-path: polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%);
+#register_modal{
+    box-shadow: #c9653c 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    background-color: transparent;
 }
-
-#buttondrop:hover{
-    @include background-base();
-    height:10vh;
-    width:10vh;
-    background-image: url('../utils/bank_logo2.gif');
-    color:transparent;
-    border: none;
-}
-
 .accountList{
     background-color: black;
 }
 
+#name_input, #email_input, #password_input,#balance_input, #register2, #modal_head, #modal_body{
+    background-color:#22272e;
+    color:#c9653c; 
+    border:none;
+    
+}
+
+#create_account{
+    background-color: black;
+    border: 3px solid rgb(58, 57, 56);
+    color:#645080; 
+}
+
+#close{
+    color:#e56b63;
+    background-color: black;
+    border: 3px solid rgb(58, 57, 56);
+}
+#create-name,#name_input{
+    color:#6c9ed5;
+    font-size: 1rem;
+    
+}
+#name_input{
+    border:1px solid #afccf3;
+}
+#create-email,#email_input{
+    color:#d64839;
+    font-size: 1rem;
+}
+#email_input{
+    border:1px solid #afccf3;
+}
+#create-password,#password_input{
+    color:#60b0ee;
+    font-size: 1rem;
+}
+#password_input{
+    border:1px solid #afccf3;
+}
+#create-balance,#balance_input{
+    color:#ec9942;
+    font-size: 1rem;
+}
+#balance_input{
+    border:1px solid #afccf3;
+}
+.create-email-placeholder{
+    height:1rem;
+}

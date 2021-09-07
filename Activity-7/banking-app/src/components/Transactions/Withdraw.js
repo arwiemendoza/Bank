@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from "react-router-dom";
+import '../../css/Withdraw.css'
 
 const Withdraw = (props) => {
     const location = useLocation();
@@ -55,22 +56,27 @@ const Withdraw = (props) => {
         }
     }
     return (
-        <div>
+        <div className="transact-parent">
             {/* Withdraw Form */}
-            <div className="transact-parent">
-                <Form className="form-class">
-                    <Form.Group className="mb-3">
-                        <Form.Label>Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
-                    </Form.Group>
-                </Form>
-                <Button variant="primary" onClick={handleWithdraw}>
-                    Withdraw
-                </Button>
+            <div className="transact-sub">
+                <div className="transact-sub2">
+                    <Form className="form-class">
+                        <Form.Group className="mb-3">
+                            <Form.Label>Account No.</Form.Label>
+                            <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Amount:</Form.Label>
+                            <Form.Control className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)}/>
+                        </Form.Group>
+                    </Form>
+                    <br/>
+                    <Form.Text className="text-muted"></Form.Text>
+                    <br/> 
+                    <Button variant="primary" onClick={handleWithdraw}>
+                        Withdraw
+                    </Button>
+                </div>
             </div>
         </div>
     )

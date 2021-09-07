@@ -35,6 +35,10 @@ svg {
   text-align: center;
 }
 
+.login-label {
+  color: black;
+}
+
 .adminmb3 {
   color: #09f501;
 }

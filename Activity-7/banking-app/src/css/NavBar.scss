@@ -1,4 +1,28 @@
+@mixin background-base {
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.navigation{
+    position: absolute;    
+    left: 10vw;
+    bottom: 5vh;
+}
+
 #nav-logo{
-    height:5vmin;
-    color:white;
+    @include background-base();
+    height:10vh;
+    width:10vh;
+    background-image: url('../utils/bank_logo3.png');
+    color:transparent;
+    border: none;
+    clip-path: polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%);
+}
+
+#nav-logo:hover{
+    background-image: url('../utils/bank_logo2.gif');
 }

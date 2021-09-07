@@ -19,31 +19,40 @@ $font-color:#09f501;
     -o-background-size: cover;
     background-size: cover;
 }
+
 *{
     font-family: Consola;
 }
+
 svg{
     height: 90%;
     width: 50%;
 }
+
 .admin-svg{
     fill:$fill-color;   
 }
+
 .adminlogin-parent{
     background-image: url('../utils/trybg.gif');
     background-color: black;
-
 }
+
 .form-placeholder{
     color:$font-color;
     background-color: black;
 }
+
 .form-placeholder:focus{
     color:$font-color;
     background-color: black;
 }
+
 .mb-3{
     text-align: center;
+}
+.login-label{
+    color:black;
 }
 .adminmb3{
     color:$font-color;

@@ -58,7 +58,7 @@ const Login = () => {
         userSwitch = document.querySelector('#userSwitch')
         loginParent = document.querySelector('.login-parent')
         adminLogo = document.querySelector('svg')
-        adminForm = document.querySelectorAll('.mb-3')
+        adminForm = document.querySelectorAll('.login-label')
         adminPlaceholder = document.querySelectorAll('.form-control')
     },[])
     const changeUser = () => {
@@ -98,20 +98,19 @@ const Login = () => {
                     <Form id ="register">
                     <div className="user"></div>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label className="login-label">Username</Form.Label>
                         <Form.Control className="form-control" type="email" placeholder="Enter username" ref={usernameRef} onKeyPress={handleLoginKeypress} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label className="login-label">Password</Form.Label>
                         <Form.Control className="form-control" type="password" placeholder="********" ref={passwordRef} onKeyPress={handleLoginKeypress} />
                     </Form.Group>
                     {/* <Button variant="primary" type="submit" className="form-button">
                         Login
                     </Button> */}
                     <br/>
-                    <Form.Text className="text-muted" id="loadingTextId">
-                        </Form.Text>
+                    <Form.Text className="text-muted" id="loadingTextId"></Form.Text>
                     </Form>
                     <div className="form-check form-switch">
                         <input className="form-check-input" type="checkbox" id="userSwitch" onClick={changeUser}/>

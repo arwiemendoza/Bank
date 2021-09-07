@@ -14,6 +14,8 @@ const AccountList = (props) => {
     //modal display states
     const [show, setShow] = useState(false);
 
+    const [validated, setValidated] = useState(false);
+
     //account data states
     const [accts, setAccts] = useState([]);
     const [acctNum, setAcctNum] = useState('');
@@ -105,23 +107,69 @@ const AccountList = (props) => {
         return date;
     }
 
+    var nameChecker;
+    var emailChecker;
+    var passwordChecker;
+
+    // Function for error checking
+    const handleErrors = (event) => {
+        // nameChecker = false;
+        // emailChecker = false;
+        // passwordChecker = false;
+        // var inputEmail = accts.find(acct => {return acct["Email"] === acctEmailRef.current.value})
+        // if (!acctNameRef.current.value) {
+        //     acctNameRef.current.style.borderColor = 'red'
+        //     acctNameRef.current.focus()
+        // }
+        // else if (!isNaN(acctNameRef.current.value.substring(0, 1))) {
+        //     acctNameRef.current.style.borderColor = 'red'
+        // }
+        // else {
+        //     acctNameRef.current.style.borderColor = 'green'
+        //     nameChecker = true;
+        // }
+        // if (!acctEmailRef.current.value) {
+        //     acctEmailRef.current.style.borderColor = 'red'
+        // }  
+        // else if (acctEmailRef.current.value.indexOf('@') === -1){
+        //     acctEmailRef.current.style.borderColor = 'red' 
+        // } 
+        // else if (acctEmailRef.current.value.indexOf('.com') === -1){
+        //     acctEmailRef.current.style.borderColor = 'red'
+        // } 
+        // else if (inputEmail != null) {
+        //     acctEmailRef.current.style.borderColor = 'red'
+        //     // alert('Account already exists')
+        // }
+        // else {
+        //     acctEmailRef.current.style.borderColor = 'green'
+        //     emailChecker = true;
+        // }
+        // if(!insecurePwordRef.current.value){
+        //     insecurePwordRef.current.style.borderColor = 'red'
+        //     // return alert('Set password!');  
+        // } 
+        // else if (insecurePwordRef.current.value.length < 8) {
+        //     insecurePwordRef.current.style.borderColor = 'red'
+        //     // return alert('Password is too weak')
+        // } 
+        // else {
+        //     insecurePwordRef.current.style.borderColor = 'green'
+        //     passwordChecker = true;
+        // }
+    }
+
     // Function for account creation
-    const handleCreateAcct = () => {
-        if (!acctNameRef.current.value || !acctEmailRef.current.value) {
-                return alert('try')
-        } else if (!isNaN(acctNameRef.current.value.substring(0, 1))) {
-            return alert('Please enter valid name')
-        } else if (acctEmailRef.current.value.indexOf('@') === -1){
-            return alert('Please enter valid email') 
-        } else if (acctEmailRef.current.value.indexOf('.com') === -1){
-            return alert('Please enter valid email')
-        } else if (accts.find(acct => {return acct["Email"] === acctEmailRef.current.value}) !== null) {
-            return alert('Account already exists')
-        } else if(!insecurePwordRef.current.value){
-            return alert('Set password!');  
-        } else if (insecurePwordRef.current.value.length < 8) {
-            return alert('Password is too weak')
-        } else {
+    const handleCreateAcct = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+    
+        setValidated(true);
+        // handleErrors(event);
+        if (validated) {
             setShow(false);
             const newAcct = {
                 'Account No.': acctNum, 
@@ -145,25 +193,8 @@ const AccountList = (props) => {
             insecurePwordRef.current.value = null
             initBalRef.current.value = null
         }
-    }
-
-    class TransactionClass {
-        constructor(transactionId, transactionDate, transactionFromAcctNum, transactionToAcctNum, transactionType, transactionAmt) {
-            this.transactionId = transactionId;
-            this.transactionDate = transactionDate;
-            this.transactionFromAcctNum = transactionFromAcctNum;
-            this.transactionToAcctNum = transactionToAcctNum;
-            this.transactionType = transactionType;
-            this.transactionAmt = transactionAmt
-        }
-    }
-
-    const handleRegKeypress = (e) => {
-        //it triggers by pressing the enter key
-        if (e.code === 'Enter') {
-            handleCreateAcct();
-        }
-    };
+    
+    } 
 
     // disable changing of number values via mousewheel
     var numberInput;
@@ -178,11 +209,6 @@ const AccountList = (props) => {
             })
     }, [])
 
-    //limit to 2 decimal places onInput
-    const validate = (e) => {
-        e.target.value = (e.target.value.indexOf(".") >= 0) ? (e.target.value.substr(0, e.target.value.indexOf(".")) + e.target.value.substr(e.target.value.indexOf("."), 3)) : e.target.value;
-    }
-
     return (
         
         <div className="accountList">
@@ -193,56 +219,59 @@ const AccountList = (props) => {
 
             {/* Accounts List Table */}
             <div className="table-container">
-
-                    <Table responsive className ="container" id="userTable">
-                        <thead>
-                            <tr>
-                            <th>Account No.</th>
-                            <th>Account Name</th>
-                            <th>Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {accts.map(acct => {
-                                return <Account key={acct['Account No.']} acct = {acct}/>
-                            })}
-                        </tbody>
-                    </Table>
-
+                <Table responsive className ="container" id="userTable">
+                    <thead>
+                        <tr>
+                        <th>Account No.</th>
+                        <th>Account Name</th>
+                        <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {accts.map(acct => {
+                            return <Account key={acct['Account No.']} acct = {acct}/>
+                        })}
+                    </tbody>
+                </Table>
             </div>
                 
             {/*Add Account Modal*/}
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} id="register_modal">
 
-                <Modal.Header>
+                <Modal.Header id="modal_head">
                     <Modal.Title>Create New Account</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
+                <Modal.Body id="modal_body">
 
-                    <Form id="register2">
-
+                    <Form id="register2" noValidate validated={validated} onSubmit="handleCreateAcct">
+                            
                         <Form.Group className="mb-3">
-                            <Form.Label>Account Holder Name</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Label id="create-name">Account Holder Name:</Form.Label>
+                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} />
+                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Label id="create-email">Email address:</Form.Label>
+                            
+                            <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)}/>
+                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  onChange={(e) => setPword(e.target.value)} onKeyPress={handleRegKeypress}/>
+                            <Form.Label id="create-password">Password:</Form.Label>
+                            <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  id="password_input" onChange={(e) => setPword(e.target.value)}/>
+                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Initial Balance</Form.Label>
-                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  onChange={(e) => setBal(e.target.value)} onInput={validate} onKeyPress={handleRegKeypress}/>
+                            <Form.Label id="create-balance">Initial Balance:</Form.Label>
+                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate}/>
+                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
-                        <Button type="submit" variant="primary" onClick={handleCreateAcct}>
+                        <Button type="submit" id="create_account" variant="primary" onClick={handleCreateAcct}>
                             Create Account
                         </Button> 
-                        {<Button variant="secondary" onClick={handleClose}>
+                        {<Button id="close" variant="secondary" onClick={handleClose}>
                             Close
                         </Button>}
 

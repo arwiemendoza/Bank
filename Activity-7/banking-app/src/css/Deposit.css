@@ -1,0 +1,64 @@
+@font-face {
+  font-family: 'Consola';
+  src: url("../utils/CONSOLA.TTF");
+}
+
+.transact-parent {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+}
+
+.transact-sub {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 20em;
+  width: 20em;
+  background-color: transparent;
+  /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
+  -webkit-box-shadow: rgba(115, 245, 8, 0.527) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+          box-shadow: rgba(115, 245, 8, 0.527) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  background-image: url("../utils/test2.gif");
+}
+
+#transfer-sub {
+  height: 25em;
+  width: 20em;
+}
+
+.transact-sub2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.mb-3 {
+  color: #06f12d;
+  font-size: 2vmin;
+  font-weight: bold;
+  font-family: Consola;
+}
+/*# sourceMappingURL=Deposit.css.map */

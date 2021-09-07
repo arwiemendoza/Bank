@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
 import {Navigation, Login, UserTransaction, AccountList, Withdraw, Deposit, Transfer } from "./components";
@@ -63,14 +62,18 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="ApplicationTest">
       <Router>
         <Navigation 
           LOCAL_STORAGE_KEY_1={LOCAL_STORAGE_KEY_1} 
           LOCAL_STORAGE_KEY_2={LOCAL_STORAGE_KEY_2} />
         <Switch>
           <Route path="/login" exact component={(props) => (<Login {...props} isAuthed={true} />)} />
-          <Route path="/accounts" exact component={(props) => (<AccountList {...props} isAuthed={true} />)} />
+          <Route path="/accounts" exact 
+            render={(props) => (
+            <AccountList {...props} 
+            validate = {validate}
+            isAuthed={true} />)} />
           <Route path="/transactions" exact render={(props) => (<UserTransaction {...props} isAuthed={true} />)}/>
           <Route path="/withdraw" exact 
             render={(props) => (

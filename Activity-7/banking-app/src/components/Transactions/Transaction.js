@@ -1,6 +1,7 @@
 import React from 'react'
 import Dinero from '../../../node_modules/dinero.js'
 
+
 const User = ({transaction}) => {
     let formattedAmt = Dinero({ amount: parseInt(transaction.transactionAmt * 100), currency: 'PHP' }).toFormat()
     return (
@@ -11,6 +12,7 @@ const User = ({transaction}) => {
                     <td>{transaction.transactionToAcctNum}</td>
                     <td>{formattedAmt}</td>
                 </tr>
+
     )
 }
 

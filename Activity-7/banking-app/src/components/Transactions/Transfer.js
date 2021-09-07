@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from "react-router-dom";
+import '../../css/Deposit.css'
 
 const Transfer = (props) => {
     const location = useLocation();
@@ -63,26 +64,31 @@ const Transfer = (props) => {
     }
 
     return (
-        <div>
+        <div className="transact-parent">
            {/* Transfer Form */}
-            <div className="transact-parent">
-                <Form className="form-class">
-                    <Form.Group className="mb-3">
-                        <Form.Label>Sender Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Receiver Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setToAcctNum(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setTransferAmt(e.target.value)}/>
-                    </Form.Group>
-                </Form>
-                <Button variant="primary" onClick={handleTransfer}>
-                    Transfer
-                </Button>
+            <div className="transact-sub" id="transfer-sub"> 
+                <div className="transact-sub2">
+                    <Form className="form-class">
+                        <Form.Group className="mb-3">
+                            <Form.Label>Sender Account No.</Form.Label>
+                            <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Receiver Account No.</Form.Label>
+                            <Form.Control type="number" placeholder="Account No." onChange={(e) => setToAcctNum(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Amount:</Form.Label>
+                            <Form.Control className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setTransferAmt(e.target.value)}/>
+                        </Form.Group>
+                    </Form>
+                    <br />
+                    <Form.Text className="text-muted"></Form.Text>
+                    <br />
+                    <Button variant="primary" onClick={handleTransfer}>
+                        Transfer
+                    </Button>
+                </div>
             </div> 
         </div>
     )
