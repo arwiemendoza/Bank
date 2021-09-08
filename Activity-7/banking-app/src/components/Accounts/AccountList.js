@@ -37,6 +37,7 @@ const AccountList = (props) => {
     const handleShow = () => {
         setShow(true)
         generateAcctNum()
+        setValidated(false)
     };
   
     // input reference
@@ -113,65 +114,117 @@ const AccountList = (props) => {
 
     // Function for error checking
     const handleErrors = (event) => {
-        // nameChecker = false;
-        // emailChecker = false;
-        // passwordChecker = false;
-        // var inputEmail = accts.find(acct => {return acct["Email"] === acctEmailRef.current.value})
-        // if (!acctNameRef.current.value) {
-        //     acctNameRef.current.style.borderColor = 'red'
-        //     acctNameRef.current.focus()
+        const fullNameError = document.getElementById('fullNameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const balanceError = document.getElementById('balanceError');
+        // console.log(validated)
+        // const form = event.currentTarget;
+        // if (form.checkValidity() === false) {
+        //     event.preventDefault();
+        //     event.stopPropagation();
+        //     console.log('passed here')
+        //     return
         // }
-        // else if (!isNaN(acctNameRef.current.value.substring(0, 1))) {
-        //     acctNameRef.current.style.borderColor = 'red'
+        // if (form.checkValidity() === true) {
+        //     console.log('passed here too')
+        //     setValidated(true)
+        //     return
         // }
-        // else {
-        //     acctNameRef.current.style.borderColor = 'green'
-        //     nameChecker = true;
-        // }
-        // if (!acctEmailRef.current.value) {
-        //     acctEmailRef.current.style.borderColor = 'red'
-        // }  
-        // else if (acctEmailRef.current.value.indexOf('@') === -1){
-        //     acctEmailRef.current.style.borderColor = 'red' 
-        // } 
-        // else if (acctEmailRef.current.value.indexOf('.com') === -1){
-        //     acctEmailRef.current.style.borderColor = 'red'
-        // } 
-        // else if (inputEmail != null) {
-        //     acctEmailRef.current.style.borderColor = 'red'
-        //     // alert('Account already exists')
-        // }
-        // else {
-        //     acctEmailRef.current.style.borderColor = 'green'
-        //     emailChecker = true;
-        // }
-        // if(!insecurePwordRef.current.value){
-        //     insecurePwordRef.current.style.borderColor = 'red'
-        //     // return alert('Set password!');  
-        // } 
-        // else if (insecurePwordRef.current.value.length < 8) {
-        //     insecurePwordRef.current.style.borderColor = 'red'
-        //     // return alert('Password is too weak')
-        // } 
-        // else {
-        //     insecurePwordRef.current.style.borderColor = 'green'
-        //     passwordChecker = true;
-        // }
+        nameChecker = false;
+        emailChecker = false;
+        passwordChecker = false;
+        var inputEmail = accts.find(acct => {return acct["Email"] === acctEmailRef.current.value})
+        if (!acctNameRef.current.value) {
+            fullNameError.textContent = "Name is required"
+            acctNameRef.current.style.borderColor = 'red'
+            acctNameRef.current.focus()
+        }
+        else if (!isNaN(acctNameRef.current.value.substring(0, 1))) {
+            acctNameRef.current.style.borderColor = 'red'
+            fullNameError.textContent = "Name should not start with a number"
+            acctNameRef.current.focus()
+        }
+        else {
+            fullNameError.textContent = ""
+            acctNameRef.current.style.borderColor = 'green'
+            nameChecker = true;
+        }
+        if (!acctEmailRef.current.value) {
+            emailError.textContent = "Email is required"
+            acctEmailRef.current.style.borderColor = 'red'
+            if(nameChecker) {
+                acctEmailRef.current.focus()
+            }
+        }  
+        else if (acctEmailRef.current.value.indexOf('@') === -1){
+            emailError.textContent = "Please enter valid email"
+            acctEmailRef.current.style.borderColor = 'red' 
+            if(nameChecker) {
+                acctEmailRef.current.focus()
+            }
+        } 
+        else if (acctEmailRef.current.value.indexOf('.com') === -1){
+            emailError.textContent = "Please enter valid email"
+            acctEmailRef.current.style.borderColor = 'red'
+            if(nameChecker) {
+                acctEmailRef.current.focus()
+            }
+        } 
+        else if (inputEmail != null) {
+            emailError.textContent = "Account already exists"
+            acctEmailRef.current.style.borderColor = 'red'
+            if(nameChecker) {
+                acctEmailRef.current.focus()
+            }
+        }
+        else {
+            emailError.textContent = ""
+            acctEmailRef.current.style.borderColor = 'green'
+            emailChecker = true;
+        }
+        if(!insecurePwordRef.current.value){
+            passwordError.textContent = "Password is required"
+            insecurePwordRef.current.style.borderColor = 'red'
+            if(emailChecker && nameChecker) {
+                insecurePwordRef.current.focus()
+            }
+            // return alert('Set password!');  
+        } 
+        else if (insecurePwordRef.current.value.length < 8) {
+            passwordError.textContent = "Password is too weak"
+            insecurePwordRef.current.style.borderColor = 'red'
+            if(emailChecker && nameChecker) {
+                insecurePwordRef.current.focus()
+            }
+            // return alert('Password is too weak')
+        } 
+        else {
+            passwordError.textContent = ""
+            insecurePwordRef.current.style.borderColor = 'green'
+            passwordChecker = true;
+        }
     }
 
-    
+    // const handleRegKeypress = (e) => {
+    //     //it triggers by pressing the enter key
+    //     if (e.code === 'Enter') {
+    //         handleCreateAcct(e);
+    //     }
+    // };
 
     // Function for account creation
     const handleCreateAcct = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
+        handleErrors();
+
+        if(!passwordChecker || !emailChecker || !nameChecker) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
         }
-    
-        setValidated(true);
+
         // handleErrors(event);
-        if (validated) {
+        else {
             setShow(false);
             const newAcct = {
                 'Account No.': acctNum, 
@@ -246,39 +299,36 @@ const AccountList = (props) => {
                 </Modal.Header>
 
                 <Modal.Body id="modal_body">
-
-                    <Form id="register2" noValidate validated={validated} >
+                    <Form  id="register2" noValidate validated={validated} onSubmit={handleCreateAcct} >
                             
                         <Form.Group className="mb-3">
                             <Form.Label id="create-name">Account Holder Name:</Form.Label>
-                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} onKeyPress={handleRegKeypress} />
-                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
+                            <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} /> {/*onKeyPress={handleRegKeypress} />*/}
+                            <div className="create-email-placeholder" id="fullNameError"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-email">Email address:</Form.Label>
                             
-                            <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)} onKeyPress={handleRegKeypress}/>
-                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
+                            <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)}/>
+                            <div className="create-email-placeholder"id="emailError"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-password">Password:</Form.Label>
-                            <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  id="password_input" onChange={(e) => setPword(e.target.value)} onKeyPress={handleRegKeypress}/>
-                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
+                            <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  id="password_input" onChange={(e) => setPword(e.target.value)}/>
+                            <div className="create-email-placeholder" id="passwordError"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-balance">Initial Balance:</Form.Label>
-                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate} onKeyPress={handleRegKeypress}/>
-                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
+                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate}/>
+                            <div className="create-email-placeholder" id="balanceError"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
-                        <Button type="submit" id="create_account" variant="primary" onClick={handleCreateAcct}>
-                            Create Account
-                        </Button> 
                         {<Button id="close" variant="secondary" onClick={handleClose}>
                             Close
                         </Button>}
-
+                        <Button type="submit" id="create_account" variant="primary">
+                            Create Account
+                        </Button> 
                     </Form>
-
                 </Modal.Body>
 
             </Modal>
