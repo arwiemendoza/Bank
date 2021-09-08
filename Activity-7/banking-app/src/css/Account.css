@@ -71,6 +71,16 @@
 
 .accountList {
   background-color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
 #name_input, #email_input, #password_input, #balance_input, #register2, #modal_head, #modal_body {
@@ -127,7 +137,11 @@
   border: 1px solid #afccf3;
 }
 
-.create-email-placeholder {
+.create-account-placeholder {
   height: 1rem;
+  font-size: 1rem;
+  padding-top: .5rem;
+  padding-bottom: 1rem;
+  text-align: center;
 }
 /*# sourceMappingURL=Account.css.map */

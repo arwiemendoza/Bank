@@ -2,8 +2,8 @@
     "version": 3,
     "mappings": "AAAA,AAAA,gBAAgB,CAAA;EACZ,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,KAAK;EACZ,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,eAAe,EAAE,YAAY;EAC7B,aAAa,EAAE,MAAM;EACrB,WAAW,EAAE,MAAM;CACtB;;AAED,AAAA,iBAAiB,CAAA;EACb,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,KAAK;CACf",
     "sources": [
-        "Transaction.scss"
+        "TransactionHistory.scss"
     ],
     "names": [],
-    "file": "Transaction.css"
+    "file": "TransactionHistory.css"
 }

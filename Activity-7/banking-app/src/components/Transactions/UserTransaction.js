@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Transaction from './Transaction'
 import Table from 'react-bootstrap/Table';
 import { useLocation } from "react-router-dom";
+import '../../css/TransactionHistory.css'
 
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
@@ -16,7 +17,9 @@ const UserTransaction = () => {
     }, [])
 
     return (
-        <div>
+        <div className="transactionList">
+            <h1> Transaction History </h1>
+            
             {/* Transactions Table */}
             <Table responsive className ="container" id="transactionTable">
                 <thead>

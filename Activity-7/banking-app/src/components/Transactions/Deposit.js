@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from "react-router-dom";
 import '../../css/Deposit.css'
+import AccountListTransactions from '../Accounts/AccountListTransactions'
 
 const Deposit = (props) => {
     const location = useLocation();
@@ -43,7 +44,7 @@ const Deposit = (props) => {
     const handleDeposit = () => {
         const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
         if(fromAcct) {
-                setDepositMessage(`Depositing ${depositAmt} from ${fromAcct["Account Name"]}'s account`)
+                setDepositMessage(`Depositing ${depositAmt} from ${fromAcct["Account Name"]}'s account...`)
                 setTimeout(() =>{
                     var newBal = (fromAcct["Balance"]*100 - (-depositAmt)*100)/100;
                     setAccts([...accts], fromAcct["Balance"] = newBal)
@@ -53,7 +54,7 @@ const Deposit = (props) => {
                         return [...prevTransactions, newTransaction]
                     })
                     depositAmtRef.current.value = null
-                    setDepositMessage(`Successfully Deposited. New balance of ${fromAcct["Account Name"]} is ${newBal}`)
+                    setDepositMessage(`Successfully deposited. The new balance of ${fromAcct["Account Name"]} is ${newBal}`)
                 }, 2000)
         }
         else {
@@ -61,29 +62,35 @@ const Deposit = (props) => {
         }
     }
     return (
-        <div className="transact-parent">
-            {/* Deposit Form */}
-            <div className="transact-sub">
-                <div className="transact-sub2">
-                <Form className="form-class">
-                    <Form.Group className="mb-3">
-                        <Form.Label>Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)} onKeyPress={(e) => setDepositMessage('')}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Amount:</Form.Label>
-                        <Form.Control ref={depositAmtRef} className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)} onKeyPress={(e) => setDepositMessage('')}/>
-                    </Form.Group>
-                </Form>
-                <br />
-                <Form.Text className="text-muted">{depositMessage}</Form.Text>
-                <br/>
-                
-                <Button variant="primary" onClick={handleDeposit}>
-                    Deposit
-                </Button>
+        <div>
+            <div className="transact-parent">
+                <h1> Deposit </h1>
+                {/* Deposit Form */}
+                <div className="transact-sub">
+                    <div className="transact-sub2">
+                    <Form className="form-class">
+                        <Form.Group className="mb-3">
+                            <Form.Label>Account No.</Form.Label>
+                            <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)} onKeyPress={(e) => setDepositMessage('')}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Amount:</Form.Label>
+                            <Form.Control ref={depositAmtRef} className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)} onKeyPress={(e) => setDepositMessage('')}/>
+                        </Form.Group>
+                    </Form>
+                    <br />
+                    <div className="muted-container">
+                        <Form.Text id="errorMessage" className="create-account-placeholder">{depositMessage}</Form.Text>
+                    </div>
+                    <br/>
+                    
+                    <Button variant="primary" onClick={handleDeposit}>
+                        Deposit
+                    </Button>
+                    </div>
                 </div>
             </div>
+            <AccountListTransactions />
         </div>
     )
 }

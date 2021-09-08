@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Account from './Account'
 import '../../css/Account.css'
+import Dinero from '../../../node_modules/dinero.js'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
@@ -48,6 +49,7 @@ const AccountList = (props) => {
     // on modify account, will add to local storage
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
+        localStorage.setItem('accountListTransactions', JSON.stringify(accts));
     }, [accts])
 
     // functions for modal
@@ -157,6 +159,7 @@ const AccountList = (props) => {
             return;
         }
         else {
+            event.preventDefault();
             setShow(false);
             const newAcct = {
                 'Account No.': acctNum, 
@@ -196,8 +199,17 @@ const AccountList = (props) => {
             })
     }, [])
 
+    const handleDelete = (id) => {
+        const updatedUserList = accts.filter(acct => acct['Account No.'] !== id['Account No.'])
+        console.log(updatedUserList)
+        setAccts(updatedUserList)
+    }
+
+
     return (   
         <div className="accountList">
+            <h1> Accounts </h1>
+
             {/* Add Account Holder Button */}
             <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>
 
@@ -208,12 +220,13 @@ const AccountList = (props) => {
                         <tr>
                         <th>Account No.</th>
                         <th>Account Name</th>
+                        <th>Email</th>
                         <th>Balance</th>
                         </tr>
                     </thead>
                     <tbody>
                         {accts.map(acct => {
-                            return <Account key={acct['Account No.']} acct = {acct}/>
+                            return <Account emailDisplay={true} key={acct['Account No.']} acct = {acct}/>
                         })}
                     </tbody>
                 </Table>
@@ -228,25 +241,25 @@ const AccountList = (props) => {
                     <Form  id="register2" noValidate validated={validated} onSubmit={handleCreateAcct} >
                             
                         <Form.Group className="mb-3">
-                            <Form.Label id="create-name">Account Holder Name*:</Form.Label>
+                            <Form.Label id="create-name">Account Holder Name:</Form.Label>
                             <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} /> {/*onKeyPress={handleRegKeypress} />*/}
-                            <div className="create-email-placeholder">{fullNameErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
+                            <div className="create-account-placeholder">{fullNameErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label id="create-email">Email address*:</Form.Label>
+                            <Form.Label id="create-email">Email address:</Form.Label>
                             
                             <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)}/>
-                            <div className="create-email-placeholder">{emailErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
+                            <div className="create-account-placeholder">{emailErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label id="create-password">Password*:</Form.Label>
+                            <Form.Label id="create-password">Password:</Form.Label>
                             <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  id="password_input" onChange={(e) => setPword(e.target.value)}/>
-                            <div className="create-email-placeholder">{passwordErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
+                            <div className="create-account-placeholder">{passwordErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-balance">Initial Balance:</Form.Label>
                             <Form.Control className="number-input" min="0" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate}/>
-                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
+                            <div className="create-account-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         {<Button id="close" variant="secondary" onClick={handleClose}>
                             Close
