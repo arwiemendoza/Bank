@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Account from './Account'
-import { v4 as uuidv4 } from 'uuid';
 import '../../css/Account.css'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
@@ -23,23 +22,17 @@ const AccountList = (props) => {
     const [acctName, setAcctName] = useState('');
     const [acctEmail, setAcctEmail] = useState('');
     const [pword, setPword] = useState('');
-    //transaction states
-    const [fromAcctNum, setFromAcctNum] = useState('');
-    const [toAcctNum, setToAcctNum] = useState('');
-    const [withdrawAmt, setWithdrawAmt] = useState(0);
-    const [depositAmt, setDepositAmt] = useState(0);
-    const [transferAmt, setTransferAmt] = useState(0);
-    const [transactionHistory, setTransactionHistory] = useState([]);
+
+    //error messages
+    const [fullNameErrorMessage, setFullNameErrorMessage] = useState('');
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+
     const addButton = "{+}";
-    
-    // functions for modal
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true)
-        generateAcctNum()
-        setValidated(false)
-    };
-  
+    var nameChecker;
+    var emailChecker;
+    var passwordChecker;
+
     // input reference
     const acctNameRef = useRef();
     const acctEmailRef = useRef();
@@ -50,8 +43,6 @@ const AccountList = (props) => {
     useEffect(() => {
         const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
         if (storedAccts) setAccts(storedAccts);
-        const storedTransactions = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_2));
-        if (storedTransactions) setTransactionHistory(storedTransactions);
     }, [])
 
     // on modify account, will add to local storage
@@ -59,10 +50,16 @@ const AccountList = (props) => {
         localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
     }, [accts])
 
-    // on new transactions, will add to local storage
-    useEffect(() => {
-        localStorage.setItem(LOCAL_STORAGE_KEY_2, JSON.stringify(transactionHistory));
-    }, [transactionHistory])
+    // functions for modal
+    const handleClose = () => setShow(false);
+    const handleShow = () => {
+        setShow(true)
+        generateAcctNum()
+        setValidated(false)
+        setFullNameErrorMessage('')
+        setEmailErrorMessage('')
+        setPasswordErrorMessage('')
+    };
 
     // Account number generator
     const generateAcctNum = () => {
@@ -71,147 +68,84 @@ const AccountList = (props) => {
         setAcctNum(Math.floor(Math.random() * 90) + min)
     }
 
-    // Date and Time generator
-    const generateDate = () => {
-        var date = '';
-        //Date
-        var currentDate = new Date();
-        var year = currentDate.getFullYear();
-        var day = currentDate.getDate();
-        var month = currentDate.getMonth();
-        var monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-        // Time
-        var currentTime = new Date();
-        var h = currentTime.getHours();
-        var m = currentTime.getMinutes();
-        var partOfDay;
-        if (h < 12) {
-            partOfDay = "AM";
-        }
-        else {
-            partOfDay = "PM";
-        }
-        if (h > 12) {
-            h = h - 12;
-        }
-        if (h === 24) {
-            h = 12;
-        }
-        if (m < 10) {
-            m = "0" + m;
-        }
-
-        // Add to variable
-        date = `${monthArray[month]} ${day} ${year} ${h}:${m} ${partOfDay}`;
-
-        return date;
-    }
-
-    var nameChecker;
-    var emailChecker;
-    var passwordChecker;
-
     // Function for error checking
     const handleErrors = (event) => {
-        const fullNameError = document.getElementById('fullNameError');
-        const emailError = document.getElementById('emailError');
-        const passwordError = document.getElementById('passwordError');
-        const balanceError = document.getElementById('balanceError');
-        // console.log(validated)
-        // const form = event.currentTarget;
-        // if (form.checkValidity() === false) {
-        //     event.preventDefault();
-        //     event.stopPropagation();
-        //     console.log('passed here')
-        //     return
-        // }
-        // if (form.checkValidity() === true) {
-        //     console.log('passed here too')
-        //     setValidated(true)
-        //     return
-        // }
         nameChecker = false;
         emailChecker = false;
         passwordChecker = false;
         var inputEmail = accts.find(acct => {return acct["Email"] === acctEmailRef.current.value})
         if (!acctNameRef.current.value) {
-            fullNameError.textContent = "Name is required"
+            setFullNameErrorMessage('Name is required')
+            // fullNameError.textContent = "Name is required"
             acctNameRef.current.style.borderColor = 'red'
             acctNameRef.current.focus()
         }
         else if (!isNaN(acctNameRef.current.value.substring(0, 1))) {
+            setFullNameErrorMessage('Please enter valid name')
             acctNameRef.current.style.borderColor = 'red'
-            fullNameError.textContent = "Name should not start with a number"
+            // fullNameError.textContent = "Name should not start with a number"
             acctNameRef.current.focus()
         }
         else {
-            fullNameError.textContent = ""
+            setFullNameErrorMessage('')
             acctNameRef.current.style.borderColor = 'green'
             nameChecker = true;
         }
         if (!acctEmailRef.current.value) {
-            emailError.textContent = "Email is required"
+            setEmailErrorMessage('Email is required')
+            // emailError.textContent = "Email is required"
             acctEmailRef.current.style.borderColor = 'red'
             if(nameChecker) {
                 acctEmailRef.current.focus()
             }
         }  
         else if (acctEmailRef.current.value.indexOf('@') === -1){
-            emailError.textContent = "Please enter valid email"
+            setEmailErrorMessage('Please enter valid email')
+            // emailError.textContent = "Please enter valid email"
             acctEmailRef.current.style.borderColor = 'red' 
             if(nameChecker) {
                 acctEmailRef.current.focus()
             }
         } 
         else if (acctEmailRef.current.value.indexOf('.com') === -1){
-            emailError.textContent = "Please enter valid email"
+            setEmailErrorMessage('Please enter valid email')
             acctEmailRef.current.style.borderColor = 'red'
             if(nameChecker) {
                 acctEmailRef.current.focus()
             }
         } 
         else if (inputEmail != null) {
-            emailError.textContent = "Account already exists"
+            setEmailErrorMessage('Account already exists')
             acctEmailRef.current.style.borderColor = 'red'
             if(nameChecker) {
                 acctEmailRef.current.focus()
             }
         }
         else {
-            emailError.textContent = ""
+            setEmailErrorMessage('')
             acctEmailRef.current.style.borderColor = 'green'
             emailChecker = true;
         }
         if(!insecurePwordRef.current.value){
-            passwordError.textContent = "Password is required"
+            setPasswordErrorMessage('Password is required')
             insecurePwordRef.current.style.borderColor = 'red'
             if(emailChecker && nameChecker) {
                 insecurePwordRef.current.focus()
             }
-            // return alert('Set password!');  
         } 
         else if (insecurePwordRef.current.value.length < 8) {
-            passwordError.textContent = "Password is too weak"
+            setPasswordErrorMessage('Password is too weak')
             insecurePwordRef.current.style.borderColor = 'red'
             if(emailChecker && nameChecker) {
                 insecurePwordRef.current.focus()
             }
-            // return alert('Password is too weak')
         } 
         else {
-            passwordError.textContent = ""
+            setPasswordErrorMessage('')
             insecurePwordRef.current.style.borderColor = 'green'
             passwordChecker = true;
         }
     }
-
-    // const handleRegKeypress = (e) => {
-    //     //it triggers by pressing the enter key
-    //     if (e.code === 'Enter') {
-    //         handleCreateAcct(e);
-    //     }
-    // };
 
     // Function for account creation
     const handleCreateAcct = (event) => {
@@ -222,8 +156,6 @@ const AccountList = (props) => {
             event.stopPropagation();
             return;
         }
-
-        // handleErrors(event);
         else {
             setShow(false);
             const newAcct = {
@@ -264,11 +196,8 @@ const AccountList = (props) => {
             })
     }, [])
 
-    return (
-        
+    return (   
         <div className="accountList">
-
-            {/* <Navigation transactionHistory={transactionHistory}/> */}
             {/* Add Account Holder Button */}
             <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>
 
@@ -291,36 +220,33 @@ const AccountList = (props) => {
             </div>
                 
             {/*Add Account Modal*/}
-
             <Modal show={show} onHide={handleClose} id="register_modal">
-
                 <Modal.Header id="modal_head">
                     <Modal.Title>Create New Account</Modal.Title>
                 </Modal.Header>
-
                 <Modal.Body id="modal_body">
                     <Form  id="register2" noValidate validated={validated} onSubmit={handleCreateAcct} >
                             
                         <Form.Group className="mb-3">
-                            <Form.Label id="create-name">Account Holder Name:</Form.Label>
+                            <Form.Label id="create-name">Account Holder Name*:</Form.Label>
                             <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} /> {/*onKeyPress={handleRegKeypress} />*/}
-                            <div className="create-email-placeholder" id="fullNameError"><Form.Text className="text-muted"></Form.Text></div>
+                            <div className="create-email-placeholder">{fullNameErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label id="create-email">Email address:</Form.Label>
+                            <Form.Label id="create-email">Email address*:</Form.Label>
                             
                             <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)}/>
-                            <div className="create-email-placeholder"id="emailError"><Form.Text className="text-muted"></Form.Text></div>
+                            <div className="create-email-placeholder">{emailErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label id="create-password">Password:</Form.Label>
+                            <Form.Label id="create-password">Password*:</Form.Label>
                             <Form.Control type="password" placeholder="********" min="5" required ref={insecurePwordRef}  id="password_input" onChange={(e) => setPword(e.target.value)}/>
-                            <div className="create-email-placeholder" id="passwordError"><Form.Text className="text-muted"></Form.Text></div>
+                            <div className="create-email-placeholder">{passwordErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-balance">Initial Balance:</Form.Label>
-                            <Form.Control className="number-input" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate}/>
-                            <div className="create-email-placeholder" id="balanceError"><Form.Text className="text-muted"></Form.Text></div>
+                            <Form.Control className="number-input" min="0" type="number" placeholder="0" ref={initBalRef}  id="balance_input" onChange={(e) => setBal(e.target.value)} onInput={props.validate}/>
+                            <div className="create-email-placeholder"><Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>
                         {<Button id="close" variant="secondary" onClick={handleClose}>
                             Close
@@ -330,9 +256,7 @@ const AccountList = (props) => {
                         </Button> 
                     </Form>
                 </Modal.Body>
-
             </Modal>
-
         </div>
     )
 }

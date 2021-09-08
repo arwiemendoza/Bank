@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +16,11 @@ const Deposit = (props) => {
     const [fromAcctNum, setFromAcctNum] = useState('');
     const [depositAmt, setDepositAmt] = useState(0);
     const [transactionHistory, setTransactionHistory] = useState([]);
+
+    //messages
+    const [depositMessage, setDepositMessage] = useState('');
+
+    const depositAmtRef = useRef();
 
     useEffect(() => {
         const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
@@ -38,16 +43,21 @@ const Deposit = (props) => {
     const handleDeposit = () => {
         const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
         if(fromAcct) {
-                var newBal = (fromAcct["Balance"]*100 - (-depositAmt)*100)/100;
-                setAccts([...accts], fromAcct["Balance"] = newBal)
-                var date = generateDate();
-                var newTransaction = new TransactionClass(uuidv4(), date, null, fromAcctNum, "Deposit", depositAmt);
-                setTransactionHistory(prevTransactions => {
-                    return [...prevTransactions, newTransaction]
-                })
+                setDepositMessage(`Depositing ${depositAmt} from ${fromAcct["Account Name"]}'s account`)
+                setTimeout(() =>{
+                    var newBal = (fromAcct["Balance"]*100 - (-depositAmt)*100)/100;
+                    setAccts([...accts], fromAcct["Balance"] = newBal)
+                    var date = generateDate();
+                    var newTransaction = new TransactionClass(uuidv4(), date, null, fromAcctNum, "Deposit", depositAmt);
+                    setTransactionHistory(prevTransactions => {
+                        return [...prevTransactions, newTransaction]
+                    })
+                    depositAmtRef.current.value = null
+                    setDepositMessage(`Successfully Deposited. New balance of ${fromAcct["Account Name"]} is ${newBal}`)
+                }, 2000)
         }
         else {
-            alert('Account does not exist')
+            setDepositMessage(`Account does not exist`)
         }
     }
     return (
@@ -58,15 +68,15 @@ const Deposit = (props) => {
                 <Form className="form-class">
                     <Form.Group className="mb-3">
                         <Form.Label>Account No.</Form.Label>
-                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)}/>
+                        <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)} onKeyPress={(e) => setDepositMessage('')}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Amount:</Form.Label>
-                        <Form.Control className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)}/>
+                        <Form.Control ref={depositAmtRef} className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)} onKeyPress={(e) => setDepositMessage('')}/>
                     </Form.Group>
                 </Form>
                 <br />
-                <Form.Text className="text-muted"></Form.Text>
+                <Form.Text className="text-muted">{depositMessage}</Form.Text>
                 <br/>
                 
                 <Button variant="primary" onClick={handleDeposit}>
