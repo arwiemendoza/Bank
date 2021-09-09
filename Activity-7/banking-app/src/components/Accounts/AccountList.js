@@ -162,11 +162,12 @@ const AccountList = (props) => {
             event.preventDefault();
             setShow(false);
             const newAcct = {
-                'Account No.': acctNum, 
+                id: acctNum, 
                 'Account Name': acctName, 
                 'Email': acctEmail, 
                 'Password': pword, 
-                'Balance': bal
+                'Balance': bal,
+                ticked: false
             }
 
             //add new user to previous set of users using spread operator for previous data 
@@ -199,19 +200,27 @@ const AccountList = (props) => {
             })
     }, [])
 
-    const handleDelete = (id) => {
-        const updatedUserList = accts.filter(acct => acct['Account No.'] !== id['Account No.'])
-        console.log(updatedUserList)
+    const handleDelete = (e) => {
+        const newAccts = [...accts]
+        const updatedUserList = newAccts.filter(acct => !acct.ticked)
         setAccts(updatedUserList)
     }
 
+    function toggleCheck(id) {
+        const newAccts = [...accts]
+        const acct = newAccts.find(acct => acct.id === id)
+        acct.ticked = !acct.ticked
+        setAccts(newAccts)
+      }
 
     return (   
         <div className="accountList">
-            <h1> Accounts </h1>
+            <h1 className="glitch" id="account-header" data-text="Accounts"> Accounts </h1>
 
             {/* Add Account Holder Button */}
             <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>
+
+            <Button variant="primary" id="deleteAccounts" onClick = {handleDelete}>Delete Selected Accounts</Button>
 
             {/* Accounts List Table */}
             <div className="table-container">
@@ -226,7 +235,7 @@ const AccountList = (props) => {
                     </thead>
                     <tbody>
                         {accts.map(acct => {
-                            return <Account emailDisplay={true} key={acct['Account No.']} acct = {acct}/>
+                            return <Account emailDisplay={true} toggleCheck={toggleCheck} key={acct.id} acct = {acct}/>
                         })}
                     </tbody>
                 </Table>
@@ -238,8 +247,7 @@ const AccountList = (props) => {
                     <Modal.Title>Create New Account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body id="modal_body">
-                    <Form  id="register2" noValidate validated={validated} onSubmit={handleCreateAcct} >
-                            
+                    <Form  id="register2" noValidate validated={validated} onSubmit={handleCreateAcct} >        
                         <Form.Group className="mb-3">
                             <Form.Label id="create-name">Account Holder Name:</Form.Label>
                             <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} /> {/*onKeyPress={handleRegKeypress} />*/}

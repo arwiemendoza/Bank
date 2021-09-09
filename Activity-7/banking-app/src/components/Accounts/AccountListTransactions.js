@@ -38,7 +38,7 @@ const AccountListTransactions = (props) => {
                     </thead>
                     <tbody>
                         {acctList.map(acct => {
-                            return <Account key={acct['Account No.']} acct = {acct}/>
+                            return <Account key={acct.id} acct = {acct}/>
                         })}
                     </tbody>
                 </Table>

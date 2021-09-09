@@ -42,7 +42,7 @@ const Deposit = (props) => {
 
     //Function to deposit
     const handleDeposit = () => {
-        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
+        const fromAcct = accts.find(acct => {return acct.id === fromAcctNum})
         if(fromAcct) {
                 setDepositMessage(`Depositing ${depositAmt} from ${fromAcct["Account Name"]}'s account...`)
                 setTimeout(() =>{
@@ -64,7 +64,7 @@ const Deposit = (props) => {
     return (
         <div>
             <div className="transact-parent">
-                <h1> Deposit </h1>
+                <h1 className="glitch" data-text="Deposit"> Deposit </h1>
                 {/* Deposit Form */}
                 <div className="transact-sub">
                     <div className="transact-sub2">
@@ -84,7 +84,7 @@ const Deposit = (props) => {
                     </div>
                     <br/>
                     
-                    <Button variant="primary" onClick={handleDeposit}>
+                    <Button id="deposit-button" className="transact-button" variant="primary" onClick={handleDeposit}>
                         Deposit
                     </Button>
                     </div>

@@ -51,7 +51,7 @@ const Withdraw = (props) => {
 
     //Function to withdraw
     const handleWithdraw = () => {
-        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
+        const fromAcct = accts.find(acct => {return acct.id === fromAcctNum})
         if(fromAcct) {
             if(fromAcct["Balance"]>= parseInt(withdrawAmt*100)/100) {
                 setWithdrawMessage(`Withdrawing ${withdrawAmt} from ${fromAcct["Account Name"]}'s account...`)
@@ -86,7 +86,7 @@ const Withdraw = (props) => {
     return (
         <div> 
             <div className="transact-parent">
-                <h1> Withdraw </h1>
+                <h1  className="glitch" data-text="Withdraw"> Withdraw </h1>
 
                 {/* Withdraw Form */}
                 <div className="transact-sub">
@@ -106,7 +106,7 @@ const Withdraw = (props) => {
                             <Form.Text id="errorMessage" className="text-muted">{withdrawMessage}</Form.Text>
                         </div>
                         <br/> 
-                        <Button variant="primary" onClick={handleWithdraw}>
+                        <Button className="transact-button" variant="primary" onClick={handleWithdraw}>
                             Withdraw
                         </Button>
                     </div>

@@ -44,8 +44,8 @@ const Transfer = (props) => {
 
     //Function to transfer
     const handleTransfer = () => {
-        const fromAcct = accts.find(acct => {return acct["Account No."] === fromAcctNum})
-        const toAcct = accts.find(acct => {return acct["Account No."] === toAcctNum})
+        const fromAcct = accts.find(acct => {return acct.id === fromAcctNum})
+        const toAcct = accts.find(acct => {return acct.id === toAcctNum})
         if(fromAcct && toAcct) {
             if(fromAcct!=toAcct) {
                 if(fromAcct["Balance"]>= parseInt(transferAmt*100)/100) {
@@ -83,7 +83,7 @@ const Transfer = (props) => {
     return (
         <div>
             <div className="transact-parent">
-                <h1> Transfer </h1>
+                <h1 className="glitch" data-text="Transfer"> Transfer </h1>
 
             {/* Transfer Form */}
                 <div className="transact-sub" id="transfer-sub"> 
@@ -107,7 +107,7 @@ const Transfer = (props) => {
                             <Form.Text id="errorMessage" className="returnMessage">{transferMessage}</Form.Text>
                         </div>
                         <br />
-                        <Button variant="primary" onClick={handleTransfer}>
+                        <Button id="transfer-button" className="transact-button" variant="primary" onClick={handleTransfer}>
                             Transfer
                         </Button>
                     </div>

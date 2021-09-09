@@ -18,7 +18,7 @@ const UserTransaction = () => {
 
     return (
         <div className="transactionList">
-            <h1> Transaction History </h1>
+            <h1 className="glitch" data-text="Transaction History"> Transaction History </h1>
             
             {/* Transactions Table */}
             <Table responsive className ="container" id="transactionTable">

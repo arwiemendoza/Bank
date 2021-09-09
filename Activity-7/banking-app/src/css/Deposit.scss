@@ -3,6 +3,8 @@
     src: url('../utils/CONSOLA.TTF');
 }
 
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100');
+
 @mixin background-base {
     background-repeat: no-repeat;
     background-position: center center;
@@ -40,9 +42,10 @@
 
     background-color:transparent;
     /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
-    box-shadow: rgba(134, 141, 33, 0.527) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;  
+    box-shadow: rgba(200, 90, 70, 0.527) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;  
     background-image: url('../utils/test4.gif')
 }
+
 #transfer-sub{
 
     height:30em;
@@ -54,8 +57,8 @@
 }
 .mb-3{
 
-    color:rgb(6, 241, 45);
-    font-size: 2vmin;
+    color:rgba(167, 1, 1, 0.938);
+    font-size: 1.5rem;
     font-weight: bold;
     font-family: Consola;
 }
@@ -71,4 +74,109 @@
     color: red;
     font-size: 1.2em;
     font-weight: 800;
+}
+
+h1 {
+	padding: 0;
+	margin: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+/* #app {
+	background: rgb(10,10,10);
+	height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(rgba(10,10,10,.6),rgba(0,0,0,.9)), repeating-linear-gradient(0, transparent, transparent 2px, black 3px, black 3px),
+		url('https://images.unsplash.com/photo-1506399558188-acca6f8cbf41?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=7118759521e3184778a3b5e010e202c6');
+	background-size: cover;
+	background-position: center;
+	z-index: 1;
+} */
+
+#wrapper {
+	 text-align: center;
+}
+
+.sub {
+	color: rgb(100,220,220);
+	letter-spacing: 1em;
+}
+
+@mixin glitchCopy { 
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch {
+    position: relative;
+    color: black;
+    font-size: 3em;
+    font-weight: bold;
+    letter-spacing: .5em;
+    animation: glitch-skew 1s infinite linear alternate-reverse;
+}
+
+.glitch::before{
+    @include glitchCopy;
+    left: 2px;
+    text-shadow: -2px 0 #0f0755;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    @include glitchCopy;
+    left: -2px;
+    text-shadow: -2px 0 white, 2px 2px white;
+    animation: glitch-anim2 1s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    $steps: 20;
+    @for $i from 0 through $steps {
+      #{percentage($i*(1/$steps))} {
+        clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+              transform: skew((random(100) / 100) + deg);
+      }
+    }
+  }
+
+  @keyframes glitch-anim2 {
+    $steps: 20;
+    @for $i from 0 through $steps {
+      #{percentage($i*(1/$steps))} {
+        clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+              transform: skew((random(100) / 100) + deg);
+      }
+    }
+  }
+
+  @keyframes glitch-skew {
+    $steps: 10;
+    @for $i from 0 through $steps {
+      #{percentage($i*(1/$steps))} {
+        transform: skew((random(10) - 5) + deg);
+      }
+    }
+  }
+#deposit-button, #transfer-button{
+  background-color: #2196f3;
+  color:white;
+  transition: 0.2s;
+  border: none;
+}
+.transact-button:hover{
+  color: #255784;
+  background: #2196f3;
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
 }
