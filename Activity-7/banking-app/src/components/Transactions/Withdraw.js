@@ -2,15 +2,19 @@ import React, {useState, useEffect, useRef} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import '../../css/Withdraw.css'
-import AccountListTransactions from '../Accounts/AccountListTransactions'
+// import AccountListTransactions from '../Accounts/AccountListTransactions'
 import Table from 'react-bootstrap/Table';
 import Account from '../Accounts/Account'
 
+const LOCAL_STORAGE_KEY_1 = 'userList';
+const LOCAL_STORAGE_KEY_2 = 'transactionList';
+const LOCAL_STORAGE_KEY_3 = 'accountListTransactions';
+
 const Withdraw = (props) => {
-    const location = useLocation();
-    const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
+    // const location = useLocation();
+    // const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
     const generateDate = props.generateDate
     const TransactionClass = props.TransactionClass
     const validate = props.validate
@@ -36,7 +40,7 @@ const Withdraw = (props) => {
 
     //filterlist
     useEffect(() => {
-        localStorage.setItem('accountListTransactions', JSON.stringify(acctList));
+        localStorage.setItem(LOCAL_STORAGE_KEY_3, JSON.stringify(acctList));
     }, [acctList])
 
     // on modify account, will add to local storage
@@ -78,9 +82,6 @@ const Withdraw = (props) => {
 
     const handelAcctNumKeypress = (e) => {
         setWithdrawMessage('')
-
-        // acctList.filter((user) => {return fromAcct[] === fromAcctNum})
-
     }
 
     return (
@@ -94,7 +95,7 @@ const Withdraw = (props) => {
                         <Form className="form-class">
                             <Form.Group className="mb-3">
                                 <Form.Label>Account No.</Form.Label>
-                                <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)} onKeyPress={(e) => handelAcctNumKeypress(e)}/>
+                                <Form.Control type="number" className="number-input" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)} onKeyPress={(e) => handelAcctNumKeypress(e)}/>
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Amount:</Form.Label>

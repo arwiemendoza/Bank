@@ -5,10 +5,11 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Account from './Account'
 import '../../css/Account.css'
-import Dinero from '../../../node_modules/dinero.js'
+// import Dinero from '../../../node_modules/dinero.js'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
-const LOCAL_STORAGE_KEY_2 = 'transactionList';
+// const LOCAL_STORAGE_KEY_2 = 'transactionList';
+const LOCAL_STORAGE_KEY_3 = 'accountListTransactions'
 
 const AccountList = (props) => {
     //modal display states
@@ -49,7 +50,7 @@ const AccountList = (props) => {
     // on modify account, will add to local storage
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
-        localStorage.setItem('accountListTransactions', JSON.stringify(accts));
+        localStorage.setItem(LOCAL_STORAGE_KEY_3, JSON.stringify(accts));
     }, [accts])
 
     // functions for modal
@@ -187,9 +188,9 @@ const AccountList = (props) => {
     
     } 
 
-    // disable changing of number values via mousewheel
-    var numberInput;
     useEffect(() => {
+            // disable changing of number values via mousewheel
+        var numberInput;
             numberInput = document.querySelectorAll('.number-input');
             numberInput.forEach(input => {
                 input.addEventListener("mousewheel", 
@@ -211,7 +212,7 @@ const AccountList = (props) => {
         const acct = newAccts.find(acct => acct.id === id)
         acct.ticked = !acct.ticked
         setAccts(newAccts)
-      }
+    }
 
     return (   
         <div className="accountList">

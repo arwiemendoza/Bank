@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import Dinero from '../../../node_modules/dinero.js'
 
 const Account = ({acct, emailDisplay, toggleCheck}) => {
@@ -10,7 +10,7 @@ const Account = ({acct, emailDisplay, toggleCheck}) => {
 
     return (
                 <tr>
-                    <td><input type="checkbox" defaultChecked={acct.ticked} onChange={handleClick}/></td>
+                    {emailDisplay && <td><input type="checkbox" defaultChecked={acct.ticked} onChange={handleClick}/></td>}
                     <td>{acct.id}</td>
                     <td>{acct['Account Name']}</td>
                     {emailDisplay && <td>{acct['Email']}</td>}

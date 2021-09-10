@@ -2,13 +2,16 @@ import React, {useState, useEffect, useRef} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import '../../css/Deposit.css'
 import AccountListTransactions from '../Accounts/AccountListTransactions'
 
+const LOCAL_STORAGE_KEY_1 = 'userList';
+const LOCAL_STORAGE_KEY_2 = 'transactionList';
+
 const Transfer = (props) => {
-    const location = useLocation();
-    const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
+    // const location = useLocation();
+    // const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
     const generateDate = props.generateDate
     const TransactionClass = props.TransactionClass
     const validate = props.validate
@@ -47,7 +50,7 @@ const Transfer = (props) => {
         const fromAcct = accts.find(acct => {return acct.id === fromAcctNum})
         const toAcct = accts.find(acct => {return acct.id === toAcctNum})
         if(fromAcct && toAcct) {
-            if(fromAcct!=toAcct) {
+            if(fromAcct!==toAcct) {
                 if(fromAcct["Balance"]>= parseInt(transferAmt*100)/100) {
                     setTransferMessage(`Transferring ${transferAmt} from ${fromAcct["Account Name"]} to ${toAcct["Account Name"]}'s account...`)
                     setTimeout(() =>{
@@ -91,7 +94,7 @@ const Transfer = (props) => {
                         <Form className="form-class">
                             <Form.Group className="mb-3">
                                 <Form.Label>Sender Account No.</Form.Label>
-                                <Form.Control type="number" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)} onKeyPress={(e) => setTransferMessage('')}/>
+                                <Form.Control type="number" className="number-input" placeholder="Account No." onChange={(e) => setFromAcctNum(e.target.value)} onKeyPress={(e) => setTransferMessage('')}/>
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Receiver Account No.</Form.Label>

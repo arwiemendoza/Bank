@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { Form, Button, Dropdown } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import '../css/Login.css'
 
@@ -9,7 +9,7 @@ const Login = () => {
     const usernameRef = useRef();
     const passwordRef = useRef();
 
-    var loadingTextId;
+    var loadingTextId
 
     const loadingText = `Loading`;
     const loadingEllipis = `...`;
@@ -18,7 +18,7 @@ const Login = () => {
 
     useEffect(() => {
         loadingTextId = document.querySelector('#loadingTextId');
-        console.log(loadingTextId);
+        // console.log(loadingTextId);
     }, [])
 
     // function for Type Effect
@@ -48,6 +48,7 @@ const Login = () => {
 
         }
     };
+    
     let userSwitch;
     let loginParent;
     let adminLogo;
