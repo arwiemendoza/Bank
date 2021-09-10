@@ -116,7 +116,7 @@ const Transfer = (props) => {
                     </div>
                 </div> 
             </div>
-            <AccountListTransactions />
+            {/* <AccountListTransactions /> */}
         </div>
     )
 }

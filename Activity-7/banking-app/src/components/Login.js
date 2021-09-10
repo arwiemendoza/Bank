@@ -1,7 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { Form } from 'react-bootstrap';
+import { Form, Button} from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import '../css/Login.css'
+import Modal from 'react-bootstrap/Modal';
+import CreateAcctModal from './Accounts/CreateAcctModal';
 
 const Login = () => {
     const [loginState, setLoginState] = useState(false);
@@ -116,7 +118,9 @@ const Login = () => {
                     <div className="form-check form-switch">
                         <input className="form-check-input" type="checkbox" id="userSwitch" onClick={changeUser}/>
                     </div>
+            
         </div>
+        <CreateAcctModal />
     </div>
     )
 }
