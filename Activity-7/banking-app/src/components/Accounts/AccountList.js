@@ -15,13 +15,17 @@ const AccountList = (props) => {
     useEffect(() => {
         const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
         if (storedAccts) setAccts(storedAccts);
+        console.log(accts)
     }, [])
 
+    // console.log(accts)
+
     // on change accts, will load existing accounts and transactions
-    useEffect(() => {
-        const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
-        if (storedAccts) setAccts(storedAccts);
-    }, [accts])
+    // useEffect(() => {
+    //     const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
+    //     if (storedAccts) setAccts(storedAccts);
+    //     // localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
+    // }, [accts])
 
 
     // console.log(accts)
