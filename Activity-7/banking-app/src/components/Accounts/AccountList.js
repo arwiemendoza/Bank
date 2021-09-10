@@ -1,16 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
-// import Modal from 'react-bootstrap/Modal';
 import Account from './Account'
 import '../../css/Account.css'
 import CreateAcctModal from './CreateAcctModal';
-// import Dinero from '../../../node_modules/dinero.js'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
-// const LOCAL_STORAGE_KEY_2 = 'transactionList';
-// const LOCAL_STORAGE_KEY_3 = 'accountListTransactions'
 
 const AccountList = (props) => {
     //account data states
@@ -22,6 +17,14 @@ const AccountList = (props) => {
         if (storedAccts) setAccts(storedAccts);
     }, [])
 
+    // on change accts, will load existing accounts and transactions
+    useEffect(() => {
+        const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
+        if (storedAccts) setAccts(storedAccts);
+    }, [accts])
+
+
+    // console.log(accts)
     const handleDelete = (e) => {
         const newAccts = [...accts]
         const updatedUserList = newAccts.filter(acct => !acct.ticked)
@@ -60,7 +63,6 @@ const AccountList = (props) => {
                     </tbody>
                 </Table>
             </div>
-            {/* <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button> */}
             <CreateAcctModal />
         </div>
     )
