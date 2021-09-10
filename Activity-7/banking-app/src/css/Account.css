@@ -61,6 +61,7 @@
   right: 10vw;
   bottom: 5vh;
   border-radius: 5vmin;
+  border: none;
 }
 
 #register_modal {
@@ -147,5 +148,11 @@
 
 #account-header {
   color: white;
+}
+
+#deleteAccounts {
+  color: black;
+  background-color: white;
+  border: none;
 }
 /*# sourceMappingURL=Account.css.map */

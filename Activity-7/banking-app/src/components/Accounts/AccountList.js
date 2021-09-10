@@ -117,7 +117,7 @@ const AccountList = (props) => {
             }
         } 
         else if (inputEmail != null) {
-            setEmailErrorMessage('Account already exists')
+            setEmailErrorMessage('Email already exists')
             acctEmailRef.current.style.borderColor = 'red'
             if(nameChecker) {
                 acctEmailRef.current.focus()
@@ -158,7 +158,7 @@ const AccountList = (props) => {
             event.stopPropagation();
             return;
         }
-        else {
+        else { 
             event.preventDefault();
             setShow(false);
             const newAcct = {
@@ -227,6 +227,7 @@ const AccountList = (props) => {
                 <Table responsive className ="container" id="userTable">
                     <thead>
                         <tr>
+                        <th></th>
                         <th>Account No.</th>
                         <th>Account Name</th>
                         <th>Email</th>
@@ -247,7 +248,7 @@ const AccountList = (props) => {
                     <Modal.Title>Create New Account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body id="modal_body">
-                    <Form  id="register2" noValidate validated={validated} onSubmit={handleCreateAcct} >        
+                    <Form  id="register2" noValidate validated={validated} onSubmit={handleCreateAcct} >       
                         <Form.Group className="mb-3">
                             <Form.Label id="create-name">Account Holder Name:</Form.Label>
                             <Form.Control type="text" placeholder="Full Name" required ref={acctNameRef} id="name_input" onChange={(e) => setAcctName(e.target.value)} /> {/*onKeyPress={handleRegKeypress} />*/}
@@ -255,7 +256,6 @@ const AccountList = (props) => {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label id="create-email">Email address:</Form.Label>
-                            
                             <Form.Control type="email" placeholder="name@example.com" required ref={acctEmailRef} id="email_input" onChange={(e) => setAcctEmail(e.target.value)}/>
                             <div className="create-account-placeholder">{emailErrorMessage}<Form.Text className="text-muted"></Form.Text></div>
                         </Form.Group>

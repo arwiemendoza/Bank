@@ -51,6 +51,7 @@ $font-color:#09f501;
     right: 10vw;
     bottom: 5vh;
     border-radius: 5vmin;
+    border: none;
 }
 #register_modal{
     box-shadow: #c9653c 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
@@ -122,4 +123,10 @@ $font-color:#09f501;
 
 #account-header{
     color: white;
+}
+
+#deleteAccounts{
+    color: black;
+    background-color: white;
+    border: none;
 }

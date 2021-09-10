@@ -125,9 +125,9 @@ const Withdraw = (props) => {
                         </thead>
                         <tbody>
                             {acctList
-                                .filter(acct => fromAcctNum === '' || acct['Account No.'].includes(fromAcctNum))
+                                .filter(acct => fromAcctNum === '' || acct.id.includes(fromAcctNum))
                                 .map(acct => {
-                                    return <Account emailDisplay={false} key={acct['Account No.']} acct = {acct}/>
+                                    return <Account emailDisplay={false} key={acct.id} acct = {acct}/>
                                 })
                             }
                         </tbody>

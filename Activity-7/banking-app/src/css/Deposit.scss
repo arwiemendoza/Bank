@@ -42,7 +42,7 @@
 
     background-color:transparent;
     /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
-    box-shadow: rgba(200, 90, 70, 0.527) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;  
+    box-shadow: rgba(243, 144, 126, 0.527) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;  
     background-image: url('../utils/test4.gif')
 }
 
@@ -55,12 +55,14 @@
 .transact-sub2{
     @include container-position();
 }
+
 .mb-3{
 
-    color:rgba(167, 1, 1, 0.938);
+    color:rgba(255, 0, 0, 0.938);
     font-size: 1.5rem;
     font-weight: bold;
     font-family: Consola;
+    
 }
 
 .muted-container{
@@ -81,23 +83,6 @@ h1 {
 	margin: 0;
 	font-family: 'Montserrat', sans-serif;
 }
-
-/* #app {
-	background: rgb(10,10,10);
-	height: 100vh;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	background: linear-gradient(rgba(10,10,10,.6),rgba(0,0,0,.9)), repeating-linear-gradient(0, transparent, transparent 2px, black 3px, black 3px),
-		url('https://images.unsplash.com/photo-1506399558188-acca6f8cbf41?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=7118759521e3184778a3b5e010e202c6');
-	background-size: cover;
-	background-position: center;
-	z-index: 1;
-} */
 
 #wrapper {
 	 text-align: center;
