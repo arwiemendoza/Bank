@@ -8,6 +8,7 @@ import AccountListTransactions from '../Accounts/AccountListTransactions'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
+const LOCAL_STORAGE_KEY_3 = 'accountListTransactions';
 
 const Transfer = (props) => {
     // const location = useLocation();
@@ -17,6 +18,7 @@ const Transfer = (props) => {
     const validate = props.validate
 
     const [accts, setAccts] = useState([]);
+    const [acctList, setAcctList] = useState([]);
     const [fromAcctNum, setFromAcctNum] = useState('');
     const [toAcctNum, setToAcctNum] = useState('');
     const [transferAmt, setTransferAmt] = useState(0);
@@ -33,6 +35,7 @@ const Transfer = (props) => {
         if (storedAccts) setAccts(storedAccts);
         const storedTransactions = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_2));
         if (storedTransactions) setTransactionHistory(storedTransactions);
+        if (storedAccts) setAcctList(storedAccts);
     }, [])
 
     // on modify account, will add to local storage
@@ -44,6 +47,11 @@ const Transfer = (props) => {
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY_2, JSON.stringify(transactionHistory));
     }, [transactionHistory])
+
+    //filterlist
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_KEY_3, JSON.stringify(acctList));
+    }, [acctList])
 
     //Function to transfer
     const handleTransfer = () => {
@@ -116,7 +124,7 @@ const Transfer = (props) => {
                     </div>
                 </div> 
             </div>
-            {/* <AccountListTransactions /> */}
+            <AccountListTransactions acctList={acctList} fromAcctNum={fromAcctNum} toAcctNum={toAcctNum}/>
         </div>
     )
 }

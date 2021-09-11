@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
-import {Navigation, Login, UserTransaction, AccountList, Withdraw, Deposit, Transfer } from "./components";
+import {Navigation, Login, UserTransaction, AccountList, Withdraw, Deposit, Transfer, Dashboard } from "./components";
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
@@ -96,6 +96,10 @@ function App() {
               TransactionClass = {TransactionClass}
               validate = {validate}
               isAuthed={true} />)}/>
+          <Route path="/client/dashboard" exact 
+            render={(props) => (
+            <Dashboard {...props} 
+            isAuthed={true} />)} />
           <Route path="/" >
             <Redirect to="/login"/>
           </Route>

@@ -1,14 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react'
-import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import Account from './Account'
 import '../../css/Account.css'
-// import Dinero from '../../../node_modules/dinero.js'
+import AcctTable from './AcctTable'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
-// const LOCAL_STORAGE_KEY_2 = 'transactionList';
 const LOCAL_STORAGE_KEY_3 = 'accountListTransactions'
 
 const AccountList = (props) => {
@@ -224,24 +221,8 @@ const AccountList = (props) => {
             <Button variant="primary" id="deleteAccounts" onClick = {handleDelete}>Delete Selected Accounts</Button>
 
             {/* Accounts List Table */}
-            <div className="table-container">
-                <Table responsive className ="container" id="userTable">
-                    <thead>
-                        <tr>
-                        <th></th>
-                        <th>Account No.</th>
-                        <th>Account Name</th>
-                        <th>Email</th>
-                        <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {accts.map(acct => {
-                            return <Account emailDisplay={true} toggleCheck={toggleCheck} key={acct.id} acct = {acct}/>
-                        })}
-                    </tbody>
-                </Table>
-            </div>
+            <AcctTable  emailDisplay={true} toggleCheck={toggleCheck} accts={accts}/>
+            
                 
             {/*Add Account Modal*/}
             <Modal show={show} onHide={handleClose} id="register_modal">

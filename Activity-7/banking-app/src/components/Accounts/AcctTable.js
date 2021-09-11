@@ -1,28 +1,26 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import Table from 'react-bootstrap/Table';
 import Account from './Account'
-import '../../css/Account.css'
 
-const AccountListTransactions = ({acctList, fromAcctNum}) => {
-    return (   
-        <div className="accountList">
+const AcctTable = ({emailDisplay, toggleCheck, accts}) => {
+    return (
+        <div>
             {/* Accounts List Table */}
             <div className="table-container">
                 <Table responsive className ="container" id="userTable">
                     <thead>
                         <tr>
+                        <th></th>
                         <th>Account No.</th>
                         <th>Account Name</th>
+                        <th>Email</th>
                         <th>Balance</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {acctList
-                            .filter(acct => fromAcctNum === '' || acct.id.includes(fromAcctNum))
-                            .map(acct => {
-                                return <Account emailDisplay={false} key={acct.id} acct = {acct}/>
-                            })
-                        }
+                        {accts.map(acct => {
+                            return <Account emailDisplay={true} toggleCheck={toggleCheck} key={acct.id} acct = {acct}/>
+                        })}
                     </tbody>
                 </Table>
             </div>
@@ -30,4 +28,4 @@ const AccountListTransactions = ({acctList, fromAcctNum}) => {
     )
 }
 
-export default AccountListTransactions;
+export default AcctTable

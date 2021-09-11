@@ -5,67 +5,86 @@ import '../css/Login.css'
 import Modal from 'react-bootstrap/Modal';
 import CreateAcctModal from './Accounts/CreateAcctModal';
 
+const LOCAL_STORAGE_KEY_1 = 'userList';
+
 const Login = () => {
+    const [accts, setAccts] = useState([]);
     const [loginState, setLoginState] = useState(false);
+    const [userType, setUserType] = useState('client');
 
     const usernameRef = useRef();
     const passwordRef = useRef();
 
-    var loadingTextId
+    // var loadingTextId
 
-    const loadingText = `Loading`;
-    const loadingEllipis = `...`;
-    const typingDelay = 500;
-    var charIndex = 0;
+    // const loadingText = `Loading`;
+    // const loadingEllipis = `...`;
+    // const typingDelay = 500;
+    // var charIndex = 0;
 
     useEffect(() => {
-        loadingTextId = document.querySelector('#loadingTextId');
-        // console.log(loadingTextId);
+        const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
+        if (storedAccts) setAccts(storedAccts);
     }, [])
 
+    // useEffect(() => {
+    //     // loadingTextId = document.querySelector('#loadingTextId');
+    //     const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
+    //     if (storedAccts) setAccts(storedAccts);
+    //     console.log(accts)
+    // }, [])
+
     // function for Type Effect
-    function type() {
-        if(charIndex < loadingText.length + loadingEllipis.length) {
-            loadingTextId.textContent += loadingEllipis.charAt(charIndex); // Add 1 dot
-            charIndex++;
-            setTimeout(type, typingDelay); // callback type function every 500ms
-        }
-    }
+    // function type() {
+    //     if(charIndex < loadingText.length + loadingEllipis.length) {
+    //         loadingTextId.textContent += loadingEllipis.charAt(charIndex); // Add 1 dot
+    //         charIndex++;
+    //         setTimeout(type, typingDelay); // callback type function every 500ms
+    //     }
+    // }
 
     const handleLoginKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
-            loadingTextId.textContent = loadingText
-            type();
+            // loadingTextId.textContent = loadingText
+            // type();
 
             setTimeout(() => {
-                if ((usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') || (usernameRef.current.value === 'arwie' && passwordRef.current.value === 'p4ssw0rd')){
-                    setLoginState(true);
+                if(userType === 'client') {
+                    let clientLogin = accts.find(acct => acct['Email'] === usernameRef.current.value && acct['Password'] === passwordRef.current.value)
+                    if (clientLogin) {
+                        setLoginState(true)
+                    }
+                    else {
+                        console.log('fail')
+                    }
+                }
+                else if ((usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') || (usernameRef.current.value === 'arwie' && passwordRef.current.value === 'p4ssw0rd')){
+                        setLoginState(true);
                 }
                 else {
                     console.log('fail')
                 }
-                loadingTextId.textContent = '';
+                // loadingTextId.textContent = '';
             }, 2000)
 
         }
     };
     
-    let userSwitch;
-    let loginParent;
-    let adminLogo;
-    let adminForm;
-    let adminPlaceholder
-
-    useEffect(() => {
+    const changeUser = () => {
+            
+        let userSwitch;
+        let loginParent;
+        let adminLogo;
+        let adminForm;
+        let adminPlaceholder
         userSwitch = document.querySelector('#userSwitch')
         loginParent = document.querySelector('.login-parent')
         adminLogo = document.querySelector('svg')
         adminForm = document.querySelectorAll('.login-label')
         adminPlaceholder = document.querySelectorAll('.form-control')
-    },[])
-    const changeUser = () => {
         if (userSwitch.checked){
+            setUserType('admin')
             loginParent.classList.add('adminlogin-parent')
             adminLogo.classList.add('admin-svg')
             adminForm.forEach(form => {
@@ -75,6 +94,7 @@ const Login = () => {
                 form.classList.add('form-placeholder')    
             })
         }else {
+            setUserType('client')
             loginParent.classList.remove('adminlogin-parent')
             adminLogo.classList.remove('admin-svg')
             adminForm.forEach(form => {
@@ -85,9 +105,14 @@ const Login = () => {
             })
         }
     }
-    if (loginState) {
+    if (loginState && userType === 'admin') {
         return (
             <Redirect to="/accounts"/>
+        )
+    }
+    else if (loginState && userType === 'client') {
+        return (
+            <Redirect to="/client/dashboard"/>
         )
     }
     else {
@@ -109,9 +134,6 @@ const Login = () => {
                         <Form.Label className="login-label">Password</Form.Label>
                         <Form.Control className="form-control" type="password" placeholder="********" ref={passwordRef} onKeyPress={handleLoginKeypress} />
                     </Form.Group>
-                    {/* <Button variant="primary" type="submit" className="form-button">
-                        Login
-                    </Button> */}
                     <br/>
                     <Form.Text className="text-muted" id="loadingTextId"></Form.Text>
                     </Form>
@@ -120,7 +142,7 @@ const Login = () => {
                     </div>
             
         </div>
-        <CreateAcctModal />
+        {/* <CreateAcctModal /> */}
     </div>
     )
 }
