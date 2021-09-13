@@ -107,7 +107,7 @@ h1 {
     color: black;
     font-size: 3em;
     font-weight: bold;
-    letter-spacing: .5em;
+    /* letter-spacing: .5em; */
     animation: glitch-skew 1s infinite linear alternate-reverse;
 }
 
@@ -122,7 +122,7 @@ h1 {
 .glitch::after {
     @include glitchCopy;
     left: -2px;
-    text-shadow: -2px 0 white, 2px 2px white;
+    text-shadow: -2px 0 white/* , 2px 2px white */;
     animation: glitch-anim2 1s infinite linear alternate-reverse;
 }
 

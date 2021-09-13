@@ -9,7 +9,7 @@ function Navigation(props) {
     const LOCAL_STORAGE_KEY_2 = props.LOCAL_STORAGE_KEY_2;
     const location = useLocation();
 
-    if (location.pathname.match('/login')){
+    if (location.pathname.match('/login') || (location.pathname.match('/dashboard'))){
         return null;
     }
 

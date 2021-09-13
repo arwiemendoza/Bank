@@ -23,15 +23,12 @@ const Login = () => {
     // var charIndex = 0;
 
     useEffect(() => {
-        const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
+        const storedAccts = JSON.parse(localStorage.getItem('userList'));
         if (storedAccts) setAccts(storedAccts);
     }, [])
 
     // useEffect(() => {
-    //     // loadingTextId = document.querySelector('#loadingTextId');
-    //     const storedAccts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_1));
-    //     if (storedAccts) setAccts(storedAccts);
-    //     console.log(accts)
+    //     loadingTextId = document.querySelector('#loadingTextId');
     // }, [])
 
     // function for Type Effect
@@ -112,7 +109,15 @@ const Login = () => {
     }
     else if (loginState && userType === 'client') {
         return (
-            <Redirect to="/client/dashboard"/>
+            <Redirect 
+                to={{
+                    pathname: '/client/dashboard',
+                    state: { 
+                        email: usernameRef.current.value,
+                        accts
+                    }
+                }}
+            />
         )
     }
     else {
