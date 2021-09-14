@@ -95,20 +95,13 @@ const AccountList = (props) => {
                 acctEmailRef.current.focus()
             }
         }  
-        else if (acctEmailRef.current.value.indexOf('@') === -1){
+        else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(acctEmailRef.current.value))){
             setEmailErrorMessage('Please enter valid email')
             acctEmailRef.current.style.borderColor = 'red' 
             if(nameChecker) {
                 acctEmailRef.current.focus()
             }
-        } 
-        else if (acctEmailRef.current.value.indexOf('.com') === -1){
-            setEmailErrorMessage('Please enter valid email')
-            acctEmailRef.current.style.borderColor = 'red'
-            if(nameChecker) {
-                acctEmailRef.current.focus()
-            }
-        } 
+        }
         else if (inputEmail != null) {
             setEmailErrorMessage('Email already exists')
             acctEmailRef.current.style.borderColor = 'red'
@@ -129,7 +122,7 @@ const AccountList = (props) => {
             }
         } 
         else if (insecurePwordRef.current.value.length < 8) {
-            setPasswordErrorMessage('Password is too weak')
+            setPasswordErrorMessage('Password is too short')
             insecurePwordRef.current.style.borderColor = 'red'
             if(emailChecker && nameChecker) {
                 insecurePwordRef.current.focus()

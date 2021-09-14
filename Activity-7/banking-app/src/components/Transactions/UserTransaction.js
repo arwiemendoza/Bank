@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Transaction from './Transaction'
 import Table from 'react-bootstrap/Table';
 // import { useLocation } from "react-router-dom";
-import '../../css/TransactionHistory.css'
+import '../../css/Account.css'
 
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
@@ -17,30 +17,28 @@ const UserTransaction = () => {
     }, [])
 
     return (
-        <div className="transactionList">
-            <h1 className="glitch" data-text="Transaction History"> Transaction History </h1>
-            
-            {/* Transactions Table */}
-            <Table responsive className ="container" id="transactionTable">
-                <thead>
-                    <tr>
-                    <th>Transaction Date</th>
-                    <th>Type</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/* {transactionHistoryProp.map(transaction => {
-                        return <Transaction key={transaction.transactionId} transaction = {transaction}/>
-                    })} */}
-                    {transactionHistory.map(transaction => {
-                        return <Transaction key={transaction.transactionId} transaction = {transaction}/>
-                    })}
-                </tbody>
-            </Table>
+        <div className="accountList">
+            <h1 className="glitch" data-text="Transaction History">Transaction History</h1>
+            <div className="table-container">
+                {/* Transactions Table */}
+                <Table responsive className ="container" id="transactionTable">
+                    <thead>
+                        <tr>
+                        <th>Transaction Date</th>
+                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {transactionHistory.map(transaction => {
+                            return <Transaction key={transaction.transactionId} transaction = {transaction}/>
+                        })}
+                    </tbody>
+                </Table>
 
+            </div>
         </div>
     )
 }
