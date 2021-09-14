@@ -17,34 +17,36 @@ const Login = () => {
 
     // var loadingTextId
 
-    // const loadingText = `Loading`;
-    // const loadingEllipis = `...`;
-    // const typingDelay = 500;
-    // var charIndex = 0;
+    const loadingText = `Loading`;
+    const loadingEllipis = `...`;
+    const typingDelay = 500;
+    var charIndex = 0;
 
     useEffect(() => {
         const storedAccts = JSON.parse(localStorage.getItem('userList'));
         if (storedAccts) setAccts(storedAccts);
     }, [])
 
+
+    const loadingTextId = document.querySelector('#loadingTextId');
     // useEffect(() => {
-    //     loadingTextId = document.querySelector('#loadingTextId');
+        
     // }, [])
 
     // function for Type Effect
-    // function type() {
-    //     if(charIndex < loadingText.length + loadingEllipis.length) {
-    //         loadingTextId.textContent += loadingEllipis.charAt(charIndex); // Add 1 dot
-    //         charIndex++;
-    //         setTimeout(type, typingDelay); // callback type function every 500ms
-    //     }
-    // }
+    function type() {
+        if(charIndex < loadingText.length + loadingEllipis.length) {
+            loadingTextId.textContent += loadingEllipis.charAt(charIndex); // Add 1 dot
+            charIndex++;
+            setTimeout(type, typingDelay); // callback type function every 500ms
+        }
+    }
 
     const handleLoginKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
-            // loadingTextId.textContent = loadingText
-            // type();
+            if(loadingTextId) {loadingTextId.textContent = loadingText}
+            type();
 
             setTimeout(() => {
                 if(userType === 'client') {
@@ -62,7 +64,7 @@ const Login = () => {
                 else {
                     console.log('fail')
                 }
-                // loadingTextId.textContent = '';
+                loadingTextId.textContent = '';
             }, 2000)
 
         }
