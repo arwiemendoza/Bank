@@ -2,21 +2,21 @@ import React, {useState, useEffect, useRef} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
-// import { useLocation } from "react-router-dom";
 import '../../css/Deposit.css'
-import AccountListTransactions from '../Accounts/AccountListTransactions'
+import Table from 'react-bootstrap/Table';
+import Account from '../Accounts/Account'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
+const LOCAL_STORAGE_KEY_3 = 'accountListTransactions';
 
 const Deposit = (props) => {
-    // const location = useLocation();
-    // const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
     const generateDate = props.generateDate
     const TransactionClass = props.TransactionClass
     const validate = props.validate
 
     const [accts, setAccts] = useState([]);
+    const [acctList, setAcctList] = useState([]);
     const [fromAcctNum, setFromAcctNum] = useState('');
     const [depositAmt, setDepositAmt] = useState(0);
     const [transactionHistory, setTransactionHistory] = useState([]);
@@ -31,7 +31,13 @@ const Deposit = (props) => {
         if (storedAccts) setAccts(storedAccts)
         const storedTransactions = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_2));
         if (storedTransactions) setTransactionHistory(storedTransactions);
+        if (storedAccts) setAcctList(storedAccts);
     }, [])
+
+    //filterlist
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_KEY_3, JSON.stringify(acctList));
+    }, [acctList])
 
     // on modify account, will add to local storage
     useEffect(() => {
@@ -65,7 +71,7 @@ const Deposit = (props) => {
         }
     }
     return (
-        <div>
+        <div className="main-parent">
             <div className="transact-parent">
                 <h1 className="glitch" data-text="Deposit"> Deposit </h1>
                 {/* Deposit Form */}
@@ -81,11 +87,9 @@ const Deposit = (props) => {
                             <Form.Control ref={depositAmtRef} className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setDepositAmt(e.target.value)} onKeyPress={(e) => setDepositMessage('')}/>
                         </Form.Group>
                     </Form>
-                    <br />
                     <div className="muted-container">
-                        <Form.Text id="errorMessage" className="create-account-placeholder">{depositMessage}</Form.Text>
+                        <Form.Text id="errorMessage">{depositMessage}</Form.Text>
                     </div>
-                    <br/>
                     
                     <Button id="deposit-button" className="transact-button" variant="primary" onClick={handleDeposit}>
                         Deposit
@@ -94,6 +98,28 @@ const Deposit = (props) => {
                 </div>
             </div>
             {/* <AccountListTransactions /> */}
+            <div className="accountList transactionAccountList">
+                {/* Accounts List Table */}
+                <div className="table-container">
+                    <Table responsive className ="container" id="userTable">
+                        <thead>
+                            <tr>
+                            <th>Account No.</th>
+                            <th>Account Name</th>
+                            <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {acctList
+                                .filter(acct => fromAcctNum === '' || acct.id.includes(fromAcctNum))
+                                .map(acct => {
+                                    return <Account emailDisplay={false} key={acct.id} acct = {acct}/>
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                </div>
+            </div>
         </div>
     )
 }

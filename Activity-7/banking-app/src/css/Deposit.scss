@@ -14,7 +14,6 @@
     background-size: cover;
 }
 
-
 @mixin container-position{
     display: flex;
     flex-direction: column;
@@ -22,59 +21,58 @@
     align-items: center;
     align-content: center;
 }
+
 .transact-parent{
-  
-  height:100vh;
-  width: 100vw;
-  /* background-color: black; */
+  height:50%;
+  width: 100%;
   background-image: url('../utils/test2.jpg');
 }
 
 .transact-sub{
     @include background-base();
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @include container-position();
+    height: 80%;
     
 
-    height:30em;
-    width: 20em;
+    // height:30em;
+    // width: 20em;
 
-    background-color:transparent;
+    // background-color:transparent;
     /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
     box-shadow: rgba(243, 144, 126, 0.527) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;  
     background-image: url('../utils/test4.gif')
 }
 
-#transfer-sub{
+// #transfer-sub{
 
-    height:30em;
-    width: 20em;
-    text-align: center;
-}
+//     // height:30em;
+//     // // width: 20em;
+//     // text-align: center;
+// }
 .transact-sub2{
     @include container-position();
+    height: 100%;
+    width: 100%;
 }
 
 .mb-3{
 
     color:rgba(255, 0, 0, 0.938);
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     font-family: Consola;
     
 }
 
 .muted-container{
-
     text-align: center;
-    height: 5em;
+    height: 3rem;
     width: 18em;
 }
 
 #errorMessage{
     color: red;
-    font-size: 1.2em;
+    font-size: 1rem;
     font-weight: 800;
 }
 
@@ -105,7 +103,7 @@ h1 {
 .glitch {
     position: relative;
     color: black;
-    font-size: 3em;
+    font-size: 2em;
     font-weight: bold;
     /* letter-spacing: .5em; */
     animation: glitch-skew 1s infinite linear alternate-reverse;
@@ -164,4 +162,19 @@ h1 {
   color: #255784;
   background: #2196f3;
   box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+}
+
+.transactionAccountList {
+  width: 100%;
+  height: 50%;
+}
+
+.main-parent {
+  @include container-position();
+  width: 100vw;
+  height: 100vh;
+}
+
+.number-input {
+  height: 1.5rem;
 }

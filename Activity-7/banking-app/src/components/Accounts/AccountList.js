@@ -63,9 +63,8 @@ const AccountList = (props) => {
 
     // Account number generator
     const generateAcctNum = () => {
-        let date = new Date();
-        let min = (date.getMinutes()).toString().substr(-2);
-        setAcctNum(Math.floor(Math.random() * 90) + min)
+        let generatedAcctNum = Date.now().toString().substr(0,12)
+        setAcctNum(generatedAcctNum)
     }
 
     // Function for error checking
@@ -76,14 +75,12 @@ const AccountList = (props) => {
         var inputEmail = accts.find(acct => {return acct["Email"] === acctEmailRef.current.value})
         if (!acctNameRef.current.value) {
             setFullNameErrorMessage('Name is required')
-            // fullNameError.textContent = "Name is required"
             acctNameRef.current.style.borderColor = 'red'
             acctNameRef.current.focus()
         }
         else if (!isNaN(acctNameRef.current.value.substring(0, 1))) {
             setFullNameErrorMessage('Please enter valid name')
             acctNameRef.current.style.borderColor = 'red'
-            // fullNameError.textContent = "Name should not start with a number"
             acctNameRef.current.focus()
         }
         else {
@@ -93,7 +90,6 @@ const AccountList = (props) => {
         }
         if (!acctEmailRef.current.value) {
             setEmailErrorMessage('Email is required')
-            // emailError.textContent = "Email is required"
             acctEmailRef.current.style.borderColor = 'red'
             if(nameChecker) {
                 acctEmailRef.current.focus()
@@ -101,7 +97,6 @@ const AccountList = (props) => {
         }  
         else if (acctEmailRef.current.value.indexOf('@') === -1){
             setEmailErrorMessage('Please enter valid email')
-            // emailError.textContent = "Please enter valid email"
             acctEmailRef.current.style.borderColor = 'red' 
             if(nameChecker) {
                 acctEmailRef.current.focus()
@@ -186,7 +181,7 @@ const AccountList = (props) => {
     } 
 
     useEffect(() => {
-            // disable changing of number values via mousewheel
+        // disable changing of number values via mousewheel
         var numberInput;
             numberInput = document.querySelectorAll('.number-input');
             numberInput.forEach(input => {

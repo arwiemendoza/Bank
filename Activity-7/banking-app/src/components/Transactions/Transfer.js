@@ -4,15 +4,14 @@ import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
 // import { useLocation } from "react-router-dom";
 import '../../css/Deposit.css'
-import AccountListTransactions from '../Accounts/AccountListTransactions'
+import Table from 'react-bootstrap/Table';
+import Account from '../Accounts/Account'
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
 const LOCAL_STORAGE_KEY_3 = 'accountListTransactions';
 
 const Transfer = (props) => {
-    // const location = useLocation();
-    // const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
     const generateDate = props.generateDate
     const TransactionClass = props.TransactionClass
     const validate = props.validate
@@ -72,7 +71,7 @@ const Transfer = (props) => {
                             return [...prevTransactions, newTransaction]
                         })
                         transferAmtRef.current.value = null
-                        setTransferMessage(`Successful Transfer. The new balance of ${fromAcct["Account Name"]} is ${newBalFromAcct} and the balance of ${toAcct["Account Name"]} is ${newBalToAcct} `)
+                        setTransferMessage(`Successful Transfer.`)
                     }, 2000)
                 }
                 else {
@@ -92,12 +91,12 @@ const Transfer = (props) => {
     }
 
     return (
-        <div>
+        <div className="main-parent">
             <div className="transact-parent">
                 <h1 className="glitch" data-text="Transfer"> Transfer </h1>
 
             {/* Transfer Form */}
-                <div className="transact-sub" id="transfer-sub"> 
+                <div className="transact-sub"> 
                     <div className="transact-sub2">
                         <Form className="form-class">
                             <Form.Group className="mb-3">
@@ -106,25 +105,45 @@ const Transfer = (props) => {
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Receiver Account No.</Form.Label>
-                                <Form.Control type="number" placeholder="Account No." onChange={(e) => setToAcctNum(e.target.value)} onKeyPress={(e) => setTransferMessage('')}/>
+                                <Form.Control type="number" className="number-input" placeholder="Account No." onChange={(e) => setToAcctNum(e.target.value)} onKeyPress={(e) => setTransferMessage('')}/>
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Amount:</Form.Label>
                                 <Form.Control ref={transferAmtRef} className="number-input" type="number" placeholder="0" onInput={validate} onChange={(e) => setTransferAmt(e.target.value)} onKeyPress={(e) => setTransferMessage('')}/>
                             </Form.Group>
                         </Form>
-                        <br />
                         <div className="muted-container">
-                            <Form.Text id="errorMessage" className="returnMessage">{transferMessage}</Form.Text>
+                            <Form.Text id="errorMessage">{transferMessage}</Form.Text>
                         </div>
-                        <br />
                         <Button id="transfer-button" className="transact-button" variant="primary" onClick={handleTransfer}>
                             Transfer
                         </Button>
                     </div>
                 </div> 
             </div>
-            <AccountListTransactions acctList={acctList} fromAcctNum={fromAcctNum} toAcctNum={toAcctNum}/>
+            {/* <AccountListTransactions /> */}
+            <div className="accountList transactionAccountList">
+                {/* Accounts List Table */}
+                <div className="table-container">
+                    <Table responsive className ="container" id="userTable">
+                        <thead>
+                            <tr>
+                            <th>Account No.</th>
+                            <th>Account Name</th>
+                            <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {acctList
+                                .filter(acct => toAcctNum === '' || acct.id.includes(toAcctNum))
+                                .map(acct => {
+                                    return <Account emailDisplay={false} key={acct.id} acct = {acct}/>
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                </div>
+            </div>
         </div>
     )
 }

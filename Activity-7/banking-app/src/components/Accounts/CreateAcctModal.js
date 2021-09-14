@@ -63,9 +63,11 @@ const CreateAcctModal = (props) => {
 
     // Account number generator
     const generateAcctNum = () => {
-        let date = new Date();
-        let min = (date.getMinutes()).toString().substr(-2);
-        setAcctNum(Math.floor(Math.random() * 90) + min)
+        // let date = new Date();
+        // let min = (date.getMinutes()).toString().substr(-2);
+        let generatedAcctNum = Date.now().toString().substr(0,11)
+        setAcctNum(generatedAcctNum)
+        // setAcctNum(Math.floor(Math.random() * 90) + min)
     }
 
     // Function for error checking

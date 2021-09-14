@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAQA,AAAA,gBAAgB,CAAA;EAPZ,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,eAAe,EAAE,YAAY;EAC7B,aAAa,EAAE,MAAM;EACrB,WAAW,EAAE,MAAM;EAKnB,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,KAAK;EACZ,gBAAgB,EAAE,WAAW;CAEhC;;AAED,AAAA,iBAAiB,CAAA;EACb,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,KAAK;CACf",
-    "sources": [
-        "TransactionHistory.scss"
-    ],
-    "names": [],
-    "file": "TransactionHistory.css"
-}
+{"version":3,"sourceRoot":"","sources":["TransactionHistory.scss"],"names":[],"mappings":"AAQA;EAPI;EACA;EACA;EACA;EACA;EAKA;EACA;EACA;;;AAIJ;EACI;EACA","file":"TransactionHistory.css"}

@@ -2,9 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { v4 as uuidv4 } from 'uuid';
-// import { useLocation } from "react-router-dom";
-import '../../css/Withdraw.css'
-// import AccountListTransactions from '../Accounts/AccountListTransactions'
+import '../../css/Deposit.css'
 import Table from 'react-bootstrap/Table';
 import Account from '../Accounts/Account'
 
@@ -13,8 +11,6 @@ const LOCAL_STORAGE_KEY_2 = 'transactionList';
 const LOCAL_STORAGE_KEY_3 = 'accountListTransactions';
 
 const Withdraw = (props) => {
-    // const location = useLocation();
-    // const {LOCAL_STORAGE_KEY_1, LOCAL_STORAGE_KEY_2} = location.state;
     const generateDate = props.generateDate
     const TransactionClass = props.TransactionClass
     const validate = props.validate
@@ -85,7 +81,7 @@ const Withdraw = (props) => {
     }
 
     return (
-        <div> 
+        <div className="main-parent"> 
             <div className="transact-parent">
                 <h1  className="glitch" data-text="Withdraw"> Withdraw </h1>
 
@@ -102,18 +98,16 @@ const Withdraw = (props) => {
                                 <Form.Control ref={withdrawAmtRef} className="number-input" min="1" type="number" placeholder="0" onInput={validate} onChange={(e) => setWithdrawAmt(e.target.value)} onKeyPress={(e) => setWithdrawMessage('')}/>
                             </Form.Group>
                         </Form>
-                        <br/>
                         <div className="muted-container">
-                            <Form.Text id="errorMessage" className="text-muted">{withdrawMessage}</Form.Text>
+                            <Form.Text id="errorMessage">{withdrawMessage}</Form.Text>
                         </div>
-                        <br/> 
                         <Button className="transact-button" variant="primary" onClick={handleWithdraw}>
                             Withdraw
                         </Button>
                     </div>
                 </div>
             </div>
-            <div className="accountList">
+            <div className="accountList transactionAccountList">
                 {/* Accounts List Table */}
                 <div className="table-container">
                     <Table responsive className ="container" id="userTable">
