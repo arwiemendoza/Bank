@@ -124,6 +124,10 @@ h1 {
     animation: glitch-anim2 1s infinite linear alternate-reverse;
 }
 
+.white-glitch{
+  color: white;
+}
+
 @keyframes glitch-anim {
     $steps: 20;
     @for $i from 0 through $steps {

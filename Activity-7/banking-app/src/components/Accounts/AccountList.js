@@ -201,7 +201,7 @@ const AccountList = (props) => {
 
     return (   
         <div className="accountList">
-            <h1 className="glitch" id="account-header" data-text="Accounts"> Accounts </h1>
+            <h1 className="glitch white-glitch" data-text="Accounts"> Accounts </h1>
 
             {/* Add Account Holder Button */}
             <Button variant="primary" id="createAccount" onClick={handleShow}>{addButton}</Button>

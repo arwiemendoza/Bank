@@ -1,14 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import Transaction from './Transaction'
 import Table from 'react-bootstrap/Table';
-// import { useLocation } from "react-router-dom";
 import '../../css/Account.css'
 
 const LOCAL_STORAGE_KEY_2 = 'transactionList';
 
 const UserTransaction = () => {    
-    // const location = useLocation();
-    // const {transactionHistoryProp} = location.state
     const [transactionHistory, setTransactionHistory] = useState([]);
 
     useEffect(() => {
@@ -18,17 +15,17 @@ const UserTransaction = () => {
 
     return (
         <div className="accountList">
-            <h1 className="glitch" data-text="Transaction History">Transaction History</h1>
+            <h1 className="glitch white-glitch" data-text="Transaction History">Transaction History</h1>
             <div className="table-container">
                 {/* Transactions Table */}
                 <Table responsive className ="container" id="transactionTable">
                     <thead>
                         <tr>
-                        <th>Transaction Date</th>
-                        <th>Type</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Amount</th>
+                            <th>Transaction Date</th>
+                            <th>Type</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
