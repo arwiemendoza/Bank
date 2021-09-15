@@ -104,9 +104,8 @@ svg {
 }
 
 #userSwitch:checked {
-  margin-top: 10vmin;
   background-color: #09f501;
-  border: 1px solid #00c600;
+  border-color: #00c600;
 }
 
 @media (max-width: 375px) {

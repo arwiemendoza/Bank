@@ -15,12 +15,10 @@ const Login = () => {
     const usernameRef = useRef();
     const passwordRef = useRef();
 
-    // var loadingTextId
-
     const loadingText = `Loading`;
     const loadingEllipis = `...`;
     const typingDelay = 500;
-    var charIndex = 0;
+    var charIndex;
 
     useEffect(() => {
         const storedAccts = JSON.parse(localStorage.getItem('userList'));
@@ -35,7 +33,8 @@ const Login = () => {
 
     // function for Type Effect
     function type() {
-        if(charIndex < loadingText.length + loadingEllipis.length) {
+        if(charIndex < loadingEllipis.length) {
+            console.log(charIndex)
             loadingTextId.textContent += loadingEllipis.charAt(charIndex); // Add 1 dot
             charIndex++;
             setTimeout(type, typingDelay); // callback type function every 500ms
@@ -45,28 +44,43 @@ const Login = () => {
     const handleLoginKeypress = (e) => {
         //it triggers by pressing the enter key
         if (e.code === 'Enter') {
-            if(loadingTextId) {loadingTextId.textContent = loadingText}
-            type();
+            if(loadingTextId) {
+                loadingTextId.textContent = loadingText
+                charIndex = 0;
+                type();
+            }
 
             setTimeout(() => {
                 if(userType === 'client') {
                     let clientLogin = accts.find(acct => acct['Email'] === usernameRef.current.value && acct['Password'] === passwordRef.current.value)
                     if (clientLogin) {
+                        usernameRef.current.style.borderColor = 'green'
+                        passwordRef.current.style.borderColor = 'green'
                         setLoginState(true)
                     }
                     else {
-                        console.log('fail')
+                        loadingTextId.textContent = 'Wrong credentials'
+                        usernameRef.current.style.borderColor = 'red'
+                        passwordRef.current.style.borderColor = 'red'
                     }
                 }
                 else if ((usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') || (usernameRef.current.value === 'arwie' && passwordRef.current.value === 'p4ssw0rd')){
+                        usernameRef.current.style.borderColor = 'green'
+                        passwordRef.current.style.borderColor = 'green'
                         setLoginState(true);
                 }
                 else {
-                    console.log('fail')
+                    loadingTextId.textContent = 'Wrong credentials'
+                    usernameRef.current.style.borderColor = 'red'
+                    passwordRef.current.style.borderColor = 'red'
                 }
-                loadingTextId.textContent = '';
             }, 2000)
 
+        }
+        else {
+            loadingTextId.textContent = ''
+            usernameRef.current.style.borderColor = 'lightgray'
+            passwordRef.current.style.borderColor = 'lightgray'
         }
     };
     

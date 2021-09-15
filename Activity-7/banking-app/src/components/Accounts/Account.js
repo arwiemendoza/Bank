@@ -15,8 +15,6 @@ const Account = ({acct, emailDisplay, toggleCheck}) => {
                     <td>{acct['Account Name']}</td>
                     {emailDisplay && <td>{acct['Email']}</td>}
                     <td>{acctBal}</td>
-                    {/* {emailDisplay && <td id="edit">E</td>} */}
-                    {/* {emailDisplay && <td id="delete"><button onClick={handleDelete(acct.id)}></button></td>} */}
                 </tr>
     )
 }
