@@ -65,8 +65,6 @@ const Login = () => {
                     }
                 }
                 else if ((usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') || (usernameRef.current.value === 'arwie' && passwordRef.current.value === 'p4ssw0rd')){
-                        usernameRef.current.style.borderColor = 'green'
-                        passwordRef.current.style.borderColor = 'green'
                         setLoginState(true);
                 }
                 else {

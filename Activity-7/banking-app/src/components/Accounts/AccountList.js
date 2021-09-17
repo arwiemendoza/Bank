@@ -153,7 +153,8 @@ const AccountList = (props) => {
                 'Email': acctEmail, 
                 'Password': pword, 
                 'Balance': bal,
-                ticked: false
+                ticked: false,
+                expenses: []
             }
 
             //add new user to previous set of users using spread operator for previous data 
@@ -209,7 +210,7 @@ const AccountList = (props) => {
             <Button variant="primary" id="deleteAccounts" onClick = {handleDelete}>Delete Selected Accounts</Button>
 
             {/* Accounts List Table */}
-            <AcctTable  emailDisplay={true} toggleCheck={toggleCheck} accts={accts}/>
+            <AcctTable emailDisplay={true} toggleCheck={toggleCheck} accts={accts}/>
             
                 
             {/*Add Account Modal*/}

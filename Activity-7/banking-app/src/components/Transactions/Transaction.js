@@ -8,8 +8,8 @@ const User = ({transaction}) => {
                 <tr>
                     <td>{transaction.transactionDate}</td>
                     <td>{transaction.transactionType}</td>
-                    <td>{transaction.transactionFromAcctNum}</td>
-                    <td>{transaction.transactionToAcctNum}</td>
+                    <td>{transaction.transactionFromAcctNum || 'Cash'}</td>
+                    <td>{transaction.transactionToAcctNum || 'Cash'}</td>
                     <td>{formattedAmt}</td>
                 </tr>
 
