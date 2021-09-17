@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Dinero from '../../../node_modules/dinero.js'
 import {Card, Modal, Button, Form} from 'react-bootstrap'
 import ExpensesTable from './ExpensesTable'
+import {Redirect} from "react-router-dom";
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 
@@ -16,6 +17,7 @@ const Dashboard = () => {
     const [expenseCost, setExpenseCost] = useState(0);
     const [show, setShow] = useState(false);
     const [indexClient] = useState(accts.findIndex(acct => acct['Email'] === email))
+    const [loginState, setLoginState] = useState(true)
 
     const expenseNameRef = useRef()
     const expenseCostRef = useRef()
@@ -82,90 +84,102 @@ const Dashboard = () => {
         localStorage.setItem(LOCAL_STORAGE_KEY_1, JSON.stringify(accts));
     }
 
-    return (
-        <div className="dashboard-container">
-            <div className="client-parent">
-                <Card className="client-bal">
-                    {/* {email} */}
-                    <h1>
-                        {clientDetails["Balance"] && Dinero({ amount: parseInt(clientDetails["Balance"] * 100), currency: 'PHP' }).toFormat()}
-                    </h1>
-                    <div className="card-sub">
-                        <div>
-                            {clientDetails && clientDetails.id}
-                        </div>
-                        <div>
-                            {clientDetails["Account Name"] && clientDetails["Account Name"]}
-                        </div>
+    const handleLogout = () => {
+        setLoginState(false)
+    }
+
+    if(!loginState) {
+        return (<Redirect to="/login" />);
+    }
+    else {
+        return (
+            <div className="dashboard-container">
+                <div className="client-parent">
+                    <div className="logout-container">
+                        <Button variant="link" onClick={handleLogout}>Logout</Button>
                     </div>
-                </Card>
-
-                <Card>
-                    <ExpensesTable expenses={clientDetails.expenses} toggleCheck={toggleCheck}/>
-                </Card>
-
-                {/* <Button variant="primary" onClick = {handleDelete}>Delete Selected Expenses</Button> */}
-
-                <Button variant="primary" onClick={handleShow}>Add Expense Item</Button>
-
-                <Modal show={show} onHide={handleClose}>
-                <Modal.Header>
-                    <Modal.Title>Create New Account</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleCreateExpense} >       
-                        <Form.Group className="mb-3">
-                            <Form.Label>Account Holder Name:</Form.Label>
-                            <Form.Control type="text" placeholder="Expense Name" required ref={expenseNameRef} onChange={(e) => setExpenseName(e.target.value)} />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Expense Cost:</Form.Label>
-                            <Form.Control min="0" type="number" placeholder="0" ref={expenseCostRef} onChange={(e) => setExpenseCost(e.target.value)}/>
-                        </Form.Group>
-                        {<Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>}
-                        <Button type="submit" variant="primary">
-                            Add
-                        </Button> 
-                    </Form>
-                </Modal.Body>
-            </Modal>
-
-                {/* <div className="slider">                  
-                    <div className="slides">
-                        <div id="slide-1">
-                            <div className="withdrawTitle">Withdraw</div>
-                            <div className="withdrawFormContainer">
-                                <form>
-                                    <input type="number" ref={withdrawRef}></input>
-                                </form>
-                                <button></button>
+                    <Card className="client-bal">
+                        {/* {email} */}
+                        <h1>
+                            {clientDetails["Balance"] && Dinero({ amount: parseInt(clientDetails["Balance"] * 100), currency: 'PHP' }).toFormat()}
+                        </h1>
+                        <div className="card-sub">
+                            <div>
+                                {clientDetails && clientDetails.id}
+                            </div>
+                            <div>
+                                {clientDetails["Account Name"] && clientDetails["Account Name"]}
                             </div>
                         </div>
-                        <div id="slide-2">
-                            <div className="depositTitle">Deposit</div>
-                            <div className="depositFormContainer">
-                                <form>
-                                    <input type="number" ref={depositRef}></input>
-                                </form>
-                                <button></button>
+                    </Card>
+
+                    <Card>
+                        <ExpensesTable expenses={clientDetails.expenses} toggleCheck={toggleCheck}/>
+                    </Card>
+
+                    {/* <Button variant="primary" onClick = {handleDelete}>Delete Selected Expenses</Button> */}
+
+                    <Button variant="primary" onClick={handleShow}>Add Expense Item</Button>
+
+                    <Modal show={show} onHide={handleClose}>
+                    <Modal.Header>
+                        <Modal.Title>Add Expense</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={handleCreateExpense} >       
+                            <Form.Group className="mb-3">
+                                <Form.Label>Expense Item:</Form.Label>
+                                <Form.Control type="text" placeholder="Expense Name" required ref={expenseNameRef} onChange={(e) => setExpenseName(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Expense Cost:</Form.Label>
+                                <Form.Control min="0" type="number" placeholder="0" ref={expenseCostRef} onChange={(e) => setExpenseCost(e.target.value)}/>
+                            </Form.Group>
+                            {<Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>}
+                            <Button type="submit" variant="primary">
+                                Add
+                            </Button> 
+                        </Form>
+                    </Modal.Body>
+                </Modal>
+
+                    {/* <div className="slider">                  
+                        <div className="slides">
+                            <div id="slide-1">
+                                <div className="withdrawTitle">Withdraw</div>
+                                <div className="withdrawFormContainer">
+                                    <form>
+                                        <input type="number" ref={withdrawRef}></input>
+                                    </form>
+                                    <button></button>
+                                </div>
+                            </div>
+                            <div id="slide-2">
+                                <div className="depositTitle">Deposit</div>
+                                <div className="depositFormContainer">
+                                    <form>
+                                        <input type="number" ref={depositRef}></input>
+                                    </form>
+                                    <button></button>
+                                </div>
+                            </div>
+                            <div id="slide-3">
+                                <div  className="transferTitle">Transfer Funds</div>
+                                <div className="transferFormContainer">
+                                    <form>
+                                        <input type="number" ref={transferRef}></input>
+                                    </form>
+                                    <button></button>
+                                </div>
                             </div>
                         </div>
-                        <div id="slide-3">
-                            <div  className="transferTitle">Transfer Funds</div>
-                            <div className="transferFormContainer">
-                                <form>
-                                    <input type="number" ref={transferRef}></input>
-                                </form>
-                                <button></button>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
+                    </div> */}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Dashboard
