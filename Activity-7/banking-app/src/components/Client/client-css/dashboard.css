@@ -28,6 +28,28 @@
   margin-top: 0;
 }
 
+.expense-table {
+  max-height: 40vh;
+  overflow: auto;
+}
+
+.slide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #74ABE2, #5563DE);
+}
+.slide .transactionTitle {
+  height: 25%;
+  font-size: 1.5rem;
+}
+
+.displayNone {
+  display: none;
+}
+
 /************* SLIDER CSS *****************/
 .slider {
   width: 300px;
@@ -132,6 +154,7 @@ html, body {
 
 body {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: "Ropa Sans", sans-serif;

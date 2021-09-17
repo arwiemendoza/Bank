@@ -2,8 +2,6 @@ import React, {useState, useRef, useEffect} from 'react'
 import { Form, Button} from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import '../css/Login.css'
-import Modal from 'react-bootstrap/Modal';
-import CreateAcctModal from './Accounts/CreateAcctModal';
 
 const LOCAL_STORAGE_KEY_1 = 'userList';
 
@@ -27,9 +25,6 @@ const Login = () => {
 
 
     const loadingTextId = document.querySelector('#loadingTextId');
-    // useEffect(() => {
-        
-    // }, [])
 
     // function for Type Effect
     function type() {
@@ -161,7 +156,6 @@ const Login = () => {
                     </div>
             
         </div>
-        {/* <CreateAcctModal /> */}
     </div>
     )
 }

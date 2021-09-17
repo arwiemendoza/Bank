@@ -21,6 +21,7 @@ const AccountList = (props) => {
     const [acctName, setAcctName] = useState('');
     const [acctEmail, setAcctEmail] = useState('');
     const [pword, setPword] = useState('');
+    const [adminLocation, setAdminLocation] = useState('');
 
     //error messages
     const [fullNameErrorMessage, setFullNameErrorMessage] = useState('');
@@ -55,10 +56,12 @@ const AccountList = (props) => {
     const handleShow = () => {
         setShow(true)
         generateAcctNum()
+        generateLocation()
         setValidated(false)
         setFullNameErrorMessage('')
         setEmailErrorMessage('')
         setPasswordErrorMessage('')
+        setAdminLocation('')
     };
 
     // Account number generator
@@ -66,6 +69,20 @@ const AccountList = (props) => {
         let generatedAcctNum = Date.now().toString().substr(0,12)
         setAcctNum(generatedAcctNum)
     }
+
+    // Geolocation generator
+    const generateLocation = () => {
+        if('geolocation' in navigator) {
+            console.log('geolocation available') 
+            navigator.geolocation.getCurrentPosition(function(position) {
+                setAdminLocation(position.coords.latitude + ', ' + position.coords.longitude)
+            })
+        }
+        else {
+            console.log('geolocation not available')
+        }
+    }
+    
 
     // Function for error checking
     const handleErrors = (event) => {
@@ -153,6 +170,7 @@ const AccountList = (props) => {
                 'Email': acctEmail, 
                 'Password': pword, 
                 'Balance': bal,
+                'Location': adminLocation,
                 ticked: false,
                 expenses: []
             }
