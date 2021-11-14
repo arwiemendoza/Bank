@@ -9,6 +9,8 @@ const Login = () => {
     const [accts, setAccts] = useState([]);
     const [loginState, setLoginState] = useState(false);
     const [userType, setUserType] = useState('client');
+    const [userPassword, setUserPassword] = useState('');
+    const [userName, setUserName] = useState('');
 
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -17,6 +19,7 @@ const Login = () => {
     const loadingEllipis = `...`;
     const typingDelay = 500;
     var charIndex;
+    let password;
 
     useEffect(() => {
         const storedAccts = JSON.parse(localStorage.getItem('userList'));
@@ -59,7 +62,7 @@ const Login = () => {
                         passwordRef.current.style.borderColor = 'red'
                     }
                 }
-                else if ((usernameRef.current.value === 'jet' && passwordRef.current.value === 'P@ssw0rd') || (usernameRef.current.value === 'arwie' && passwordRef.current.value === 'p4ssw0rd')){
+                else if ((usernameRef.current.value === 'admin' && passwordRef.current.value === 'P@ssw0rd') || (usernameRef.current.value === 'arwie' && passwordRef.current.value === 'p4ssw0rd')){
                         setLoginState(true);
                 }
                 else {
@@ -99,6 +102,8 @@ const Login = () => {
             adminPlaceholder.forEach(form => {
                 form.classList.add('form-placeholder')    
             })
+            setUserName('admin')
+            setUserPassword('P@ssw0rd')
         }else {
             setUserType('client')
             loginParent.classList.remove('adminlogin-parent')
@@ -109,6 +114,8 @@ const Login = () => {
             adminPlaceholder.forEach(form => {
                 form.classList.remove('form-placeholder')    
             })
+            setUserName('')
+            setUserPassword('')
         }
     }
     if (loginState && userType === 'admin') {
@@ -141,12 +148,12 @@ const Login = () => {
                     <div className="user"></div>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="login-label">Username</Form.Label>
-                        <Form.Control className="form-control" type="email" placeholder="Enter username" ref={usernameRef} onKeyPress={handleLoginKeypress} />
+                        <Form.Control className="form-control" type="email" placeholder="Enter username" ref={usernameRef} onKeyPress={handleLoginKeypress} value={userName}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label className="login-label">Password</Form.Label>
-                        <Form.Control className="form-control" type="password" placeholder="********" ref={passwordRef} onKeyPress={handleLoginKeypress} />
+                        <Form.Control className="form-control" type="password" placeholder="********" ref={passwordRef} onKeyPress={handleLoginKeypress} value={userPassword}/>
                     </Form.Group>
                     <br/>
                     <Form.Text className="text-muted" id="loadingTextId"></Form.Text>
