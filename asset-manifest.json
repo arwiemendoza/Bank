@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/banking-app/static/css/main.e538d0af.chunk.css",
-    "main.js": "/banking-app/static/js/main.47f31073.chunk.js",
-    "main.js.map": "/banking-app/static/js/main.47f31073.chunk.js.map",
-    "runtime-main.js": "/banking-app/static/js/runtime-main.15230fdc.js",
-    "runtime-main.js.map": "/banking-app/static/js/runtime-main.15230fdc.js.map",
-    "static/css/2.818011ed.chunk.css": "/banking-app/static/css/2.818011ed.chunk.css",
-    "static/js/2.e5be4c5a.chunk.js": "/banking-app/static/js/2.e5be4c5a.chunk.js",
-    "static/js/2.e5be4c5a.chunk.js.map": "/banking-app/static/js/2.e5be4c5a.chunk.js.map",
-    "index.html": "/banking-app/index.html",
-    "static/css/2.818011ed.chunk.css.map": "/banking-app/static/css/2.818011ed.chunk.css.map",
-    "static/css/main.e538d0af.chunk.css.map": "/banking-app/static/css/main.e538d0af.chunk.css.map",
-    "static/js/2.e5be4c5a.chunk.js.LICENSE.txt": "/banking-app/static/js/2.e5be4c5a.chunk.js.LICENSE.txt",
-    "static/media/Login.css": "/banking-app/static/media/trybg.784a5d59.gif",
-    "static/media/NavBar.css": "/banking-app/static/media/bank_logo3.e2f9c6de.png",
-    "static/media/dashboard.css": "/banking-app/static/media/card-bg.94080992.jpg",
-    "static/media/Deposit.css": "/banking-app/static/media/test4.37fa9dbc.gif"
+    "main.css": "/Bank/static/css/main.245b358f.chunk.css",
+    "main.js": "/Bank/static/js/main.47f31073.chunk.js",
+    "main.js.map": "/Bank/static/js/main.47f31073.chunk.js.map",
+    "runtime-main.js": "/Bank/static/js/runtime-main.a8518284.js",
+    "runtime-main.js.map": "/Bank/static/js/runtime-main.a8518284.js.map",
+    "static/css/2.818011ed.chunk.css": "/Bank/static/css/2.818011ed.chunk.css",
+    "static/js/2.e5be4c5a.chunk.js": "/Bank/static/js/2.e5be4c5a.chunk.js",
+    "static/js/2.e5be4c5a.chunk.js.map": "/Bank/static/js/2.e5be4c5a.chunk.js.map",
+    "index.html": "/Bank/index.html",
+    "static/css/2.818011ed.chunk.css.map": "/Bank/static/css/2.818011ed.chunk.css.map",
+    "static/css/main.245b358f.chunk.css.map": "/Bank/static/css/main.245b358f.chunk.css.map",
+    "static/js/2.e5be4c5a.chunk.js.LICENSE.txt": "/Bank/static/js/2.e5be4c5a.chunk.js.LICENSE.txt",
+    "static/media/Login.css": "/Bank/static/media/trybg.784a5d59.gif",
+    "static/media/NavBar.css": "/Bank/static/media/bank_logo3.e2f9c6de.png",
+    "static/media/dashboard.css": "/Bank/static/media/card-bg.94080992.jpg",
+    "static/media/Deposit.css": "/Bank/static/media/test4.37fa9dbc.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.15230fdc.js",
+    "static/js/runtime-main.a8518284.js",
     "static/css/2.818011ed.chunk.css",
     "static/js/2.e5be4c5a.chunk.js",
-    "static/css/main.e538d0af.chunk.css",
+    "static/css/main.245b358f.chunk.css",
     "static/js/main.47f31073.chunk.js"
   ]
 }
