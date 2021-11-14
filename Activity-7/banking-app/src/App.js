@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
 import {Navigation, Login, UserTransaction, AccountList, Withdraw, Deposit, Transfer, Dashboard } from "./components";
 
