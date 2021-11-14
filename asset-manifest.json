@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/Bank/static/css/main.245b358f.chunk.css",
-    "main.js": "/Bank/static/js/main.7afbc69f.chunk.js",
-    "main.js.map": "/Bank/static/js/main.7afbc69f.chunk.js.map",
-    "runtime-main.js": "/Bank/static/js/runtime-main.a8518284.js",
-    "runtime-main.js.map": "/Bank/static/js/runtime-main.a8518284.js.map",
-    "static/css/2.818011ed.chunk.css": "/Bank/static/css/2.818011ed.chunk.css",
-    "static/js/2.e5be4c5a.chunk.js": "/Bank/static/js/2.e5be4c5a.chunk.js",
-    "static/js/2.e5be4c5a.chunk.js.map": "/Bank/static/js/2.e5be4c5a.chunk.js.map",
+    "main.css": "/Bank/static/css/main.7390f753.chunk.css",
+    "main.js": "/Bank/static/js/main.2592df56.chunk.js",
+    "main.js.map": "/Bank/static/js/main.2592df56.chunk.js.map",
+    "runtime-main.js": "/Bank/static/js/runtime-main.94f940dd.js",
+    "runtime-main.js.map": "/Bank/static/js/runtime-main.94f940dd.js.map",
+    "static/css/2.383c0125.chunk.css": "/Bank/static/css/2.383c0125.chunk.css",
+    "static/js/2.7d87e74b.chunk.js": "/Bank/static/js/2.7d87e74b.chunk.js",
+    "static/js/2.7d87e74b.chunk.js.map": "/Bank/static/js/2.7d87e74b.chunk.js.map",
     "index.html": "/Bank/index.html",
-    "static/css/2.818011ed.chunk.css.map": "/Bank/static/css/2.818011ed.chunk.css.map",
-    "static/css/main.245b358f.chunk.css.map": "/Bank/static/css/main.245b358f.chunk.css.map",
-    "static/js/2.e5be4c5a.chunk.js.LICENSE.txt": "/Bank/static/js/2.e5be4c5a.chunk.js.LICENSE.txt",
+    "static/css/2.383c0125.chunk.css.map": "/Bank/static/css/2.383c0125.chunk.css.map",
+    "static/css/main.7390f753.chunk.css.map": "/Bank/static/css/main.7390f753.chunk.css.map",
+    "static/js/2.7d87e74b.chunk.js.LICENSE.txt": "/Bank/static/js/2.7d87e74b.chunk.js.LICENSE.txt",
     "static/media/Login.css": "/Bank/static/media/trybg.784a5d59.gif",
     "static/media/NavBar.css": "/Bank/static/media/bank_logo3.e2f9c6de.png",
     "static/media/dashboard.css": "/Bank/static/media/card-bg.94080992.jpg",
     "static/media/Deposit.css": "/Bank/static/media/test4.37fa9dbc.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.a8518284.js",
-    "static/css/2.818011ed.chunk.css",
-    "static/js/2.e5be4c5a.chunk.js",
-    "static/css/main.245b358f.chunk.css",
-    "static/js/main.7afbc69f.chunk.js"
+    "static/js/runtime-main.94f940dd.js",
+    "static/css/2.383c0125.chunk.css",
+    "static/js/2.7d87e74b.chunk.js",
+    "static/css/main.7390f753.chunk.css",
+    "static/js/main.2592df56.chunk.js"
   ]
 }
